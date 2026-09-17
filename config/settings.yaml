@@ -1,0 +1,62 @@
+indicators:
+  ema:
+    short: 20
+    medium: 50
+    long: 200
+    slope_window: 5
+
+  rsi:
+    period: 14
+    oversold: 30
+    weak_threshold: 50
+    positive_threshold: 60
+    strong_threshold: 70
+
+  macd:
+    fast: 12
+    slow: 26
+    signal: 9
+
+  atr:
+    period: 14
+    stop_multiplier: 1.5
+
+  volume:
+    lookback: 20
+    breakout_multiplier: 1.5
+    expansion_threshold: 1.2
+    contraction_threshold: 0.8
+
+breakouts:
+  short: 20
+  long: 50
+
+benchmarks:
+  market: "^NSEI"
+  sector_map:
+    RELIANCE: "^CNXENERGY"
+    TCS: "^CNXIT"
+    INFY: "^CNXIT"
+    HDFCBANK: "^NSEBANK"
+    ICICIBANK: "^NSEBANK"
+    SBIN: "^NSEBANK"
+    TATAMOTORS: "^CNXAUTO"
+    SUNPHARMA: "^CNXPHARMA"
+
+scoring:
+  weights:
+    daily_trend: 20
+    hourly_trend: 15
+    momentum: 15
+    volume: 15
+    breakout: 15
+    support_resistance: 10
+    relative_strength: 5
+    volatility: 5
+
+  categories:
+    weak_max: 30
+    neutral_max: 50
+    positive_max: 70
+    strong_max: 85
+    very_strong_max: 100

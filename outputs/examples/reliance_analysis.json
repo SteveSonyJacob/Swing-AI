@@ -1,0 +1,59 @@
+{
+  "status": "success",
+  "symbol": "RELIANCE",
+  "market": "NSE",
+  "analysis_timestamp": "2026-09-18 00:14:43.660417",
+  "technical_score": 83,
+  "score_breakdown": {
+    "daily_trend": 18,
+    "hourly_trend": 15,
+    "momentum": 13,
+    "volume": 11,
+    "breakout": 10,
+    "support_resistance": 7,
+    "relative_strength": 4,
+    "volatility": 5
+  },
+  "trend": {
+    "daily": "bullish",
+    "hourly": "bullish",
+    "daily_ema_alignment": true,
+    "hourly_ema_alignment": true,
+    "market_structure": "lower_highs_higher_lows"
+  },
+  "momentum": {
+    "daily_rsi": 63.8,
+    "hourly_rsi": 73.8,
+    "daily_macd": "bullish",
+    "hourly_macd": "bullish"
+  },
+  "volume": {
+    "relative_volume": 1.43,
+    "confirmation": true
+  },
+  "breakout": {
+    "detected": true,
+    "type": "50_day_high",
+    "volume_confirmed": false
+  },
+  "levels": {
+    "support": 2185.77,
+    "resistance": 2293.04
+  },
+  "volatility": {
+    "atr_14": 57.8,
+    "atr_percent": 2.58
+  },
+  "relative_strength": {
+    "vs_nifty_1m": 1.88,
+    "vs_sector_1m": 7.92
+  },
+  "trade_setup": {
+    "direction": "long",
+    "entry_zone": "2232.24 - 2254.67",
+    "stop_loss": 2156.75,
+    "target_1": 2373.51,
+    "target_2": 2460.21,
+    "risk_reward": 1.5
+  }
+}
