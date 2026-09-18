@@ -1,90 +1,72 @@
-# Agent 2 — Technical Analysis Engine
+# SwingTrade AI — Multi-Agent Trading System
 
-Deterministic technical-analysis agent for swing trading Indian equities (NSE).
+Deterministic multi-agent trading system for Indian equities (NSE).
 
-Agent 2 ingests stock symbols (e.g. `RELIANCE`, `TCS`, `INFY`), retrieves historical multi-timeframe market data (Daily & 1-Hour), deterministically calculates technical indicators, detects chart patterns and breakouts without look-ahead bias, evaluates market structure, scores the opportunity (0–100), calculates risk/reward levels, and emits machine-readable JSON for downstream agents.
-
----
-
-## 1. Features
-
-- **Multi-Timeframe Analysis**: Daily macro trend and 1-hour short-term confirmation.
-- **Strict Look-Ahead Bias Prevention**: All rolling windows, moving averages, and breakout levels (`high.shift(1).rolling(20).max()`) strictly exclude the current candle. Point-in-time filtering via `--date` ensures historical simulation integrity.
-- **Deterministic Indicators**:
-  - **Moving Averages**: EMA 20, 50, 200 and normalized slopes.
-  - **Momentum**: RSI 14 (Wilder's smoothing) and MACD (12, 26, 9) line/signal/hist with crossover detection.
-  - **Volume**: 20-period Relative Volume (RVOL), volume expansion/contraction, and price-volume confirmation.
-  - **Volatility**: ATR 14 (Wilder's smoothing) and ATR%.
-- **V2 Setup Detection**:
-  - 20-day and 50-day breakouts with volume confirmation.
-  - Nearest confirmed support and resistance levels.
-  - Relative strength (outperformance) versus NIFTY 50 (`^NSEI`) and sectoral indices over 1W, 1M, and 3M.
-- **100-Point Scoring Engine**:
-  - Daily Trend: 20 pts
-  - Hourly Trend: 15 pts
-  - Momentum: 15 pts
-  - Volume: 15 pts
-  - Breakout: 15 pts
-  - Support & Resistance: 10 pts
-  - Relative Strength: 5 pts
-  - Volatility / Trade Quality: 5 pts
-- **Trade Setup & Risk Calculator**:
-  - Entry zone, Stop loss (`Entry - 1.5 * ATR`), Target 1, Target 2, and Risk/Reward ratio.
+- **Agent 2 — Technical Analysis Engine**: Evaluates price trends across daily and hourly timeframes, momentum, volume, breakouts (zero look-ahead bias), key S/R levels, and risk/reward setups.
+- **Agent 3 — Fundamental Analysis Engine**: Evaluates quarterly & annual financial statements, revenue/PAT growth, profitability (ROE, ROCE, margins), balance sheet leverage, cash flow quality (OCF, FCF, OCF/PAT), earnings quality, and valuation multiples relative to sector medians.
 
 ---
 
-## 2. Directory Structure
+## 1. Project Layout
 
 ```text
 SwingTrade AI/
 ├── config/
-│   └── settings.yaml            # Strategy parameters, weights, and benchmarks
+│   ├── settings.yaml                 # Agent 2 settings & weights
+│   └── fundamental_settings.yaml     # Agent 3 settings, sector medians & weights
 ├── data/
-│   ├── raw/                     # Cached market data
+│   ├── raw/                          # Cached market & financial data
 │   └── processed/
 ├── outputs/
 │   └── examples/
-│       └── reliance_analysis.json
+│       ├── reliance_analysis.json    # Agent 2 Technical output
+│       └── reliance_fundamental.json # Agent 3 Fundamental output
 ├── src/
-│   ├── main.py                  # CLI entrypoint
-│   ├── data/
-│   │   ├── market_data.py       # Data fetcher, caching & synthetic fallback
-│   │   ├── benchmark_data.py    # NIFTY 50 & sector index loader
-│   │   └── validator.py         # Data validation & sufficiency checks
-│   ├── indicators/
-│   │   ├── moving_averages.py   # EMA 20/50/200 & slope calculation
-│   │   ├── momentum.py          # RSI 14 & MACD 12/26/9
-│   │   ├── volume.py            # 20-period Relative Volume (RVOL)
-│   │   └── volatility.py        # ATR 14 & ATR%
-│   ├── analysis/
-│   │   ├── daily_analysis.py    # Daily trend, EMA alignment, swing structure
-│   │   ├── hourly_analysis.py   # Hourly trend & alignment
-│   │   ├── trend_analysis.py    # Multi-timeframe trend confirmation
-│   │   ├── breakout.py          # 20D/50D breakout detection
-│   │   ├── support_resistance.py# Support & resistance levels
-│   │   └── relative_strength.py # Outperformance vs NIFTY 50 & sector
-│   ├── scoring/
-│   │   └── technical_score.py   # 100-point scoring engine
-│   ├── risk/
-│   │   └── trade_levels.py      # Entry, stop loss, targets, risk/reward
-│   └── output/
-│       └── formatter.py         # JSON schema formatter
+│   ├── main.py                       # Technical analysis CLI (legacy/default)
+│   ├── technical/                    # Agent 2 modules
+│   └── fundamental/                  # Agent 3 modules
+│       ├── main.py                   # Fundamental CLI
+│       ├── data/
+│       │   ├── company_data.py       # Profile & market cap tier
+│       │   ├── financial_data.py     # Income Statement, Balance Sheet, Cash Flow
+│       │   ├── market_data.py        # Valuation ratios (PE, PB, EV/EBITDA)
+│       │   └── validator.py          # Missing data & quality tracker
+│       ├── ratios/
+│       │   └── financial_ratios.py   # ROE, ROCE, Margins, D/E, Interest Coverage
+│       ├── analysis/
+│       │   ├── growth.py             # YoY, QoQ, 3Y CAGR
+│       │   ├── profitability.py      # Margins & margin trend
+│       │   ├── balance_sheet.py      # Solvency & liquidity
+│       │   ├── cash_flow.py          # OCF, FCF, cash conversion
+│       │   ├── earnings_quality.py   # Red flag and accounting warning checks
+│       │   ├── valuation.py          # Sector premium & valuation assessment
+│       │   └── ownership.py          # Ownership structure
+│       ├── events/
+│       │   └── corporate_events.py   # Upcoming earnings calendar
+│       ├── scoring/
+│       │   └── fundamental_score.py  # 100-point scoring with missing-data normalization
+│       └── output/
+│           ├── formatter.py          # Section 23 JSON formatter
+│           └── llm_explainer.py      # Natural language explanation generator
 ├── tests/
 │   ├── conftest.py
-│   ├── test_validator.py
-│   ├── test_indicators.py
-│   ├── test_trend.py
-│   ├── test_breakout.py
-│   ├── test_scoring.py
-│   └── test_risk.py
-├── plan.md                      # Specification document
+│   ├── test_*.py                     # Agent 2 technical tests
+│   └── fundamental/                  # Agent 3 fundamental tests
+│       ├── test_financial_ratios.py
+│       ├── test_growth.py
+│       ├── test_cash_flow.py
+│       ├── test_earnings_quality.py
+│       ├── test_valuation.py
+│       └── test_fundamental_score.py
+├── run_technical.py                  # CLI runner for Agent 2
+├── run_fundamental.py                # CLI runner for Agent 3
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## 3. Installation
+## 2. Installation
 
 ```bash
 pip install -r requirements.txt
@@ -92,33 +74,37 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Usage
+## 3. Usage
 
-### Run Technical Analysis for a Stock
+### Agent 3: Fundamental Analysis Engine
 ```bash
-# Live analysis for RELIANCE
-python src/main.py --symbol RELIANCE
+# Run fundamental analysis for RELIANCE
+python run_fundamental.py --symbol RELIANCE
 
-# Offline analysis (using cached or synthetic data)
-python src/main.py --symbol RELIANCE --offline
+# Run offline with cached/synthetic financials
+python run_fundamental.py --symbol RELIANCE --offline
 
-# Point-in-time historical simulation
-python src/main.py --symbol TCS --date 2025-06-01
+# Generate natural-language explanation
+python run_fundamental.py --symbol RELIANCE --offline --explain
 
-# Emit pure JSON for agent piping
-python src/main.py --symbol INFY --json-only
+# Output pure JSON conforming to Section 23
+python run_fundamental.py --symbol RELIANCE --offline --json-only
 ```
 
-### Save Output to File
+### Agent 2: Technical Analysis Engine
 ```bash
-python src/main.py --symbol RELIANCE --offline --output outputs/reliance.json
+# Run technical analysis for RELIANCE
+python run_technical.py --symbol RELIANCE
+
+# Output pure JSON conforming to Section 19
+python run_technical.py --symbol RELIANCE --offline --json-only
 ```
 
 ---
 
-## 5. Running Tests
+## 4. Testing
 
-Run all unit tests:
+Run all 34 automated unit tests:
 ```bash
 pytest -v tests/
 ```

@@ -1,0 +1,65 @@
+{
+  "status": "success",
+  "symbol": "RELIANCE",
+  "market": "NSE",
+  "analysis_timestamp": "2026-09-18T00:45:10.595288",
+  "fundamental_score": 80,
+  "score_breakdown": {
+    "growth": 13,
+    "profitability": 13,
+    "balance_sheet": 13,
+    "cash_flow": 15,
+    "earnings_quality": 10,
+    "valuation": 8,
+    "consistency": 5,
+    "sector_relative": 3
+  },
+  "growth": {
+    "revenue_yoy": 16.99,
+    "pat_yoy": 16.99,
+    "eps_yoy": 16.99,
+    "revenue_cagr_3y": 16.0,
+    "pat_cagr_3y": 16.0
+  },
+  "profitability": {
+    "roe": 58.0,
+    "roce": 70.51,
+    "operating_margin": 16.0,
+    "net_margin": 10.88,
+    "margin_trend": "stable"
+  },
+  "balance_sheet": {
+    "debt_equity": 0.21,
+    "net_debt": 1934.68,
+    "interest_coverage": 10.67,
+    "current_ratio": 1.78
+  },
+  "cash_flow": {
+    "operating_cash_flow": 2926.11,
+    "free_cash_flow": 1756.25,
+    "ocf_pat_ratio": 1.15,
+    "cash_flow_trend": "strong"
+  },
+  "earnings_quality": {
+    "score": 10,
+    "status": "strong",
+    "warnings": []
+  },
+  "valuation": {
+    "pe": 22.54,
+    "pb": 1.86,
+    "ev_ebitda": 11.1,
+    "sector_pe": 18.0,
+    "pe_premium_to_sector": 25.2,
+    "valuation_assessment": "premium"
+  },
+  "events": {
+    "upcoming_results": true,
+    "days_to_results": 27
+  },
+  "warnings": [],
+  "data_quality": {
+    "status": "complete",
+    "missing_metrics": []
+  }
+}

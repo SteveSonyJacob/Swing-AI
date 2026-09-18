@@ -1,155 +1,207 @@
-# Agent 2 — Technical Analysis Engine
+# Agent 3 — Fundamental Analysis Engine
 ## Implementation Plan
 
-### 1. Objective
+## 1. Objective
 
-Build a deterministic technical-analysis agent for the swing-trading system.
+Build a deterministic fundamental-analysis agent for the swing-trading system.
 
-The agent receives a stock symbol and analysis date, retrieves historical market data, calculates technical indicators across multiple timeframes, detects technical setups, calculates a 0–100 technical score, and returns structured JSON.
+The agent receives a stock symbol and analysis date, collects the latest financial statements, ratios, valuation data, earnings history, and relevant company information, then produces:
 
-The system should **calculate facts deterministically** and use an LLM only for optional natural-language explanation. The LLM must not invent indicator values or independently decide the score.
+- Fundamental metrics
+- Growth analysis
+- Profitability analysis
+- Balance-sheet analysis
+- Cash-flow analysis
+- Earnings-quality analysis
+- Valuation analysis
+- Management/corporate-event context where reliable data is available
+- A 0–100 fundamental score
+- A structured JSON output
+- Optional LLM-generated explanation
+
+The fundamental agent should **not predict the stock price directly**. It should assess the company's underlying financial quality and valuation using information that was available as of the analysis date.
 
 ---
 
-## 2. Scope
+# 2. Important Design Principle
 
-### V1 — Core Technical Engine
+Fundamental analysis is different from technical analysis.
+
+Technical Agent:
+
+```text
+"What is happening with the stock price?"
+```
+
+Fundamental Agent:
+
+```text
+"How financially healthy is the company,
+how quickly is it growing, and how is it valued?"
+```
+
+The fundamental agent should therefore avoid using:
+
+- RSI
+- MACD
+- EMA
+- Chart patterns
+- Short-term price momentum
+
+Those belong to Agent 2.
+
+The only market-price information needed here is primarily for valuation and relative valuation.
+
+---
+
+# 3. Scope
+
+## V1 — Core Fundamental Analysis
 
 Implement:
 
-- OHLCV data acquisition
-- Daily timeframe analysis
-- 1-hour timeframe analysis
-- EMA 20 / 50 / 200
-- RSI 14
-- MACD
-- Volume / Relative Volume
-- ATR 14
-- Basic trend classification
-- Basic technical scoring
+- Company identification
+- Latest quarterly results
+- Previous-quarter comparison
+- Year-over-year comparison
+- Annual financial statements
+- Revenue growth
+- EBITDA/operating-profit growth
+- PAT growth
+- EPS growth
+- Operating margin
+- Net profit margin
+- ROE
+- ROCE
+- Debt/equity
+- Interest coverage
+- Operating cash flow
+- Free cash flow
+- Basic valuation
+- Fundamental score
 - Structured JSON output
-- Error handling and data validation
 
-### V2 — Setup Detection
+## V2 — Advanced Fundamental Analysis
 
 Add:
 
-- Support/resistance
-- Swing highs/lows
-- 20-day / 50-day breakouts
-- Breakout volume confirmation
-- Higher-high / higher-low detection
-- Relative strength versus NIFTY 50
-- Relative strength versus sector index
-- Entry/stop/target estimation
-- Risk/reward calculation
+- 3Y/5Y CAGR
+- Margin trend
+- Cash-flow quality
+- Working-capital analysis
+- Promoter/institutional ownership changes
+- Share dilution
+- Pledged shares
+- Sector-relative valuation
+- Historical valuation
+- Earnings consistency
+- Dividend/buyback information
+- Corporate actions
+- Management guidance
+- Order book/revenue visibility where applicable
 
-### V3 — Advanced Analysis
+## V3 — Fundamental Event Analysis
 
-Potential additions:
+Integrate:
 
-- 15-minute confirmation timeframe
-- Volume profile
-- Advanced consolidation detection
-- Pullback detection
-- Trend continuation setups
-- Gap analysis
-- Divergence detection
-- Additional volatility measures
-- More robust sector-relative analysis
+- Upcoming earnings
+- Recent earnings announcement
+- Earnings surprise
+- Guidance changes
+- Major contracts
+- Capex announcements
+- Acquisitions
+- Regulatory approvals
+- Demergers
+- Fundraising
+- Credit-rating changes
 
-### V4 — Backtesting
+## V4 — Historical Backtesting
 
-Evaluate whether the scoring system has historical predictive value.
-
-Test:
-
-- 1-day forward return
-- 3-day forward return
-- 5-day forward return
-- 10-day forward return
-- Maximum favorable excursion
-- Maximum adverse excursion
-- Win rate
-- Average return
-- Average R multiple
-- Profit factor
-- Maximum drawdown
-
-Use point-in-time data to avoid look-ahead bias.
+Determine whether the fundamental score contains useful information for the overall swing-trading system.
 
 ---
 
-# 3. Architecture
+# 4. Architecture
 
 ```text
-                  Stock Symbol
-                       |
-                       v
-              +------------------+
-              | Data Acquisition |
-              +--------+---------+
-                       |
-                       v
-              +------------------+
-              | Data Validation  |
-              +--------+---------+
-                       |
-          +------------+-------------+
-          |            |             |
-          v            v             v
-       Daily         Hourly       Benchmark
-       Analysis      Analysis     Analysis
-          |            |             |
-          +------------+-------------+
-                       |
-                       v
-              +------------------+
-              | Indicator Engine |
-              +--------+---------+
-                       |
-                       v
-              +------------------+
-              | Setup Detection  |
-              +--------+---------+
-                       |
-                       v
-              +------------------+
-              | Scoring Engine   |
-              +--------+---------+
-                       |
-                       v
-              +------------------+
-              | Risk Calculator  |
-              +--------+---------+
-                       |
-                       v
-              +------------------+
-              | JSON Formatter   |
-              +--------+---------+
-                       |
-                       v
-                Agent 2 Output
+                    Stock Symbol
+                         |
+                         v
+                +-------------------+
+                | Company Resolver  |
+                +---------+---------+
+                          |
+                          v
+                +-------------------+
+                | Financial Data    |
+                | Acquisition       |
+                +---------+---------+
+                          |
+          +---------------+----------------+
+          |               |                |
+          v               v                v
+     Income Statement  Balance Sheet   Cash Flow
+          |               |                |
+          +---------------+----------------+
+                          |
+                          v
+                +-------------------+
+                | Ratio Calculator  |
+                +---------+---------+
+                          |
+                          v
+                +-------------------+
+                | Growth Analysis   |
+                +---------+---------+
+                          |
+                          v
+                +-------------------+
+                | Earnings Quality  |
+                +---------+---------+
+                          |
+                          v
+                +-------------------+
+                | Valuation Engine  |
+                +---------+---------+
+                          |
+                          v
+                +-------------------+
+                | Sector Comparison |
+                +---------+---------+
+                          |
+                          v
+                +-------------------+
+                | Scoring Engine    |
+                +---------+---------+
+                          |
+                          v
+                +-------------------+
+                | JSON Formatter    |
+                +---------+---------+
+                          |
+                          v
+                  Agent 3 Output
 ```
 
 Optional:
 
 ```text
-Agent 2 JSON
-     |
-     v
+Agent 3 JSON
+      |
+      v
 LLM Explanation Layer
-     |
-     v
-Human-readable explanation
+      |
+      v
+Human-readable fundamental analysis
 ```
 
 ---
 
-# 4. Recommended Project Structure
+# 5. Recommended Project Structure
 
 ```text
-technical-agent/
+fundamental-agent/
 │
 ├── README.md
 ├── plan.md
@@ -168,41 +220,40 @@ technical-agent/
 │   ├── main.py
 │   │
 │   ├── data/
+│   │   ├── company_data.py
+│   │   ├── financial_data.py
 │   │   ├── market_data.py
-│   │   ├── benchmark_data.py
 │   │   └── validator.py
 │   │
-│   ├── indicators/
-│   │   ├── trend.py
-│   │   ├── moving_averages.py
-│   │   ├── momentum.py
-│   │   ├── volume.py
-│   │   └── volatility.py
-│   │
 │   ├── analysis/
-│   │   ├── daily_analysis.py
-│   │   ├── hourly_analysis.py
-│   │   ├── trend_analysis.py
-│   │   ├── breakout.py
-│   │   ├── support_resistance.py
-│   │   └── relative_strength.py
+│   │   ├── growth.py
+│   │   ├── profitability.py
+│   │   ├── balance_sheet.py
+│   │   ├── cash_flow.py
+│   │   ├── earnings_quality.py
+│   │   ├── valuation.py
+│   │   └── ownership.py
+│   │
+│   ├── ratios/
+│   │   └── financial_ratios.py
 │   │
 │   ├── scoring/
-│   │   └── technical_score.py
+│   │   └── fundamental_score.py
 │   │
-│   ├── risk/
-│   │   └── trade_levels.py
+│   ├── events/
+│   │   └── corporate_events.py
 │   │
 │   └── output/
 │       └── formatter.py
 │
 ├── tests/
 │   ├── test_data.py
-│   ├── test_indicators.py
-│   ├── test_trend.py
-│   ├── test_breakout.py
-│   ├── test_scoring.py
-│   └── test_risk.py
+│   ├── test_ratios.py
+│   ├── test_growth.py
+│   ├── test_profitability.py
+│   ├── test_cash_flow.py
+│   ├── test_valuation.py
+│   └── test_scoring.py
 │
 └── outputs/
     └── examples/
@@ -210,810 +261,1243 @@ technical-agent/
 
 ---
 
-# 5. Data Acquisition
+# 6. Data Acquisition
 
-## Required data
+The agent needs reliable financial data.
 
-For each stock:
+## Required
 
-### Daily
-
-At minimum:
-
-- Open
-- High
-- Low
-- Close
-- Adjusted Close
-- Volume
-
-Recommended historical period:
-
-- 1–2 years
-
-This provides enough history for EMA 200 and historical analysis.
-
-### Hourly
+### Income statement
 
 At minimum:
 
-- Open
-- High
-- Low
-- Close
-- Volume
+- Revenue
+- EBITDA / operating profit
+- EBIT
+- PBT
+- PAT
+- EPS
+- Interest expense
+- Depreciation
 
-Use as much historical hourly data as the selected data provider reliably supports.
+### Balance sheet
 
-### Benchmark
+At minimum:
 
-Fetch:
+- Total assets
+- Total liabilities
+- Equity
+- Total debt
+- Cash
+- Current assets
+- Current liabilities
+- Receivables
+- Inventory
 
-- NIFTY 50
-- Relevant sector index
+### Cash flow
 
-Benchmark data is required for relative-strength analysis.
+At minimum:
+
+- Operating cash flow
+- Investing cash flow
+- Financing cash flow
+- Capital expenditure
+- Free cash flow
+
+### Market/valuation data
+
+- Current share price
+- Shares outstanding
+- Market capitalization
+- P/E
+- P/B
+- EV/EBITDA
+- Dividend yield where available
+
+### Company information
+
+- Sector
+- Industry
+- Market capitalization category
+- Business description
 
 ---
 
-# 6. Data Validation
+# 7. Data Sources
 
-Before calculating indicators, verify:
+Use reliable and legally accessible sources.
 
-- Data is not empty
-- Required columns exist
-- Timestamps are valid
-- Data is sorted chronologically
-- Duplicate timestamps are handled
-- Missing OHLC values are handled
-- Volume is non-negative
-- Enough rows exist for EMA 200
-- Timeframe is correct
-- Market holidays/gaps are not incorrectly treated as missing candles
+For an Indian-stock implementation, possible data sources include:
 
-If insufficient data exists:
+- Exchange/company filings
+- Official company investor-relations pages
+- SEBI-related filings
+- NSE/BSE data
+- Licensed market-data APIs
+- Financial-data providers
 
-```json
-{
-  "status": "insufficient_data",
-  "symbol": "XYZ",
-  "reason": "Not enough daily candles for EMA200"
-}
+Prefer **primary company filings** for financial statements and earnings announcements.
+
+Avoid making a low-quality scraped website the sole source for important financial information.
+
+The system should store the source and reporting period for every metric.
+
+---
+
+# 8. Point-in-Time Data
+
+This is critical.
+
+If the analysis date is:
+
+```text
+2026-09-18
 ```
 
-Never silently generate a score from incomplete data.
+the engine must not use financial information published after:
+
+```text
+2026-09-18
+```
+
+For historical backtesting, use:
+
+```text
+publication date
+```
+
+rather than simply:
+
+```text
+financial period end date
+```
+
+Example:
+
+```text
+Quarter ended:       30 Jun 2025
+Results published:   14 Aug 2025
+```
+
+The result should not be available to a simulated analysis dated:
+
+```text
+01 Aug 2025
+```
+
+This prevents look-ahead bias.
 
 ---
 
-# 7. Indicator Engine
+# 9. Quarterly Growth Analysis
 
-## Moving averages
+Calculate year-over-year growth.
+
+## Revenue
+
+```text
+Revenue Growth =
+(Current Quarter Revenue - Same Quarter Previous Year Revenue)
+/
+Same Quarter Previous Year Revenue × 100
+```
+
+## PAT
+
+```text
+PAT Growth =
+(Current PAT - Same Quarter Previous Year PAT)
+/
+Same Quarter Previous Year PAT × 100
+```
+
+## EPS
+
+Calculate similarly.
+
+Also calculate sequential growth:
+
+```text
+Current Quarter vs Previous Quarter
+```
+
+Do not confuse:
+
+```text
+QoQ
+```
+
+with:
+
+```text
+YoY
+```
+
+Both should be stored separately.
+
+---
+
+# 10. Long-Term Growth
 
 Calculate:
 
-- EMA 20
-- EMA 50
-- EMA 200
+- 3-year revenue CAGR
+- 5-year revenue CAGR
+- 3-year PAT CAGR
+- 5-year PAT CAGR
+- 3-year EPS CAGR
+- 5-year EPS CAGR
 
-For both:
+CAGR:
 
-- Daily
-- Hourly
+```text
+CAGR =
+(Ending Value / Beginning Value)^(1 / Years) - 1
+```
 
-Also calculate EMA slopes.
+Growth should be considered alongside profitability and cash flow.
+
+High revenue growth with deteriorating margins should not receive the same treatment as profitable growth.
+
+---
+
+# 11. Profitability Analysis
+
+Calculate:
+
+## Operating margin
+
+```text
+Operating Margin =
+Operating Profit / Revenue × 100
+```
+
+## Net margin
+
+```text
+Net Margin =
+PAT / Revenue × 100
+```
+
+## ROE
+
+```text
+ROE =
+Net Income / Average Shareholders' Equity × 100
+```
+
+## ROCE
+
+Use a consistent definition throughout the system.
+
+For example:
+
+```text
+ROCE =
+EBIT / Capital Employed × 100
+```
+
+Track both:
+
+```text
+Current margin
+Historical margin
+Margin trend
+```
 
 Example:
 
 ```text
-EMA20_slope =
-(EMA20_current - EMA20_N_periods_ago)
-/
-EMA20_N_periods_ago
+Operating Margin
+
+2024: 15.2%
+2025: 17.1%
+2026: 18.4%
+
+→ Improving
 ```
 
-Use a consistent slope window defined in configuration.
+Do not judge a margin without considering the company's industry.
 
 ---
 
-# 8. Daily Trend Analysis
+# 12. Balance-Sheet Analysis
 
-Determine:
+Calculate:
 
-### Bullish alignment
-
-```text
-Price > EMA20
-EMA20 > EMA50
-EMA50 > EMA200
-```
-
-### Bearish alignment
+### Debt/equity
 
 ```text
-Price < EMA20
-EMA20 < EMA50
-EMA50 < EMA200
+Debt / Equity
 ```
 
-Also evaluate:
-
-- EMA slopes
-- Recent swing structure
-- Higher highs
-- Higher lows
-- Lower highs
-- Lower lows
-
-Return:
-
-```json
-{
-  "trend": "bullish",
-  "ema_alignment": true,
-  "ema20_slope": 0.012,
-  "ema50_slope": 0.008,
-  "market_structure": "higher_highs_higher_lows"
-}
-```
-
-Do not force bullish/bearish classification when evidence is mixed.
-
-Possible values:
+### Net debt
 
 ```text
-bullish
-bearish
-neutral
-mixed
+Total Debt - Cash
 ```
+
+### Interest coverage
+
+```text
+EBIT / Interest Expense
+```
+
+### Current ratio
+
+```text
+Current Assets / Current Liabilities
+```
+
+Also inspect:
+
+- Debt trend
+- Cash trend
+- Receivables trend
+- Inventory trend
+- Equity trend
+
+A company becoming more profitable while debt and receivables are growing unusually quickly should trigger an earnings-quality review.
 
 ---
 
-# 9. Hourly Trend Analysis
+# 13. Cash-Flow Analysis
 
-Perform the same analysis on the 1-hour timeframe.
+This should be a major part of the agent.
 
-The objective is to determine whether the shorter-term trend confirms the daily trend.
+Calculate:
+
+- Operating cash flow
+- Free cash flow
+- OCF / PAT
+- FCF margin
+- OCF growth
+
+## Earnings-to-cash conversion
+
+```text
+OCF / PAT
+```
 
 Example:
 
 ```text
-Daily  = bullish
-Hourly = bullish
+PAT = ₹1,000 Cr
+OCF = ₹1,100 Cr
 
-→ Trend confirmation
+OCF/PAT = 1.10
+```
+
+Compare this over multiple years.
+
+Potential warning:
+
+```text
+PAT consistently rising
+but
+OCF consistently weak/negative
+```
+
+This should reduce the earnings-quality score and generate a warning, not automatically label the company as fraudulent or poor-quality.
+
+---
+
+# 14. Earnings Quality
+
+Create a dedicated module.
+
+Check:
+
+- PAT growth vs OCF growth
+- Revenue growth vs receivables growth
+- Margin changes
+- One-time gains
+- Exceptional items
+- Tax-rate changes
+- Other income contribution
+- Debt-funded growth
+- Working-capital changes
+
+Example:
+
+```text
+Revenue       +20%
+PAT           +35%
+OCF           +32%
+Receivables   +8%
+
+→ Stronger earnings-quality profile
 ```
 
 versus:
 
 ```text
-Daily  = bullish
-Hourly = bearish
+Revenue       +8%
+PAT           +30%
+OCF           -15%
+Receivables   +35%
 
-→ Short-term countertrend
+→ Earnings-quality warning
 ```
 
-This distinction should affect the score.
+The system should surface the underlying numbers so the user can inspect them.
 
 ---
 
-# 10. Momentum Analysis
-
-## RSI
+# 15. Valuation Engine
 
 Calculate:
 
-```text
-RSI(14)
-```
+- P/E
+- Forward P/E where reliable forward estimates exist
+- P/B
+- EV/EBITDA
+- PEG where meaningful
+- Dividend yield
 
-Suggested interpretation:
+Valuation must be compared against:
 
-```text
-< 30       Oversold
-30–50       Weak
-50–60       Positive
-60–70       Strong momentum
-> 70        Potentially extended
-```
-
-Do not automatically classify RSI > 70 as bearish.
-
-Store the raw RSI value and the interpretation separately.
-
-## MACD
-
-Calculate:
-
-- MACD
-- Signal
-- Histogram
-
-Detect:
-
-- MACD > Signal
-- MACD < Signal
-- Bullish crossover
-- Bearish crossover
-- Positive histogram
-- Negative histogram
-
-Do this for daily and hourly data.
-
----
-
-# 11. Volume Analysis
-
-Calculate:
-
-```text
-Relative Volume =
-Current Volume / Average Volume
-```
-
-Use a configurable lookback, initially:
-
-```text
-20 periods
-```
-
-Detect:
-
-- Volume expansion
-- Volume contraction
-- Breakout volume
-- Price-volume confirmation
+### Historical valuation
 
 Example:
 
 ```text
-Price breakout = true
-Relative volume = 2.1
+Current P/E = 28
+5Y median P/E = 22
+
+Premium = 27%
 ```
 
-This should produce stronger confirmation than:
-
-```text
-Price breakout = true
-Relative volume = 0.7
-```
-
----
-
-# 12. Volatility
-
-Calculate:
-
-```text
-ATR(14)
-ATR %
-```
-
-Where:
-
-```text
-ATR% = ATR / Close × 100
-```
-
-Use ATR later for:
-
-- Stop-loss estimation
-- Position-risk estimation
-- Risk/reward
-- Avoiding unrealistic setups
-
----
-
-# 13. Breakout Detection — V2
-
-Implement basic quantitative breakout rules first.
-
-### 20-day breakout
-
-```text
-Current close > previous 20-day high
-```
-
-### 50-day breakout
-
-```text
-Current close > previous 50-day high
-```
-
-Important:
-
-The breakout reference must exclude the current candle.
-
-Correct:
-
-```python
-previous_high = high.shift(1).rolling(20).max()
-breakout = close > previous_high
-```
-
-This prevents look-ahead errors.
-
-Then check volume confirmation.
-
----
-
-# 14. Support / Resistance — V2
-
-Identify:
-
-- Recent swing highs
-- Recent swing lows
-- 20-day high
-- 50-day high
-- Recent consolidation levels
-
-Return nearest:
-
-```text
-support
-resistance
-```
-
-Avoid claiming exact support/resistance when the data does not provide a clear level.
-
----
-
-# 15. Relative Strength — V2
-
-Compare stock performance against:
-
-### NIFTY 50
+### Sector valuation
 
 Example:
 
 ```text
-Stock 1M return = +12%
-NIFTY 1M return = +5%
+Company P/E = 28
+Sector median P/E = 24
 
-Relative outperformance = +7%
+Premium = 16.7%
 ```
 
-Also compare against the relevant sector index.
+Do not automatically interpret a premium valuation as bad.
 
-Calculate configurable periods such as:
+A high-quality, fast-growing company can trade at a premium.
 
-- 1 week
-- 1 month
-- 3 months
+The score should consider:
+
+```text
+Growth + Profitability + Valuation
+```
+
+together.
 
 ---
 
-# 16. Scoring Engine
+# 16. Sector-Aware Analysis
 
-Initial score:
+Fundamental metrics differ significantly across sectors.
+
+For example:
+
+```text
+Bank
+→ ROA
+→ ROE
+→ NIM
+→ GNPA
+→ NNPA
+→ Capital adequacy
+
+IT
+→ Revenue growth
+→ EBIT margin
+→ Deal wins
+→ Utilization
+→ Attrition
+
+Manufacturing
+→ ROCE
+→ Debt
+→ Capacity utilization
+→ Order book
+→ Operating margin
+```
+
+V1 should use a common cross-sector framework.
+
+V2 should introduce sector-specific metrics.
+
+Do not compare raw financial ratios across unrelated industries without normalization.
+
+---
+
+# 17. Upcoming Results / Earnings Context
+
+Agent 1 may identify:
+
+```text
+Results in 2 days
+```
+
+Agent 3 should provide the **fundamental context** for that event.
+
+Analyze:
+
+- Previous 4 quarters
+- Revenue trend
+- PAT trend
+- EPS trend
+- Margin trend
+- Management guidance
+- Previous earnings surprises where reliable
+- Current valuation
+- Expectations if reliable data is available
+
+Example:
+
+```text
+Previous 4 quarters:
+
+Revenue: +12%, +15%, +18%, +20%
+PAT:     +10%, +13%, +19%, +24%
+Margin:  improving
+
+Upcoming result:
+2 days
+
+Fundamental context:
+Positive historical growth trend
+```
+
+Do not predict the exact result unless a separate forecasting model is explicitly developed and validated.
+
+---
+
+# 18. Corporate Events
+
+Track relevant events:
+
+- Major contracts
+- Acquisitions
+- Divestitures
+- Capex
+- Fundraising
+- Buybacks
+- Dividends
+- Stock splits
+- Bonus issues
+- Regulatory approvals
+- Credit-rating changes
+- Promoter transactions
+
+These events can be passed from Agent 1 or independently retrieved.
+
+Avoid double-counting the same catalyst in both the fundamental and news scores.
+
+---
+
+# 19. Ownership Analysis — V2
+
+For Indian stocks, optionally calculate:
+
+- Promoter holding
+- Promoter holding change
+- Promoter pledged shares
+- FII holding
+- DII holding
+- Institutional holding change
+
+Example:
+
+```text
+Promoter holding:
+Q1 → 52.1%
+Q2 → 52.4%
+Q3 → 52.7%
+```
+
+Store the trend rather than treating one-quarter changes as definitive signals.
+
+---
+
+# 20. Fundamental Score
+
+Initial scoring:
 
 | Component | Points |
 |---|---:|
-| Daily trend | 20 |
-| Hourly trend | 15 |
-| Momentum | 15 |
-| Volume | 15 |
-| Breakout | 15 |
-| Support/resistance | 10 |
-| Relative strength | 5 |
-| Volatility/trade quality | 5 |
+| Revenue/Earnings Growth | 20 |
+| Profitability | 15 |
+| Balance Sheet | 15 |
+| Cash Flow | 15 |
+| Earnings Quality | 10 |
+| Valuation | 15 |
+| Consistency | 5 |
+| Sector-relative position | 5 |
 | **Total** | **100** |
 
-## Example scoring
+## Suggested breakdown
 
-### Daily trend — 20
+### Growth — 20
 
-Possible factors:
+Consider:
 
-```text
-Price > EMA20           +4
-EMA20 > EMA50           +4
-EMA50 > EMA200          +4
-Positive EMA slopes     +4
-Bullish market structure +4
-```
+- Revenue growth
+- PAT growth
+- EPS growth
+- Long-term CAGR
 
-### Hourly trend — 15
+### Profitability — 15
 
-```text
-Price > EMA20           +4
-EMA20 > EMA50           +4
-Positive slope          +3
-Bullish structure       +4
-```
+Consider:
 
-### Momentum — 15
+- ROE
+- ROCE
+- Operating margin
+- Net margin
+- Margin trend
 
-Combine:
+### Balance Sheet — 15
 
-- RSI
-- MACD
-- Momentum confirmation
+Consider:
 
-### Volume — 15
+- Debt/equity
+- Net debt
+- Interest coverage
+- Liquidity
 
-Combine:
+### Cash Flow — 15
 
-- Relative volume
-- Price-volume confirmation
-- Breakout volume
+Consider:
 
-### Breakout — 15
+- OCF
+- FCF
+- OCF/PAT
+- Cash-flow trend
 
-Reward:
+### Earnings Quality — 10
 
-- Confirmed breakout
-- Breakout above significant level
-- Volume confirmation
+Consider:
 
-Do not award breakout points merely because price is close to resistance.
+- OCF vs PAT
+- Receivables
+- One-time items
+- Other income
+- Working capital
+
+### Valuation — 15
+
+Consider:
+
+- P/E
+- EV/EBITDA
+- P/B
+- Historical valuation
+- Sector valuation
+
+### Consistency — 5
+
+Consider:
+
+- Consistent revenue growth
+- Consistent earnings
+- Stable/improving margins
+- Consistent cash generation
+
+### Sector-relative — 5
+
+Compare relevant metrics against the company's sector.
 
 ---
 
-# 17. Score Categories
+# 21. Valuation Should Not Dominate the Score
 
-The numerical score should remain the primary output.
-
-For presentation, optionally map it to:
+Avoid simplistic rules such as:
 
 ```text
-0–30    Weak
-30–50   Neutral
-50–70   Positive
-70–85   Strong
-85–100  Very strong
+P/E < 20 = good
+P/E > 30 = bad
 ```
 
-These are internal system categories, not guaranteed return predictions.
-
----
-
-# 18. Risk / Trade-Level Analysis — V2
-
-For a bullish setup calculate:
+Instead:
 
 ```text
-Entry zone
-Stop loss
-Target 1
-Target 2
-Risk/reward
+Growth
++
+Profitability
++
+Balance Sheet
++
+Cash Flow
++
+Valuation
 ```
 
-Initially:
-
-```text
-Stop =
-Entry - 1.5 × ATR
-```
-
-Targets should preferably use nearby resistance and/or an ATR-based projection.
+should be considered together.
 
 Example:
 
 ```text
-Entry:      ₹1,250
-Stop:       ₹1,205
-Target 1:   ₹1,330
-Target 2:   ₹1,380
+Company A
+Growth:          Very strong
+ROCE:            Very strong
+Debt:            Low
+Cash flow:       Strong
+P/E:             High
+
+→ Expensive valuation should be reflected
+  without automatically eliminating the company.
 ```
-
-Calculate:
-
-```text
-Risk = Entry - Stop
-Reward = Target - Entry
-R:R = Reward / Risk
-```
-
-Do not produce trade levels when support/resistance or volatility data is insufficient.
 
 ---
 
-# 19. Output Schema
+# 22. Missing Data Handling
 
-Final output should be machine-readable.
+Financial datasets often contain missing or differently defined metrics.
+
+Never substitute:
+
+```text
+missing = 0
+```
+
+Instead:
+
+```json
+{
+  "roe": null,
+  "roe_status": "unavailable"
+}
+```
+
+The scoring engine should normalize scores based on available components or mark the analysis as incomplete.
+
+Every metric should also have:
+
+```text
+value
+period
+source
+definition
+```
+
+where practical.
+
+---
+
+# 23. Output Schema
 
 Example:
 
 ```json
 {
   "status": "success",
-  "symbol": "RELIANCE",
+  "symbol": "XYZ",
   "market": "NSE",
   "analysis_timestamp": "2026-09-18T00:00:00+05:30",
 
-  "technical_score": 84,
+  "fundamental_score": 82,
 
   "score_breakdown": {
-    "daily_trend": 18,
-    "hourly_trend": 14,
-    "momentum": 13,
-    "volume": 13,
-    "breakout": 12,
-    "support_resistance": 7,
-    "relative_strength": 4,
-    "volatility": 3
+    "growth": 18,
+    "profitability": 13,
+    "balance_sheet": 14,
+    "cash_flow": 13,
+    "earnings_quality": 8,
+    "valuation": 8,
+    "consistency": 4,
+    "sector_relative": 4
   },
 
-  "trend": {
-    "daily": "bullish",
-    "hourly": "bullish",
-    "daily_ema_alignment": true,
-    "hourly_ema_alignment": true,
-    "market_structure": "higher_highs_higher_lows"
+  "growth": {
+    "revenue_yoy": 18.2,
+    "pat_yoy": 31.4,
+    "eps_yoy": 29.8,
+    "revenue_cagr_3y": 15.7,
+    "pat_cagr_3y": 21.3
   },
 
-  "momentum": {
-    "daily_rsi": 63.4,
-    "hourly_rsi": 61.2,
-    "daily_macd": "bullish",
-    "hourly_macd": "bullish"
+  "profitability": {
+    "roe": 21.3,
+    "roce": 24.8,
+    "operating_margin": 18.4,
+    "net_margin": 12.7,
+    "margin_trend": "improving"
   },
 
-  "volume": {
-    "relative_volume": 1.82,
-    "confirmation": true
+  "balance_sheet": {
+    "debt_equity": 0.18,
+    "net_debt": 120,
+    "interest_coverage": 12.4,
+    "current_ratio": 1.72
   },
 
-  "breakout": {
-    "detected": true,
-    "type": "20_day_high",
-    "volume_confirmed": true
+  "cash_flow": {
+    "operating_cash_flow": 1100,
+    "free_cash_flow": 820,
+    "ocf_pat_ratio": 1.10,
+    "cash_flow_trend": "strong"
   },
 
-  "levels": {
-    "support": 1410,
-    "resistance": 1500
+  "earnings_quality": {
+    "score": 8,
+    "status": "strong",
+    "warnings": []
   },
 
-  "volatility": {
-    "atr_14": 28.4,
-    "atr_percent": 1.96
+  "valuation": {
+    "pe": 28.0,
+    "pb": 4.1,
+    "ev_ebitda": 18.2,
+    "sector_pe": 24.0,
+    "pe_premium_to_sector": 16.7,
+    "valuation_assessment": "premium"
   },
 
-  "relative_strength": {
-    "vs_nifty_1m": 7.2,
-    "vs_sector_1m": 4.8
+  "events": {
+    "upcoming_results": true,
+    "days_to_results": 2
   },
 
-  "trade_setup": {
-    "direction": "long",
-    "entry_zone": null,
-    "stop_loss": null,
-    "target_1": null,
-    "target_2": null,
-    "risk_reward": null
+  "warnings": [],
+
+  "data_quality": {
+    "status": "complete",
+    "missing_metrics": []
   }
 }
 ```
 
-Use `null` instead of inventing values.
-
 ---
 
-# 20. Configuration
+# 24. LLM Explanation Layer
 
-Keep strategy parameters outside the code.
+After the deterministic engine is working, optionally send the JSON to an LLM.
 
-Example:
+The LLM prompt should be restrictive:
 
-```yaml
-indicators:
-  ema:
-    short: 20
-    medium: 50
-    long: 200
+```text
+You are a financial-analysis explanation assistant.
 
-  rsi:
-    period: 14
+Use ONLY the supplied structured data.
 
-  atr:
-    period: 14
+Do not invent financial metrics.
+Do not modify scores.
+Do not predict a stock price.
+Do not issue a guaranteed buy/sell recommendation.
 
-  volume:
-    lookback: 20
+Explain:
+1. Growth
+2. Profitability
+3. Balance sheet
+4. Cash flow
+5. Earnings quality
+6. Valuation
+7. Important warnings
+8. Upcoming earnings context
 
-breakouts:
-  short: 20
-  long: 50
-
-scoring:
-  daily_trend: 20
-  hourly_trend: 15
-  momentum: 15
-  volume: 15
-  breakout: 15
-  support_resistance: 10
-  relative_strength: 5
-  volatility: 5
+Clearly distinguish facts from interpretation.
 ```
 
-This makes it easy to backtest different configurations later.
+Example output:
+
+```text
+Fundamental Score: 82/100
+
+Growth:
+Revenue and PAT have grown strongly over the recent periods.
+
+Profitability:
+ROE and ROCE are healthy, with operating margins improving.
+
+Balance Sheet:
+Debt remains relatively low and interest coverage is strong.
+
+Cash Flow:
+Operating cash flow is broadly consistent with reported earnings.
+
+Valuation:
+The company trades above its sector's median P/E, so valuation is a consideration despite the company's growth profile.
+
+Upcoming Event:
+Results are expected in 2 days.
+```
 
 ---
 
-# 21. Testing Strategy
+# 25. Agent 3 API
 
-Every indicator should have unit tests.
+A simple interface:
+
+```text
+POST /fundamental-analysis
+```
+
+Input:
+
+```json
+{
+  "symbol": "RELIANCE",
+  "market": "NSE",
+  "analysis_date": "2026-09-18"
+}
+```
+
+Output:
+
+```json
+{
+  "status": "success",
+  "symbol": "RELIANCE",
+  "fundamental_score": 78,
+  "...": "..."
+}
+```
+
+This allows the orchestrator to call Agent 3 independently.
+
+---
+
+# 26. Integration With Agent 1 and Agent 2
+
+The eventual system:
+
+```text
+                    Candidate Scanner
+                          |
+                    Candidate List
+                          |
+          +---------------+---------------+
+          |               |               |
+          v               v               v
+     Agent 1          Agent 2          Agent 3
+     Catalyst         Technical       Fundamental
+          |               |               |
+          |          Technical Score     |
+          |               |          Fundamental Score
+          |               |               |
+          +---------------+---------------+
+                          |
+                          v
+                    Score Engine
+                          |
+                          v
+                    Risk Engine
+                          |
+                          v
+                 Final Opportunities
+```
+
+Avoid double counting.
+
+For example:
+
+```text
+Agent 1:
+Positive earnings announcement = catalyst
+
+Agent 3:
+Revenue/PAT growth = fundamental quality
+```
+
+These are related but represent different information.
+
+---
+
+# 27. Database Design
+
+Store historical analyses.
+
+Suggested table:
+
+```text
+fundamental_analysis
+--------------------
+id
+symbol
+analysis_timestamp
+financial_period
+revenue
+revenue_growth
+pat
+pat_growth
+eps
+eps_growth
+roe
+roce
+operating_margin
+net_margin
+debt_equity
+interest_coverage
+operating_cash_flow
+free_cash_flow
+ocf_pat_ratio
+pe
+pb
+ev_ebitda
+fundamental_score
+growth_score
+profitability_score
+balance_sheet_score
+cash_flow_score
+earnings_quality_score
+valuation_score
+consistency_score
+sector_relative_score
+data_quality
+source_metadata
+```
+
+This makes historical analysis and backtesting possible.
+
+---
+
+# 28. Testing Strategy
+
+Unit-test every calculation.
 
 Test:
 
-- EMA calculation
-- RSI calculation
-- MACD calculation
-- ATR calculation
-- Relative volume
-- Breakout detection
-- Trend classification
+- Revenue growth
+- PAT growth
+- CAGR
+- ROE
+- ROCE
+- Debt/equity
+- Interest coverage
+- OCF/PAT
+- Free cash flow
+- P/E
+- EV/EBITDA
+- Sector premium
 - Score calculation
-- Risk/reward calculation
 
-Also test edge cases:
+Test edge cases:
 
 ```text
-Empty data
-Missing candles
-Insufficient history
-Zero volume
-NaN indicators
-Duplicate timestamps
-Extreme price movements
+Negative earnings
+Negative equity
+Zero revenue
+Zero interest expense
+Negative free cash flow
+Missing quarterly results
+Stock splits
+Bonus issues
+Large one-time gains
+Different fiscal years
+Different sector accounting conventions
 ```
 
 ---
 
-# 22. Backtesting Rules
+# 29. Backtesting
 
-Do not optimize the score using the same period used to evaluate it.
+Backtest fundamental scores using only information available at the time.
+
+For every historical analysis date:
+
+```text
+Fundamental data available at T
+            |
+            v
+      Fundamental Score
+            |
+            v
+    Future performance
+```
+
+Measure:
+
+- 1-week return
+- 2-week return
+- 1-month return
+- 3-month return
+- Maximum drawdown
+- Maximum favorable excursion
+- Maximum adverse excursion
+
+Do not optimize and evaluate on the same period.
 
 Use:
 
 ```text
-Historical data
-      |
-      +---- Training / calibration period
-      |
-      +---- Validation period
-      |
-      +---- Final unseen test period
+Training
+Validation
+Out-of-sample Test
 ```
-
-Never use future information when calculating a historical score.
-
-For example, when calculating the score on:
-
-```text
-2025-06-01
-```
-
-the engine must only see information available by the close/time being simulated.
 
 ---
 
-# 23. Logging
+# 30. Fundamental Score Calibration
 
-Every analysis should log:
+The initial weights are hypotheses.
+
+Do not assume:
 
 ```text
-timestamp
-symbol
-data source
-latest candle timestamp
-indicator values
-score components
-final score
-errors/warnings
+Growth = 20
+Valuation = 15
 ```
 
-This makes debugging and backtesting much easier.
+is optimal.
+
+After collecting historical results, test alternative weighting schemes.
+
+Example:
+
+```text
+Configuration A
+Growth 20
+Profitability 15
+...
+
+Configuration B
+Growth 25
+Profitability 15
+...
+
+Configuration C
+Growth 15
+Cash Flow 20
+...
+```
+
+Evaluate them on unseen data.
+
+Do not select weights solely because they perform well on historical data; guard against overfitting.
 
 ---
 
-# 24. Development Milestones
+# 31. Development Milestones
 
-## Milestone 1 — Data
+## Milestone 1 — Data Layer
 
-- [ ] Choose market-data provider
-- [ ] Implement daily data retrieval
-- [ ] Implement hourly data retrieval
-- [ ] Implement benchmark retrieval
-- [ ] Add validation
-- [ ] Cache data locally
+- [ ] Choose financial-data sources
+- [ ] Implement company lookup
+- [ ] Implement quarterly financial retrieval
+- [ ] Implement annual financial retrieval
+- [ ] Implement market/valuation retrieval
+- [ ] Store source metadata
+- [ ] Add data validation
 
-## Milestone 2 — Indicators
+## Milestone 2 — Core Metrics
 
-- [ ] EMA 20
-- [ ] EMA 50
-- [ ] EMA 200
-- [ ] EMA slopes
-- [ ] RSI 14
-- [ ] MACD
-- [ ] ATR 14
-- [ ] Relative volume
+- [ ] Revenue growth
+- [ ] PAT growth
+- [ ] EPS growth
+- [ ] CAGR
+- [ ] ROE
+- [ ] ROCE
+- [ ] Operating margin
+- [ ] Net margin
+- [ ] Debt/equity
+- [ ] Interest coverage
+- [ ] Current ratio
+- [ ] OCF
+- [ ] FCF
+- [ ] OCF/PAT
 
-## Milestone 3 — Trend
+## Milestone 3 — Analysis
 
-- [ ] Daily trend
-- [ ] Hourly trend
-- [ ] Market structure
-- [ ] Trend confirmation
+- [ ] Growth analysis
+- [ ] Profitability analysis
+- [ ] Balance-sheet analysis
+- [ ] Cash-flow analysis
+- [ ] Earnings-quality analysis
+- [ ] Valuation analysis
+- [ ] Sector comparison
 
 ## Milestone 4 — Scoring
 
-- [ ] Implement score components
-- [ ] Implement 0–100 score
-- [ ] Implement score breakdown
-- [ ] Add configuration-driven weights
+- [ ] Implement 100-point score
+- [ ] Implement component scores
+- [ ] Make weights configurable
+- [ ] Add data-quality adjustment
+- [ ] Add warnings
 
-## Milestone 5 — V2 Setups
+## Milestone 5 — Events
 
-- [ ] Breakout detection
-- [ ] Support/resistance
-- [ ] Relative strength
-- [ ] Trade levels
-- [ ] Risk/reward
+- [ ] Upcoming earnings
+- [ ] Previous earnings
+- [ ] Guidance
+- [ ] Corporate events
+- [ ] Ownership changes
 
-## Milestone 6 — Output
+## Milestone 6 — Output/API
 
 - [ ] JSON schema
 - [ ] API endpoint
-- [ ] Error responses
 - [ ] Logging
+- [ ] Error handling
+- [ ] LLM explanation layer
 
 ## Milestone 7 — Backtesting
 
-- [ ] Historical simulation
-- [ ] Forward returns
-- [ ] Win rate
-- [ ] R-multiple analysis
-- [ ] Drawdown
-- [ ] Parameter testing
+- [ ] Point-in-time dataset
+- [ ] Historical scoring
+- [ ] Forward-return calculation
+- [ ] Score calibration
 - [ ] Out-of-sample validation
 
 ---
 
-# 25. Definition of Done
+# 32. Definition of Done
 
-Agent 2 is considered ready for integration with the other agents when:
+Agent 3 is ready for integration when:
 
 - [ ] A stock symbol can be submitted programmatically
-- [ ] Daily and hourly market data are retrieved successfully
-- [ ] All V1 indicators are calculated deterministically
-- [ ] Daily and hourly trends are classified
-- [ ] Technical score is reproducible
-- [ ] Score breakdown is available
-- [ ] No future data is used
-- [ ] Insufficient/invalid data is handled safely
+- [ ] Latest available financial data can be retrieved
+- [ ] Historical quarterly and annual data are available
+- [ ] Core financial ratios are calculated deterministically
+- [ ] Growth, profitability, balance-sheet, cash-flow and valuation analyses are available
+- [ ] Earnings quality is evaluated
+- [ ] Sector context is included where data is available
+- [ ] Fundamental score is reproducible
+- [ ] Missing data is handled explicitly
+- [ ] Every important metric has a reporting period/source
+- [ ] No future information leaks into historical analysis
 - [ ] JSON output follows a fixed schema
 - [ ] Unit tests pass
-- [ ] Historical backtesting pipeline exists
-- [ ] Results can be stored for comparison with future performance
+- [ ] Historical backtesting is possible
 
 ---
 
-# 26. Important Design Principle
+# 33. Final Role of Agent 3
 
-The technical agent should answer:
-
-> "What does the current market data quantitatively indicate?"
-
-It should **not** answer:
-
-> "This stock will go up."
-
-The final trading system can combine:
+Agent 3 should produce:
 
 ```text
-Catalyst Agent
-      +
-Technical Agent
-      +
-Fundamental Agent
-      +
-Risk Engine
-      ↓
-Final opportunity score
+                FUNDAMENTAL QUALITY
+                       |
+        +--------------+--------------+
+        |              |              |
+      Growth       Financial       Valuation
+                    Health
+        |              |              |
+        +--------------+--------------+
+                       |
+                       v
+              Fundamental Score
+                    /100
 ```
 
-Agent 2 should remain modular so its technical score can be independently evaluated and backtested before being combined with the other agents.
+The score should answer:
+
+> "How strong are the company's underlying fundamentals and how reasonable is its valuation, based on currently available information?"
+
+It should then pass the structured result to the final system:
+
+```text
+Catalyst Score
+      +
+Technical Score
+      +
+Fundamental Score
+      +
+Risk Assessment
+      |
+      v
+Final Opportunity Ranking
+```
+
+The final system should treat the fundamental score as **one component of a trading decision**, not as a standalone prediction of future returns.

@@ -1,0 +1,1 @@
+"""Fundamental output formatting package."""
