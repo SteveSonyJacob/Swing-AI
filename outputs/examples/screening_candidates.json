@@ -1,0 +1,189 @@
+{
+  "status": "success",
+  "market": "NSE",
+  "scan_timestamp": "2026-10-06T13:03:39.219321",
+  "universe": "nifty50",
+  "total_scanned": 59,
+  "candidates_count": 5,
+  "candidates": [
+    {
+      "symbol": "TRENT",
+      "name": "Trent Ltd",
+      "current_price": 2880.0,
+      "change_pct": 11.5,
+      "screening_score": 86,
+      "category": "PRIME_SETUP",
+      "score_breakdown": {
+        "trend": 25,
+        "momentum_breakout": 25,
+        "volume": 21,
+        "liquidity": 15,
+        "catalyst": 0
+      },
+      "tags": [
+        "VOLUME_SHOCKER",
+        "52W_HIGH_BREAKOUT",
+        "20D_BREAKOUT",
+        "MOMENTUM_RSI",
+        "52W_HIGH_PROXIMITY",
+        "BULLISH_TREND",
+        "VOLUME_SURGE",
+        "TOP_GAINER",
+        "HIGH_LIQUIDITY"
+      ],
+      "source": [
+        "moneycontrol",
+        "yfinance"
+      ],
+      "metrics": {
+        "volume_ratio": 1.89,
+        "rsi": 66.8,
+        "distance_52w_high_pct": 0.5,
+        "breakout_20d": true,
+        "turnover_cr": 456.99,
+        "days_to_results": null
+      },
+      "suggested_action": "pass_to_agent_2_and_3"
+    },
+    {
+      "symbol": "RELIANCE",
+      "name": "Reliance Industries",
+      "current_price": 1420.0,
+      "change_pct": 2.1,
+      "screening_score": 81,
+      "category": "STRONG_CANDIDATE",
+      "score_breakdown": {
+        "trend": 25,
+        "momentum_breakout": 20,
+        "volume": 16,
+        "liquidity": 15,
+        "catalyst": 5
+      },
+      "tags": [
+        "TOP_ACTIVE",
+        "20D_BREAKOUT",
+        "52W_HIGH_PROXIMITY",
+        "BULLISH_TREND",
+        "VOLUME_SURGE",
+        "52W_HIGH_BREAKOUT",
+        "HIGH_LIQUIDITY"
+      ],
+      "source": [
+        "moneycontrol",
+        "yfinance"
+      ],
+      "metrics": {
+        "volume_ratio": 1.85,
+        "rsi": 76.0,
+        "distance_52w_high_pct": 0.5,
+        "breakout_20d": true,
+        "turnover_cr": 369.64,
+        "days_to_results": null
+      },
+      "suggested_action": "pass_to_agent_2_and_3"
+    },
+    {
+      "symbol": "KOTAKBANK",
+      "name": "KOTAKBANK",
+      "current_price": 1960.46,
+      "change_pct": 2.15,
+      "screening_score": 79,
+      "category": "STRONG_CANDIDATE",
+      "score_breakdown": {
+        "trend": 25,
+        "momentum_breakout": 23,
+        "volume": 16,
+        "liquidity": 15,
+        "catalyst": 0
+      },
+      "tags": [
+        "20D_BREAKOUT",
+        "52W_HIGH_PROXIMITY",
+        "VOLUME_SURGE",
+        "BULLISH_TREND",
+        "52W_HIGH_BREAKOUT",
+        "HIGH_LIQUIDITY"
+      ],
+      "source": [
+        "yfinance"
+      ],
+      "metrics": {
+        "volume_ratio": 1.76,
+        "rsi": 74.1,
+        "distance_52w_high_pct": 0.79,
+        "breakout_20d": true,
+        "turnover_cr": 347.24,
+        "days_to_results": null
+      },
+      "suggested_action": "pass_to_agent_2_and_3"
+    },
+    {
+      "symbol": "GRASIM",
+      "name": "GRASIM",
+      "current_price": 2355.9,
+      "change_pct": 0.6,
+      "screening_score": 71,
+      "category": "STRONG_CANDIDATE",
+      "score_breakdown": {
+        "trend": 25,
+        "momentum_breakout": 15,
+        "volume": 16,
+        "liquidity": 15,
+        "catalyst": 0
+      },
+      "tags": [
+        "52W_HIGH_PROXIMITY",
+        "VOLUME_SURGE",
+        "BULLISH_TREND",
+        "52W_HIGH_BREAKOUT",
+        "HIGH_LIQUIDITY"
+      ],
+      "source": [
+        "yfinance"
+      ],
+      "metrics": {
+        "volume_ratio": 1.52,
+        "rsi": 73.9,
+        "distance_52w_high_pct": 1.16,
+        "breakout_20d": false,
+        "turnover_cr": 571.81,
+        "days_to_results": null
+      },
+      "suggested_action": "pass_to_agent_2_and_3"
+    },
+    {
+      "symbol": "TATAMOTORS",
+      "name": "TATAMOTORS",
+      "current_price": 949.33,
+      "change_pct": -0.11,
+      "screening_score": 71,
+      "category": "STRONG_CANDIDATE",
+      "score_breakdown": {
+        "trend": 25,
+        "momentum_breakout": 15,
+        "volume": 16,
+        "liquidity": 15,
+        "catalyst": 0
+      },
+      "tags": [
+        "52W_HIGH_PROXIMITY",
+        "VOLUME_SURGE",
+        "BULLISH_TREND",
+        "52W_HIGH_BREAKOUT",
+        "HIGH_LIQUIDITY"
+      ],
+      "source": [
+        "yfinance"
+      ],
+      "metrics": {
+        "volume_ratio": 1.76,
+        "rsi": 73.5,
+        "distance_52w_high_pct": 1.41,
+        "breakout_20d": false,
+        "turnover_cr": 213.6,
+        "days_to_results": null
+      },
+      "suggested_action": "pass_to_agent_2_and_3"
+    }
+  ]
+}

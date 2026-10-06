@@ -1,0 +1,68 @@
+name: Agent 1 & System CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  agent-1-screening:
+    name: Agent 1 Screening Tests (Python 3.12)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Agent 1 Unit Tests
+        run: |
+          pytest tests/screening/ -v
+
+      - name: Run Agent 1 Offline CLI Smoke Tests
+        run: |
+          echo "=== Testing Agent 1 Table Output ==="
+          python run_screening.py --offline --min-score 50 --top-n 5
+
+          echo "=== Testing Agent 1 Pure JSON Output ==="
+          python run_screening.py --offline --json-only --top-n 3
+
+          echo "=== Testing Agent 1 -> Agent 2 -> Agent 3 Pipeline Dispatch ==="
+          python run_screening.py --offline --run-agents --top-n 2
+
+  full-test-suite:
+    name: Full Test Suite (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run All Automated Unit Tests
+        run: |
+          pytest tests/ -v
