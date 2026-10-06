@@ -15,42 +15,76 @@ logger = logging.getLogger(__name__)
 DATA_DIR = Path(__file__).resolve().parent.parent.parent.parent / "data" / "raw"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-# Known name/slug to NSE symbol fast lookup to avoid round-trip lookups
+# Known name/slug/scrip to NSE symbol fast lookup to avoid round-trip lookups
 KNOWN_SYMBOL_MAP: Dict[str, str] = {
+    # Names, slugs, and scrip codes
     "trent": "TRENT",
+    "t04": "TRENT",
     "reliance": "RELIANCE",
     "reliance industries": "RELIANCE",
+    "relianceindustries": "RELIANCE",
+    "ri": "RELIANCE",
     "tata steel": "TATASTEEL",
+    "tatasteel": "TATASTEEL",
+    "tis": "TATASTEEL",
     "bhel": "BHEL",
     "bharat heavy electricals": "BHEL",
+    "bharatheavyelectricals": "BHEL",
+    "bhe": "BHEL",
     "hfcl": "HFCL",
+    "hfc": "HFCL",
     "maruti": "MARUTI",
     "maruti suzuki": "MARUTI",
+    "marutisuzukiindia": "MARUTI",
+    "ms24": "MARUTI",
     "angel one": "ANGELONE",
+    "angelone": "ANGELONE",
+    "abl03": "ANGELONE",
     "honasa consumer": "HONASA",
+    "honasaconsumer": "HONASA",
+    "hcl06": "HONASA",
     "pg electroplast": "PGEL",
+    "pgelectroplast": "PGEL",
+    "pe06": "PGEL",
     "hegam": "HEG",
     "tega industries": "TEGA",
+    "tegaindustries": "TEGA",
+    "ti26": "TEGA",
     "infosys": "INFY",
+    "it": "INFY",
     "tcs": "TCS",
+    "tataconsultancyservices": "TCS",
     "hdfc bank": "HDFCBANK",
+    "hdfcbank": "HDFCBANK",
+    "hdf01": "HDFCBANK",
     "icici bank": "ICICIBANK",
+    "icicibank": "ICICIBANK",
+    "ici02": "ICICIBANK",
     "state bank of india": "SBIN",
+    "statebankindia": "SBIN",
     "sbi": "SBIN",
     "larsen & toubro": "LT",
     "l&t": "LT",
+    "larsentoubro": "LT",
     "bharti airtel": "BHARTIARTL",
+    "bhartiairtel": "BHARTIARTL",
     "itc": "ITC",
     "zomato": "ZOMATO",
     "hal": "HAL",
     "hindustan aeronautics": "HAL",
+    "hindustanaeronautics": "HAL",
     "bel": "BEL",
     "bharat electronics": "BEL",
+    "bharatelectronics": "BEL",
     "dixon": "DIXON",
+    "dixontechnologies": "DIXON",
     "persistent": "PERSISTENT",
+    "persistentsystems": "PERSISTENT",
     "coforge": "COFORGE",
     "polycab": "POLYCAB",
-    "tata motors": "TATAMOTORS"
+    "polycabindia": "POLYCAB",
+    "tata motors": "TATAMOTORS",
+    "tatamotors": "TATAMOTORS"
 }
 
 
@@ -71,15 +105,23 @@ def clean_number(text: str) -> Optional[float]:
 def extract_symbol_from_quote_url(url: str, session: Optional[requests.Session] = None, timeout: int = 5) -> Optional[str]:
     """
     Extracts the NSE symbol from a Moneycontrol quote page URL.
-    Checks the HTML for '<li class="clearfix"> <span>NSE:</span> <p>SYMBOL</p></li>'.
+    Checks the URL slug and scrip code against KNOWN_SYMBOL_MAP first.
+    If not found, queries the quote page HTML if reachable.
     """
     if not url:
         return None
 
-    # Check known slug patterns
-    slug = url.rstrip("/").split("/")[-2].lower().replace("-", " ")
-    if slug in KNOWN_SYMBOL_MAP:
-        return KNOWN_SYMBOL_MAP[slug]
+    # URL format: .../india/stockpricequote/<sector>/<company_slug>/<scrip_code>
+    parts = [p.lower().strip() for p in url.rstrip("/").split("/") if p.strip()]
+    if len(parts) >= 2:
+        slug_raw = parts[-2]
+        slug_no_hyphen = slug_raw.replace("-", "")
+        slug_spaced = slug_raw.replace("-", " ")
+        scrip_code = parts[-1]
+
+        for key in [slug_no_hyphen, slug_spaced, slug_raw, scrip_code]:
+            if key in KNOWN_SYMBOL_MAP:
+                return KNOWN_SYMBOL_MAP[key]
 
     sess = session or requests.Session()
     headers = {
@@ -88,25 +130,30 @@ def extract_symbol_from_quote_url(url: str, session: Optional[requests.Session] 
 
     try:
         resp = sess.get(url, headers=headers, timeout=timeout)
-        if resp.status_code != 200:
-            return None
-        soup = BeautifulSoup(resp.text, "html.parser")
-        for span in soup.find_all("span"):
-            if span.get_text().strip() == "NSE:":
-                parent = span.parent
-                p = parent.find("p") if parent else None
-                if p:
-                    sym = p.get_text().strip().upper()
-                    if sym:
-                        KNOWN_SYMBOL_MAP[slug] = sym
-                        return sym
+        if resp.status_code == 200:
+            soup = BeautifulSoup(resp.text, "html.parser")
+            for span in soup.find_all("span"):
+                if span.get_text().strip() == "NSE:":
+                    parent = span.parent
+                    p = parent.find("p") if parent else None
+                    if p:
+                        sym = p.get_text().strip().upper()
+                        if sym:
+                            if len(parts) >= 2:
+                                KNOWN_SYMBOL_MAP[parts[-2].replace("-", "")] = sym
+                                KNOWN_SYMBOL_MAP[parts[-1]] = sym
+                            return sym
     except Exception as e:
         logger.debug(f"Failed to extract symbol from quote page {url}: {e}")
 
     # Fallback to uppercase slug if alphabetic
-    raw_slug = url.rstrip("/").split("/")[-2].upper().replace("-", "")
-    if re.match(r"^[A-Z]{3,10}$", raw_slug):
-        return raw_slug
+    if len(parts) >= 2:
+        raw_slug = parts[-2].upper().replace("-", "")
+        for known_sym in KNOWN_SYMBOL_MAP.values():
+            if known_sym in raw_slug:
+                return known_sym
+        if re.match(r"^[A-Z]{3,15}$", raw_slug):
+            return raw_slug
     return None
 
 

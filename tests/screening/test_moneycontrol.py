@@ -48,10 +48,16 @@ def test_parse_moneycontrol_table_synthetic_html():
     assert "VOLUME_SHOCKER" in item["tags"]
 
 
-def test_extract_symbol_known_map():
-    url = "https://www.moneycontrol.com/india/stockpricequote/refineries/relianceindustries/RI"
-    sym = extract_symbol_from_quote_url(url)
-    assert sym == "RELIANCE"
+def test_extract_symbol_known_map(monkeypatch):
+    # Ensure network calls fail if attempted, verifying offline map resolution
+    def mock_get(*args, **kwargs):
+        raise ConnectionError("No network allowed in unit test")
+    monkeypatch.setattr("requests.Session.get", mock_get)
+
+    assert extract_symbol_from_quote_url("https://www.moneycontrol.com/india/stockpricequote/refineries/relianceindustries/RI") == "RELIANCE"
+    assert extract_symbol_from_quote_url("https://www.moneycontrol.com/india/stockpricequote/retail/trent/T04") == "TRENT"
+    assert extract_symbol_from_quote_url("https://www.moneycontrol.com/india/stockpricequote/ironsteel/tatasteel/TIS") == "TATASTEEL"
+    assert extract_symbol_from_quote_url("https://www.moneycontrol.com/india/stockpricequote/telecommunications-equipment/hfcl/HFC") == "HFCL"
 
 
 def test_fetch_moneycontrol_offline():
