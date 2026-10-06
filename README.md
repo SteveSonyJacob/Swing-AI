@@ -8,6 +8,65 @@ Deterministic multi-agent trading system for Indian equities (NSE).
 
 ---
 
+## Architecture
+
+```mermaid
+flowchart TD
+    subgraph DataSources ["Data Ingestion Layer"]
+        MC["Moneycontrol.com (Top Gainers, Volume Shockers, 52W High, Most Active)"]
+        YF["Yahoo Finance (Batch OHLCV, Financial Statements, Multiples)"]
+    end
+
+    subgraph Agent1 ["Agent 1: Screening Agent (Universe Funnel)"]
+        A1_Scan["Market Scanner (Moneycontrol + yfinance)"]
+        A1_Filter["Modular Filters (Liquidity, Volume Surge, Trend, Catalysts)"]
+        A1_Score["Screening Score Engine (0-100 pts)"]
+        A1_Rank["Ranked Candidates (PRIME_SETUP / STRONG_CANDIDATE)"]
+
+        A1_Scan --> A1_Filter
+        A1_Filter --> A1_Score
+        A1_Score --> A1_Rank
+    end
+
+    MC --> A1_Scan
+    YF --> A1_Scan
+
+    subgraph Agent2 ["Agent 2: Technical Analysis Engine"]
+        A2_Data["Daily & Hourly Price Action"]
+        A2_Ind["Indicators: EMA 20/50/200, RSI, MACD, ATR, RVol"]
+        A2_SR["Support / Resistance & Breakout Detection"]
+        A2_Risk["Trade Setup: Entry Zone, Stop Loss, Targets 1 & 2"]
+        A2_Score["Technical Score (0-100 pts)"]
+
+        A2_Data --> A2_Ind --> A2_SR --> A2_Risk --> A2_Score
+    end
+
+    subgraph Agent3 ["Agent 3: Fundamental Analysis Engine"]
+        A3_Fin["Financial Statements (Income, Balance Sheet, Cash Flow)"]
+        A3_Ratios["Ratios: ROE, ROCE, Margins, D/E, OCF/PAT"]
+        A3_Analysis["Quality, Growth CAGR & Sector Relative Valuation"]
+        A3_Score["Fundamental Score (0-100 pts)"]
+
+        A3_Fin --> A3_Ratios --> A3_Analysis --> A3_Score
+    end
+
+    A1_Rank -->|"Top Candidates Pipeline"| A2_Data
+    A1_Rank -->|"Top Candidates Pipeline"| A3_Fin
+    YF --> A2_Data
+    YF --> A3_Fin
+
+    subgraph Composite ["Decision & Execution Layer"]
+        Verdict["Composite Scorer & Alignment Verification"]
+        Output["Final Opportunities Report: Scores, Levels & Risk-Reward"]
+
+        A2_Score --> Verdict
+        A3_Score --> Verdict
+        Verdict --> Output
+    end
+```
+
+---
+
 ## 1. Project Layout
 
 ```text
