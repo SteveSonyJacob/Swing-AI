@@ -99,7 +99,7 @@ def score_balance_sheet(bs_data: Dict[str, Any], max_points: int = 15) -> Tuple[
     ic = bs_data.get("interest_coverage")
     cr = bs_data.get("current_ratio")
 
-    if de is None and ic is None and cr is None:
+    if bs_data.get("is_financial") or (de is None and ic is None and cr is None):
         return 0, 0
 
     points = 0

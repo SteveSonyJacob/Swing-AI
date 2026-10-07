@@ -34,14 +34,75 @@ breakouts:
 benchmarks:
   market: "^NSEI"
   sector_map:
+    # Energy / Oil & Gas / Power
     RELIANCE: "^CNXENERGY"
+    ONGC: "^CNXENERGY"
+    NTPC: "^CNXENERGY"
+    POWERGRID: "^CNXENERGY"
+    COALINDIA: "^CNXENERGY"
+    BPCL: "^CNXENERGY"
+    JSWEGY: "^CNXENERGY"
+
+    # IT / Technology
     TCS: "^CNXIT"
     INFY: "^CNXIT"
+    HCLTECH: "^CNXIT"
+    TECHM: "^CNXIT"
+    WIPRO: "^CNXIT"
+
+    # Banking
     HDFCBANK: "^NSEBANK"
     ICICIBANK: "^NSEBANK"
     SBIN: "^NSEBANK"
+    KOTAKBANK: "^NSEBANK"
+    AXISBANK: "^NSEBANK"
+    INDUSINDBK: "^NSEBANK"
+
+    # Financial Services / Insurance
+    BAJFINANCE: "^CNXFINANCE"
+    BAJAJFINSV: "^CNXFINANCE"
+    SHRIRAMFIN: "^CNXFINANCE"
+    SBILIFE: "^CNXFINANCE"
+    LICI: "^CNXFINANCE"
+
+    # Automobiles
+    MARUTI: "^CNXAUTO"
     TATAMOTORS: "^CNXAUTO"
+    M&M: "^CNXAUTO"
+    EICHERMOT: "^CNXAUTO"
+    HEROMOTOCO: "^CNXAUTO"
+    BAJAJ-AUTO: "^CNXAUTO"
+
+    # Pharma & Healthcare
     SUNPHARMA: "^CNXPHARMA"
+    CIPLA: "^CNXPHARMA"
+    DRREDDY: "^CNXPHARMA"
+    APOLLOHOSP: "^CNXPHARMA"
+
+    # Metals & Mining
+    TATASTEEL: "^CNXMETAL"
+    JSWSTEEL: "^CNXMETAL"
+    HINDALCO: "^CNXMETAL"
+
+    # FMCG & Consumer
+    ITC: "^CNXFMCG"
+    HINDUNILVR: "^CNXFMCG"
+    NESTLEIND: "^CNXFMCG"
+    BRITANNIA: "^CNXFMCG"
+    TATACONSUM: "^CNXFMCG"
+    TRENT: "^CNXFMCG"
+    ASIANPAINT: "^CNXFMCG"
+    TITAN: "^CNXFMCG"
+
+    # Infrastructure / Conglomerate / Capital Goods
+    LT: "^CNXINFRA"
+    ADANIENT: "^CNXINFRA"
+    ADANIPORTS: "^CNXINFRA"
+    ULTRACEMCO: "^CNXINFRA"
+    GRASIM: "^CNXINFRA"
+    BEL: "^CNXINFRA"
+    BHARTIARTL: "^CNXINFRA"
+
 
 scoring:
   weights:

@@ -61,7 +61,7 @@ def compute_screening_score(
             trend_pts += 15
         elif change_pct > 0.0:
             trend_pts += 10
-    trend_pts = min(trend_pts, max_trend)
+    trend_score = min(int(round((min(trend_pts, 25) / 25.0) * max_trend)), max_trend)
 
     # 2. Momentum & Breakout (max: weights['momentum_breakout'], default 25)
     max_mom = weights.get("momentum_breakout", 25)
@@ -91,7 +91,7 @@ def compute_screening_score(
         if "TOP_GAINER" not in tags:
             tags.append("TOP_GAINER")
 
-    mom_pts = min(mom_pts, max_mom)
+    mom_score = min(int(round((min(mom_pts, 25) / 25.0) * max_mom)), max_mom)
 
     # 3. Volume (max: weights['volume'], default 25)
     max_vol = weights.get("volume", 25)
@@ -115,7 +115,7 @@ def compute_screening_score(
     elif volume >= 200_000:
         vol_pts += 4
 
-    vol_pts = min(vol_pts, max_vol)
+    vol_score = min(int(round((min(vol_pts, 25) / 25.0) * max_vol)), max_vol)
 
     # 4. Liquidity & Quality (max: weights['liquidity'], default 15)
     max_liq = weights.get("liquidity", 15)
@@ -140,23 +140,31 @@ def compute_screening_score(
             liq_pts += 7
         else:
             liq_pts += 4
-    liq_pts = min(liq_pts, max_liq)
+    liq_score = min(int(round((min(liq_pts, 15) / 15.0) * max_liq)), max_liq)
 
     # 5. Catalyst Presence (max: weights['catalyst'], default 10)
     max_cat = weights.get("catalyst", 10)
     cat_pts = 0
+    catalyst_status = candidate.get("catalyst_status")
     if days_to_results is not None and 0 <= days_to_results <= 14:
         cat_pts += 10
+        catalyst_status = "upcoming"
         if "EARNINGS_CATALYST" not in tags:
             tags.append("EARNINGS_CATALYST")
     elif "EARNINGS_CATALYST" in tags:
         cat_pts += 10
+        catalyst_status = "upcoming"
     elif "TOP_ACTIVE" in tags:
         cat_pts += 5
+        if not catalyst_status:
+            catalyst_status = "active_market"
+    else:
+        if not catalyst_status:
+            catalyst_status = "unavailable"
 
-    cat_pts = min(cat_pts, max_cat)
+    cat_score = min(int(round((min(cat_pts, 10) / 10.0) * max_cat)), max_cat)
 
-    total_score = trend_pts + mom_pts + vol_pts + liq_pts + cat_pts
+    total_score = trend_score + mom_score + vol_score + liq_score + cat_score
     final_score = max(0, min(100, int(round(total_score))))
 
     if final_score >= 85:
@@ -177,12 +185,13 @@ def compute_screening_score(
     return {
         "screening_score": final_score,
         "score_breakdown": {
-            "trend": trend_pts,
-            "momentum_breakout": mom_pts,
-            "volume": vol_pts,
-            "liquidity": liq_pts,
-            "catalyst": cat_pts
+            "trend": trend_score,
+            "momentum_breakout": mom_score,
+            "volume": vol_score,
+            "liquidity": liq_score,
+            "catalyst": cat_score
         },
         "category": category,
-        "tags": clean_tags
+        "tags": clean_tags,
+        "catalyst_status": catalyst_status
     }

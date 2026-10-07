@@ -99,3 +99,42 @@ def test_zero_baseline_score():
     )
     assert result["technical_score"] < 20
     assert result["category"] == "weak"
+
+
+def test_custom_scoring_weights_scale_proportionally():
+    """Verify that user-configured weights in settings scale component scores proportionally."""
+    daily_analysis = {
+        "close": 1500,
+        "ema20": 1450,
+        "ema50": 1400,
+        "ema200": 1300,
+        "ema20_slope": 0.015,
+        "ema50_slope": 0.008,
+        "market_structure": "higher_highs_higher_lows"
+    }
+    # Double the daily_trend weight from default 20 to 40
+    custom_weights = {
+        "daily_trend": 40,
+        "hourly_trend": 10,
+        "momentum": 10,
+        "volume": 10,
+        "breakout": 10,
+        "support_resistance": 10,
+        "relative_strength": 5,
+        "volatility": 5
+    }
+    result = compute_technical_score(
+        daily_analysis=daily_analysis,
+        hourly_analysis={},
+        momentum_data={},
+        volume_data={},
+        breakout_data={},
+        sr_levels={},
+        rs_data={},
+        atr_percent=2.0,
+        weights=custom_weights
+    )
+    # Full marks on daily trend with weight 40 must yield 40 points (not clamped to 20)
+    assert result["score_breakdown"]["daily_trend"] == 40
+    assert 0 <= result["technical_score"] <= 100
+

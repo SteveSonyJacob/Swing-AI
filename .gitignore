@@ -9,3 +9,10 @@ outputs/*.json
 !outputs/examples/
 .env
 .venv/
+
+# Audit, Roadmap & Planning Documents
+FEATURE_ROADMAP.md
+plan.md
+PHASE_1_IMPLEMENTATION_REPORT.md
+PROJECT_AUDIT.md
+TODO_AUDIT.md

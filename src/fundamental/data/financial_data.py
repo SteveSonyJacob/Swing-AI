@@ -13,6 +13,31 @@ DATA_DIR = Path(__file__).resolve().parent.parent.parent.parent / "data" / "raw"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 
+def get_publication_date(
+    period_end_date: str,
+    is_annual: bool = False,
+    publication_dates: Optional[Dict[str, str]] = None
+) -> pd.Timestamp:
+    """
+    Determines the date a financial statement became publicly visible to the market.
+
+    Order of precedence:
+    1. Explicit publication/announcement date from provider or metadata.
+    2. Conservative statutory reporting lag fallback under SEBI (LODR) regulations:
+       - Quarterly statements (Q1, Q2, Q3): 45 calendar days after quarter end.
+       - Annual statements / Q4 (period ending March 31): 60 calendar days after financial year-end.
+
+    This strictly prevents look-ahead bias in point-in-time backtesting.
+    """
+    if publication_dates and period_end_date in publication_dates:
+        return pd.to_datetime(publication_dates[period_end_date])
+
+    period_dt = pd.to_datetime(period_end_date)
+    # Statutory filing window fallback (SEBI LODR Reg. 33)
+    lag_days = 60 if is_annual or (period_dt.month == 3 and period_dt.day == 31) else 45
+    return period_dt + pd.Timedelta(days=lag_days)
+
+
 def df_to_clean_dict(df: Optional[pd.DataFrame]) -> Dict[str, Dict[str, float]]:
     """Converts a yfinance financial statement DataFrame into a serializable dict."""
     if df is None or df.empty:
@@ -116,24 +141,37 @@ def generate_synthetic_financials(symbol: str) -> Dict[str, Any]:
             "Free Cash Flow": (pat * 1.12) - (rev * 0.05)
         }
 
+    publication_dates = {
+        "2025-06-30": "2025-08-12",
+        "2025-09-30": "2025-11-10",
+        "2025-12-31": "2026-02-11",
+        "2026-03-31": "2026-05-24",
+        "2026-06-30": "2026-08-13",
+        "2024-03-31": "2024-05-22",
+        "2025-03-31": "2025-05-20",
+        "2026-03-31": "2026-05-24"
+    }
+
     return {
         "quarterly_is": quarterly_is,
         "quarterly_bs": quarterly_bs,
         "quarterly_cf": quarterly_cf,
         "annual_is": annual_is,
         "annual_bs": annual_bs,
-        "annual_cf": annual_cf
+        "annual_cf": annual_cf,
+        "publication_dates": publication_dates
     }
 
 
 def fetch_financial_statements(
     symbol: str,
     as_of_date: Optional[str] = None,
-    offline: bool = False
+    offline: bool = False,
+    custom_publication_dates: Optional[Dict[str, str]] = None
 ) -> Dict[str, Any]:
     """
     Fetches quarterly and annual financial statements with local caching
-    and point-in-time filtering.
+    and look-ahead protected point-in-time filtering.
     """
     clean_sym = symbol.upper().replace(".NS", "").replace("^", "")
     cache_file = DATA_DIR / f"{clean_sym}_financials.json"
@@ -167,14 +205,19 @@ def fetch_financial_statements(
         else:
             financials = generate_synthetic_financials(symbol)
 
-    # Point-in-time filtering: filter out any statement period ending after as_of_date
+    # Point-in-time filtering: filter out statements that were not publicly published as of as_of_date
     if as_of_date:
         as_of_dt = pd.to_datetime(as_of_date)
+        pub_dates = dict(financials.get("publication_dates", {}))
+        if custom_publication_dates:
+            pub_dates.update(custom_publication_dates)
+
         for key in ["quarterly_is", "quarterly_bs", "quarterly_cf", "annual_is", "annual_bs", "annual_cf"]:
             statements = financials.get(key, {})
+            is_annual = key.startswith("annual")
             filtered = {
                 d: v for d, v in statements.items()
-                if pd.to_datetime(d) <= as_of_dt
+                if get_publication_date(d, is_annual=is_annual, publication_dates=pub_dates) <= as_of_dt
             }
             financials[key] = filtered
 

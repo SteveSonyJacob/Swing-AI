@@ -67,3 +67,40 @@ def test_fetch_moneycontrol_offline():
     assert "TRENT" in symbols
     assert "RELIANCE" in symbols
     assert all(c.get("price") is not None for c in candidates)
+
+
+def test_parse_moneycontrol_table_dynamic_headers():
+    """Verify that table parsing uses <th> header labels to identify column positions."""
+    html = """
+    <table>
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Volume</th>
+                <th>Price & Change</th>
+                <th>Day's High</th>
+                <th>Day's Low</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="https://www.moneycontrol.com/india/stockpricequote/retail/trent/T04">Trent Ltd</a></td>
+                <td>5,000,000</td>
+                <td>2,950.00 (+5.2%)</td>
+                <td>3,000.00</td>
+                <td>2,920.00</td>
+            </tr>
+        </tbody>
+    </table>
+    """
+    results = parse_moneycontrol_table(html, "volume_shockers")
+    assert len(results) == 1
+    res = results[0]
+    assert res["name"] == "Trent Ltd"
+    assert res["symbol"] == "TRENT"
+    assert res["volume"] == 5000000
+    assert res["price"] == 2950.0
+    assert res["change_pct"] == 5.2
+    assert res["days_high"] == 3000.0
+    assert res["days_low"] == 2920.0
+

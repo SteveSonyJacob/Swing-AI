@@ -14,10 +14,12 @@ def analyze_balance_sheet(
     quarterly_is: Dict[str, Dict[str, float]],
     quarterly_bs: Dict[str, Dict[str, float]],
     annual_is: Dict[str, Dict[str, float]],
-    annual_bs: Dict[str, Dict[str, float]]
-) -> Dict[str, Optional[float]]:
+    annual_bs: Dict[str, Dict[str, float]],
+    is_financial: bool = False
+) -> Dict[str, Any]:
     """
     Analyzes balance sheet health: Debt/Equity, Net Debt, Interest Coverage, Current Ratio.
+    Financial institutions (Banks/NBFCs) are flagged and exempt from corporate ratio distortion.
     """
     sorted_q_dates = sorted(quarterly_is.keys(), key=lambda d: pd.to_datetime(d))
     sorted_a_dates = sorted(annual_is.keys(), key=lambda d: pd.to_datetime(d))
@@ -34,14 +36,15 @@ def analyze_balance_sheet(
     ebit = latest_is.get("Operating Income") or latest_is.get("EBITDA")
     interest = latest_is.get("Interest Expense")
 
-    de = calculate_debt_equity(total_debt, equity)
-    net_debt = calculate_net_debt(total_debt, cash)
-    ic = calculate_interest_coverage(ebit, interest)
-    cr = calculate_current_ratio(curr_assets, curr_liab)
+    de = calculate_debt_equity(total_debt, equity) if not is_financial else None
+    net_debt = calculate_net_debt(total_debt, cash) if not is_financial else None
+    ic = calculate_interest_coverage(ebit, interest) if not is_financial else None
+    cr = calculate_current_ratio(curr_assets, curr_liab) if not is_financial else None
 
     return {
         "debt_equity": de,
         "net_debt": net_debt,
         "interest_coverage": ic,
-        "current_ratio": cr
+        "current_ratio": cr,
+        "is_financial": is_financial
     }

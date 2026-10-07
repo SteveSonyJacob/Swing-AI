@@ -103,9 +103,10 @@ SwingTrade AI/
 │       └── output/                   # JSON formatter & LLM explainer
 ├── tests/
 │   ├── conftest.py
-│   ├── screening/                    # Agent 1 screening tests (19 tests)
-│   ├── test_*.py                     # Agent 2 technical tests (17 tests)
-│   └── fundamental/                  # Agent 3 fundamental tests (17 tests)
+│   ├── screening/                    # Agent 1 screening tests
+│   ├── test_*.py                     # Agent 2 technical tests
+│   └── fundamental/                  # Agent 3 fundamental tests
+├── run_all.py                        # Master runner: orchestrates Agent 1, 2, and 3 end-to-end
 ├── run_screening.py                  # CLI runner for Agent 1
 ├── run_technical.py                  # CLI runner for Agent 2
 ├── run_fundamental.py                # CLI runner for Agent 3
@@ -124,6 +125,26 @@ pip install -r requirements.txt
 ---
 
 ## 3. Usage
+
+### Master Unified Runner (`run_all.py`)
+Run the end-to-end multi-agent pipeline (Screening -> Technical -> Fundamental -> Decision Engine) with a single command:
+
+```bash
+# Run all automated tests across all agents
+python run_all.py --test
+
+# Run end-to-end pipeline offline (Screen -> Technical -> Fundamental -> Composite Verdicts)
+python run_all.py --offline --top-n 3
+
+# Run live market screening and deep pipeline analysis
+python run_all.py --universe nifty50 --top-n 5
+
+# Deep-dive on a single stock directly
+python run_all.py --symbol RELIANCE --offline
+
+# Export pipeline results as pure JSON
+python run_all.py --offline --top-n 3 --json-only --output-file outputs/pipeline_run.json
+```
 
 ### Agent 1: Screening Agent
 ```bash
@@ -175,14 +196,21 @@ python run_technical.py --symbol RELIANCE --offline --json-only
 
 ## 4. Testing
 
-Run all 53 automated unit tests:
+Run all 71 automated unit tests via pytest:
 ```bash
-pytest -v tests/
+pytest -v
 ```
 
-Run only Agent 1 screening unit tests:
+Or run tests via the master runner:
 ```bash
-pytest -v tests/screening/
+python run_all.py --test
+```
+
+Run specific test suites:
+```bash
+pytest -v tests/screening/    # Agent 1 screening tests (23 tests)
+pytest -v tests/              # Agent 2 technical analysis tests (17 tests)
+pytest -v tests/fundamental/  # Agent 3 fundamental analysis tests (31 tests)
 ```
 
 ---

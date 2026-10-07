@@ -18,7 +18,8 @@ def format_fundamental_output(
     valuation: Dict[str, Any],
     events: Dict[str, Any],
     warnings: List[str],
-    data_quality: Dict[str, Any]
+    data_quality: Dict[str, Any],
+    ownership: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     """
     Constructs the canonical JSON output dictionary matching Section 23.
@@ -47,7 +48,9 @@ def format_fundamental_output(
             "pat_yoy": growth.get("pat_yoy"),
             "eps_yoy": growth.get("eps_yoy"),
             "revenue_cagr_3y": growth.get("revenue_cagr_3y"),
-            "pat_cagr_3y": growth.get("pat_cagr_3y")
+            "pat_cagr_3y": growth.get("pat_cagr_3y"),
+            "ttm_revenue_yoy": growth.get("ttm_revenue_yoy"),
+            "ttm_pat_yoy": growth.get("ttm_pat_yoy")
         },
 
         "profitability": {
@@ -62,7 +65,8 @@ def format_fundamental_output(
             "debt_equity": balance_sheet.get("debt_equity"),
             "net_debt": balance_sheet.get("net_debt"),
             "interest_coverage": balance_sheet.get("interest_coverage"),
-            "current_ratio": balance_sheet.get("current_ratio")
+            "current_ratio": balance_sheet.get("current_ratio"),
+            "is_financial": bool(balance_sheet.get("is_financial", False))
         },
 
         "cash_flow": {
@@ -85,6 +89,12 @@ def format_fundamental_output(
             "sector_pe": valuation.get("sector_pe"),
             "pe_premium_to_sector": valuation.get("pe_premium_to_sector"),
             "valuation_assessment": str(valuation.get("valuation_assessment", "fair"))
+        },
+
+        "ownership": {
+            "insider_holding": ownership.get("insider_holding") if ownership else None,
+            "institutional_holding": ownership.get("institutional_holding") if ownership else None,
+            "ownership_trend": str(ownership.get("ownership_trend", "stable")) if ownership else "stable"
         },
 
         "events": {

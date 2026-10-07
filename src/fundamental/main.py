@@ -25,6 +25,7 @@ from src.fundamental.analysis.balance_sheet import analyze_balance_sheet
 from src.fundamental.analysis.cash_flow import analyze_cash_flow
 from src.fundamental.analysis.earnings_quality import analyze_earnings_quality
 from src.fundamental.analysis.valuation import analyze_valuation
+from src.fundamental.analysis.ownership import analyze_ownership
 from src.fundamental.events.corporate_events import check_upcoming_results
 from src.fundamental.scoring.fundamental_score import compute_fundamental_score
 from src.fundamental.output.formatter import format_fundamental_output, format_fundamental_error
@@ -63,11 +64,12 @@ def run_fundamental_analysis(
 
     try:
         # 1. Company Profile
-        profile = fetch_company_profile(symbol)
+        profile = fetch_company_profile(symbol, offline=offline)
         sector = profile.get("sector", "Default")
+        is_financial = sector.lower() in ["financial services", "banking", "finance", "bank"]
 
         # 2. Valuation & Market Multiples
-        market_metrics = fetch_valuation_metrics(symbol)
+        market_metrics = fetch_valuation_metrics(symbol, offline=offline)
 
         # 3. Financial Statements
         financials = fetch_financial_statements(symbol, as_of_date=as_of_date, offline=offline)
@@ -93,16 +95,13 @@ def run_fundamental_analysis(
                 quality_tracker.register(k, v)
 
         # 6. Balance Sheet Analysis
-        balance_sheet = analyze_balance_sheet(q_is, q_bs, a_is, a_bs)
+        balance_sheet = analyze_balance_sheet(q_is, q_bs, a_is, a_bs, is_financial=is_financial)
         for k, v in balance_sheet.items():
-            quality_tracker.register(k, v)
+            if k != "is_financial":
+                quality_tracker.register(k, v)
 
-        # Latest PAT for cash flow comparison
-        sorted_q_dates = sorted(q_is.keys(), key=lambda d: pd.to_datetime(d))
-        latest_pat = q_is[sorted_q_dates[-1]].get("Net Income") if sorted_q_dates else None
-
-        # 7. Cash Flow Analysis
-        cash_flow = analyze_cash_flow(q_cf, a_cf, latest_pat)
+        # 7. Cash Flow Analysis with strict period matching
+        cash_flow = analyze_cash_flow(q_cf, a_cf, quarterly_is=q_is, annual_is=a_is)
         quality_tracker.register("operating_cash_flow", cash_flow.get("operating_cash_flow"))
         quality_tracker.register("free_cash_flow", cash_flow.get("free_cash_flow"))
         quality_tracker.register("ocf_pat_ratio", cash_flow.get("ocf_pat_ratio"))
@@ -115,10 +114,13 @@ def run_fundamental_analysis(
         quality_tracker.register("pe", valuation.get("pe"))
         quality_tracker.register("pb", valuation.get("pb"))
 
-        # 10. Corporate Events
+        # 10. Ownership Analysis
+        ownership = analyze_ownership(profile)
+
+        # 11. Corporate Events
         events = check_upcoming_results(symbol, as_of_date=as_of_date)
 
-        # 11. Scoring Engine
+        # 12. Scoring Engine
         scoring_res = compute_fundamental_score(
             growth_data=growth,
             profitability_data=profitability,
@@ -134,7 +136,7 @@ def run_fundamental_analysis(
 
         # Aggregate warnings
         all_warnings = list(earnings_quality.get("warnings", []))
-        if balance_sheet.get("debt_equity") and balance_sheet["debt_equity"] > 1.8:
+        if not is_financial and balance_sheet.get("debt_equity") and balance_sheet["debt_equity"] > 1.8:
             all_warnings.append("High debt-to-equity ratio")
         if valuation.get("valuation_assessment") == "expensive":
             all_warnings.append("Valuation is at a substantial premium to sector median")
@@ -143,7 +145,7 @@ def run_fundamental_analysis(
         if as_of_date:
             analysis_ts = f"{as_of_date}T00:00:00"
 
-        # 12. Format Canonical Output
+        # 13. Format Canonical Output
         final_json = format_fundamental_output(
             symbol=symbol,
             market=market,
@@ -158,7 +160,8 @@ def run_fundamental_analysis(
             valuation=valuation,
             events=events,
             warnings=all_warnings,
-            data_quality=quality_tracker.to_dict()
+            data_quality=quality_tracker.to_dict(),
+            ownership=ownership
         )
 
         return final_json

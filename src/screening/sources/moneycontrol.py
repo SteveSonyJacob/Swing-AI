@@ -7,6 +7,7 @@ import logging
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, Any, List, Optional, Tuple
+import time
 import requests
 from bs4 import BeautifulSoup
 
@@ -171,15 +172,41 @@ def parse_moneycontrol_table(html_content: str, screener_type: str) -> List[Dict
     # Data is almost always in the second table on modern market-stats pages,
     # or the first if only one table is present.
     target_table = tables[1] if len(tables) > 1 else tables[0]
+
+    # Dynamically detect column indices from <th> headers if available
+    th_tags = target_table.find_all("th")
+    col_mapping = {}
+    for idx, th in enumerate(th_tags):
+        th_text = th.get_text(strip=True).lower()
+        if "company" in th_text or "stock" in th_text:
+            col_mapping["company"] = idx
+        elif "price" in th_text or "ltp" in th_text or "last" in th_text:
+            col_mapping["price"] = idx
+        elif "high" in th_text:
+            col_mapping["high"] = idx
+        elif "low" in th_text:
+            col_mapping["low"] = idx
+        elif "volume" in th_text or "vol" in th_text:
+            col_mapping["volume"] = idx
+        elif "value" in th_text or "turnover" in th_text:
+            col_mapping["turnover"] = idx
+
+    col_company = col_mapping.get("company", 0)
+    col_price = col_mapping.get("price", 2)
+    col_high = col_mapping.get("high", 3)
+    col_low = col_mapping.get("low", 4)
+    col_volume = col_mapping.get("volume", 5)
+    col_turnover = col_mapping.get("turnover", 5)
+
     rows = target_table.find_all("tr")
 
     for row in rows:
         tds = row.find_all("td")
-        if not tds:
+        if not tds or len(tds) <= max(col_company, col_price):
             continue
 
-        # Column 0: Company name, tags, and link
-        col0 = tds[0]
+        # Company name, tags, and link
+        col0 = tds[col_company]
         a_tag = col0.find("a")
         if not a_tag:
             continue
@@ -199,11 +226,11 @@ def parse_moneycontrol_table(html_content: str, screener_type: str) -> List[Dict
                 elif "52" in btn_txt.lower():
                     tags.append("52W_HIGH")
 
-        # Column 2: Price and percentage change
+        # Price and percentage change
         price = None
         change_pct = None
-        if len(tds) > 2:
-            cell_text = tds[2].get_text(separator=" ", strip=True)
+        if len(tds) > col_price:
+            cell_text = tds[col_price].get_text(separator=" ", strip=True)
             pct_match = re.search(r"\(([+-]?[\d.]+)%\)", cell_text)
             if pct_match:
                 change_pct = clean_number(pct_match.group(1))
@@ -212,17 +239,20 @@ def parse_moneycontrol_table(html_content: str, screener_type: str) -> List[Dict
             if tokens:
                 price = clean_number(tokens[0])
 
-        # Column 3: Day's High
-        days_high = clean_number(tds[3].get_text(strip=True)) if len(tds) > 3 else None
-        # Column 4: Day's Low
-        days_low = clean_number(tds[4].get_text(strip=True)) if len(tds) > 4 else None
+        # Day's High and Low
+        days_high = clean_number(tds[col_high].get_text(strip=True)) if len(tds) > col_high else None
+        days_low = clean_number(tds[col_low].get_text(strip=True)) if len(tds) > col_low else None
 
-        # Column 5: Volume or Value or Open
+        # Volume or Value or Open
         volume = None
         turnover_cr = None
-        if len(tds) > 5:
-            col5_text = tds[5].get_text(strip=True)
-            num = clean_number(col5_text)
+        if "volume" in screener_type.lower() and len(tds) > col_volume:
+            num = clean_number(tds[col_volume].get_text(strip=True))
+            volume = int(num) if num else None
+        elif "active" in screener_type.lower() and len(tds) > col_turnover:
+            turnover_cr = clean_number(tds[col_turnover].get_text(strip=True))
+        elif len(tds) > 5:
+            num = clean_number(tds[5].get_text(strip=True))
             if "volume" in screener_type.lower():
                 volume = int(num) if num else None
             elif "active" in screener_type.lower():
@@ -394,13 +424,25 @@ def fetch_moneycontrol_screeners(
         url = endpoints.get(cat)
         if not url:
             continue
-        try:
-            resp = session.get(url, timeout=timeout)
-            if resp.status_code == 200:
-                parsed = parse_moneycontrol_table(resp.text, cat)
-                raw_candidates.extend(parsed)
-        except Exception as e:
-            logger.warning(f"Error fetching Moneycontrol {cat} from {url}: {e}")
+        for attempt in range(3):
+            try:
+                resp = session.get(url, timeout=timeout)
+                if resp.status_code == 200:
+                    parsed = parse_moneycontrol_table(resp.text, cat)
+                    raw_candidates.extend(parsed)
+                    break
+                elif resp.status_code == 429:
+                    logger.warning(f"Rate limited (429) fetching Moneycontrol {cat}; backoff attempt {attempt + 1}")
+                    time.sleep(1.0 * (2 ** attempt))
+                else:
+                    logger.warning(f"HTTP {resp.status_code} fetching Moneycontrol {cat} from {url}")
+                    break
+            except Exception as e:
+                logger.warning(f"Attempt {attempt + 1} failed fetching Moneycontrol {cat} from {url}: {e}")
+                if attempt == 2:
+                    break
+                time.sleep(1.0 * (2 ** attempt))
+
 
     if not raw_candidates:
         logger.info("Moneycontrol network fetch returned no candidates; using synthetic fallback.")

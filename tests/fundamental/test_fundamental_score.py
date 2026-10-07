@@ -42,3 +42,23 @@ def test_fundamental_score_missing_data_normalization():
     score = res["fundamental_score"]
     assert 0 <= score <= 100
     assert res["data_completeness_pct"] < 100.0
+
+
+def test_bank_nbfc_balance_sheet_exemption():
+    """Verify that banks and financial institutions are exempt from corporate D/E and current ratio."""
+    bs_financial = {"is_financial": True, "debt_equity": 6.5, "current_ratio": 0.5}
+    pts, weight = score_balance_sheet(bs_financial, max_points=15)
+    assert pts == 0
+    assert weight == 0  # Zero weight means omitted from denominator
+
+    # When scoring a healthy bank, missing corporate BS ratios do not drag down the normalized score
+    growth = {"revenue_yoy": 25.0, "pat_yoy": 30.0}
+    prof = {"roe": 19.0, "operating_margin": 22.0}
+    cf = {"operating_cash_flow": 5000.0, "free_cash_flow": 4000.0, "ocf_pat_ratio": 1.1}
+    eq = {"score": 9}
+    val = {"pe": 16.0, "valuation_assessment": "discount"}
+
+    res = compute_fundamental_score(growth, prof, bs_financial, cf, eq, val)
+    # The score should be strong because available components are normalized over remaining weight
+    assert res["fundamental_score"] >= 80
+

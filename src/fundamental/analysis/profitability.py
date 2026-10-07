@@ -52,12 +52,19 @@ def analyze_profitability(
     debt = latest_bs.get("Total Debt") or 0.0
     cap_employed = (equity + debt) if equity is not None else None
 
-    # For annualizing quarterly figures
-    is_quarterly = bool(sorted_q_dates)
-    multiplier = 4.0 if is_quarterly else 1.0
-
-    ann_pat = (pat * multiplier) if pat is not None else None
-    ann_ebit = (ebit * multiplier) if ebit is not None else None
+    # For annualizing quarterly figures: prefer true 4-quarter TTM aggregation
+    if len(sorted_q_dates) >= 4:
+        ann_pat = sum(quarterly_is[d].get("Net Income", 0.0) for d in sorted_q_dates[-4:])
+        ann_ebit = sum((quarterly_is[d].get("Operating Income") or quarterly_is[d].get("EBITDA") or 0.0) for d in sorted_q_dates[-4:])
+    elif sorted_a_dates:
+        latest_ann = annual_is[sorted_a_dates[-1]]
+        ann_pat = latest_ann.get("Net Income")
+        ann_ebit = latest_ann.get("Operating Income") or latest_ann.get("EBITDA")
+    else:
+        is_quarterly = bool(sorted_q_dates)
+        multiplier = 4.0 if is_quarterly else 1.0
+        ann_pat = (pat * multiplier) if pat is not None else None
+        ann_ebit = (ebit * multiplier) if ebit is not None else None
 
     roe = calculate_roe(ann_pat, equity)
     roce = calculate_roce(ann_ebit, cap_employed)

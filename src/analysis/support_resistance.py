@@ -39,16 +39,20 @@ def identify_key_levels(df: pd.DataFrame, window: int = 5) -> Dict[str, Optional
     # Nearest support is maximum candidate below current price
     nearest_support = max(support_candidates) if support_candidates else None
 
-    # Fallback to recent low/high if candidates empty
+    # Fallback to recent low/high if candidates empty, strictly excluding active candle
     if nearest_support is None and len(df) >= 20:
-        candidate = float(df["low"].iloc[-20:].min())
-        if candidate < latest_close:
-            nearest_support = candidate
+        prior_lows = df["low"].iloc[-21:-1] if len(df) >= 21 else df["low"].iloc[:-1]
+        if not prior_lows.empty:
+            candidate = float(prior_lows.min())
+            if candidate < latest_close:
+                nearest_support = candidate
 
     if nearest_resistance is None and len(df) >= 20:
-        candidate = float(df["high"].iloc[-20:].max())
-        if candidate > latest_close:
-            nearest_resistance = candidate
+        prior_highs = df["high"].iloc[-21:-1] if len(df) >= 21 else df["high"].iloc[:-1]
+        if not prior_highs.empty:
+            candidate = float(prior_highs.max())
+            if candidate > latest_close:
+                nearest_resistance = candidate
 
     return {
         "support": round(nearest_support, 2) if nearest_support is not None else None,

@@ -40,11 +40,12 @@ def calculate_daily_trend_score(daily_analysis: Dict[str, Any], max_points: int 
     elif structure in ("higher_highs_lower_lows", "lower_highs_higher_lows"):
         points += 2
 
-    return min(points, max_points)
+    scaled = (points / 20.0) * max_points
+    return min(int(round(scaled)), max_points)
 
 
 def calculate_hourly_trend_score(hourly_analysis: Dict[str, Any], max_points: int = 15) -> int:
-    """Hourly trend scoring (up to 15 points)."""
+    """Hourly trend scoring (scaled to max_points, baseline 15)."""
     points = 0
     close = hourly_analysis.get("close", 0.0)
     ema20 = hourly_analysis.get("ema20", 0.0)
@@ -70,11 +71,12 @@ def calculate_hourly_trend_score(hourly_analysis: Dict[str, Any], max_points: in
     elif structure in ("higher_highs_lower_lows", "lower_highs_higher_lows"):
         points += 2
 
-    return min(points, max_points)
+    scaled = (points / 15.0) * max_points
+    return min(int(round(scaled)), max_points)
 
 
 def calculate_momentum_score(daily_indicators: Dict[str, Any], max_points: int = 15) -> int:
-    """Momentum scoring (up to 15 points) based on RSI and MACD."""
+    """Momentum scoring (scaled to max_points, baseline 15) based on RSI and MACD."""
     points = 0
     rsi = daily_indicators.get("rsi", 50.0)
     macd_line = daily_indicators.get("macd_line", 0.0)
@@ -102,11 +104,12 @@ def calculate_momentum_score(daily_indicators: Dict[str, Any], max_points: int =
     if crossover:
         points += 2
 
-    return min(points, max_points)
+    scaled = (points / 15.0) * max_points
+    return min(int(round(scaled)), max_points)
 
 
 def calculate_volume_score(volume_data: Dict[str, Any], max_points: int = 15) -> int:
-    """Volume scoring (up to 15 points)."""
+    """Volume scoring (scaled to max_points, baseline 15)."""
     points = 0
     rvol = volume_data.get("rvol", 1.0)
     expansion = volume_data.get("volume_expansion", False)
@@ -130,11 +133,12 @@ def calculate_volume_score(volume_data: Dict[str, Any], max_points: int = 15) ->
     if confirmation:
         points += 4
 
-    return min(points, max_points)
+    scaled = (points / 15.0) * max_points
+    return min(int(round(scaled)), max_points)
 
 
 def calculate_breakout_score(breakout_data: Dict[str, Any], max_points: int = 15) -> int:
-    """Breakout scoring (up to 15 points)."""
+    """Breakout scoring (scaled to max_points, baseline 15)."""
     points = 0
     detected = breakout_data.get("detected", False)
     breakout_type = breakout_data.get("type", "none")
@@ -149,7 +153,8 @@ def calculate_breakout_score(breakout_data: Dict[str, Any], max_points: int = 15
         if volume_confirmed:
             points += 5
 
-    return min(points, max_points)
+    scaled = (points / 15.0) * max_points
+    return min(int(round(scaled)), max_points)
 
 
 def calculate_support_resistance_score(
@@ -157,7 +162,7 @@ def calculate_support_resistance_score(
     current_close: float,
     max_points: int = 10
 ) -> int:
-    """Support & resistance quality score (up to 10 points)."""
+    """Support & resistance quality score (scaled to max_points, baseline 10)."""
     points = 0
     support = levels.get("support")
     resistance = levels.get("resistance")
@@ -181,41 +186,55 @@ def calculate_support_resistance_score(
         # Blue sky / all-time highs
         points += 5
 
-    return min(points, max_points)
+    scaled = (points / 10.0) * max_points
+    return min(int(round(scaled)), max_points)
 
 
 def calculate_relative_strength_score(rs_data: Dict[str, Any], max_points: int = 5) -> int:
-    """Relative strength score (up to 5 points)."""
+    """Relative strength score (scaled to max_points, baseline 5). Handles unmapped sectors gracefully."""
     points = 0
     vs_nifty = rs_data.get("vs_nifty_1m")
     vs_sector = rs_data.get("vs_sector_1m")
 
-    if vs_nifty is not None:
-        if vs_nifty > 5.0:
-            points += 3
-        elif vs_nifty > 0.0:
-            points += 2
-
     if vs_sector is not None:
+        if vs_nifty is not None:
+            if vs_nifty > 5.0:
+                points += 3
+            elif vs_nifty > 0.0:
+                points += 2
         if vs_sector > 0.0:
             points += 2
+    else:
+        # If sector benchmark is unmapped, evaluate outperformance using Nifty over full 5 pts
+        if vs_nifty is not None:
+            if vs_nifty > 5.0:
+                points += 5
+            elif vs_nifty > 2.0:
+                points += 4
+            elif vs_nifty > 0.0:
+                points += 3
 
-    return min(points, max_points)
+    scaled = (points / 5.0) * max_points
+    return min(int(round(scaled)), max_points)
 
 
 def calculate_volatility_score(atr_percent: float, max_points: int = 5) -> int:
-    """Volatility & trade quality score (up to 5 points)."""
+    """Volatility & trade quality score (scaled to max_points, baseline 5)."""
     if np.isnan(atr_percent) or atr_percent <= 0:
         return 0
     # Sweet spot for swing trading: 1.2% to 4.5% daily range
+    points = 0
     if 1.2 <= atr_percent <= 4.5:
-        return 5
+        points = 5
     elif 0.8 <= atr_percent < 1.2:
-        return 3
+        points = 3
     elif 4.5 < atr_percent <= 6.5:
-        return 3
+        points = 3
     else:
-        return 1
+        points = 1
+
+    scaled = (points / 5.0) * max_points
+    return min(int(round(scaled)), max_points)
 
 
 def categorize_score(score: int) -> str:

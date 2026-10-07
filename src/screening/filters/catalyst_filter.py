@@ -19,11 +19,18 @@ def evaluate_catalyst_criteria(candidate: Dict[str, Any], thresholds: Dict[str, 
     is_upcoming_soon = False
     if days_to_results is not None:
         is_upcoming_soon = 0 <= days_to_results <= lookahead
+        catalyst_status = "upcoming" if is_upcoming_soon else "none"
     elif has_earnings:
         is_upcoming_soon = True
+        catalyst_status = "upcoming"
+    else:
+        is_upcoming_soon = False
+        catalyst_status = "unavailable"
 
     return {
         "has_catalyst": is_upcoming_soon,
         "days_to_results": days_to_results,
-        "earnings_upcoming": is_upcoming_soon
+        "earnings_upcoming": is_upcoming_soon,
+        "catalyst_status": catalyst_status
     }
+

@@ -6,6 +6,9 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
+from src.indicators.momentum import calculate_rsi
+from src.indicators.volume import calculate_relative_volume
+
 logger = logging.getLogger(__name__)
 
 
@@ -23,31 +26,15 @@ def clean_symbol(symbol: str) -> str:
 
 
 def compute_rsi(series: pd.Series, period: int = 14) -> float:
-    """Computes Wilder's Relative Strength Index (RSI)."""
+    """Computes Wilder's Relative Strength Index (RSI) using shared indicator logic."""
     if len(series) < period + 1:
         return 50.0
 
-    delta = series.diff()
-    gain = delta.where(delta > 0, 0.0)
-    loss = -delta.where(delta < 0, 0.0)
-
-    avg_gain = gain.rolling(window=period, min_periods=period).mean()
-    avg_loss = loss.rolling(window=period, min_periods=period).mean()
-
-    # Apply exponential smoothing
-    for i in range(period, len(series)):
-        avg_gain.iloc[i] = (avg_gain.iloc[i - 1] * (period - 1) + gain.iloc[i]) / period
-        avg_loss.iloc[i] = (avg_loss.iloc[i - 1] * (period - 1) + loss.iloc[i]) / period
-
-    last_gain = avg_gain.iloc[-1]
-    last_loss = avg_loss.iloc[-1]
-
-    if last_loss == 0 or np.isnan(last_loss):
-        return 100.0 if last_gain > 0 else 50.0
-
-    rs = last_gain / last_loss
-    rsi = 100.0 - (100.0 / (1.0 + rs))
-    return float(np.clip(rsi, 0.0, 100.0))
+    rsi_series = calculate_rsi(series, period=period)
+    val = float(rsi_series.iloc[-1])
+    if np.isnan(val):
+        return 50.0
+    return float(np.clip(val, 0.0, 100.0))
 
 
 def compute_metrics_from_ohlcv(df: pd.DataFrame, symbol: str) -> Optional[Dict[str, Any]]:
@@ -85,16 +72,22 @@ def compute_metrics_from_ohlcv(df: pd.DataFrame, symbol: str) -> Optional[Dict[s
 
     # Volume
     current_vol = float(volume.iloc[-1])
-    avg_vol_20 = float(volume.rolling(window=20).mean().iloc[-1])
-    vol_ratio = (current_vol / avg_vol_20) if avg_vol_20 > 0 else 1.0
+    rvol_series = calculate_relative_volume(volume, lookback=20)
+    vol_ratio = float(rvol_series.iloc[-1]) if not rvol_series.empty and not np.isnan(rvol_series.iloc[-1]) else 1.0
+    if len(volume) > 1:
+        avg_vol_20 = float(volume.iloc[:-1].rolling(window=min(20, len(volume) - 1), min_periods=1).mean().iloc[-1])
+    else:
+        avg_vol_20 = current_vol
 
     # Highs and breakout
     # Lookback 20 days prior to today
     prior_20d_high = float(high.iloc[-21:-1].max()) if len(high) >= 21 else float(high.iloc[:-1].max())
     breakout_20d = bool(current_price >= prior_20d_high or high.iloc[-1] >= prior_20d_high)
 
-    high_period = float(high.max())
-    dist_high_pct = ((high_period - current_price) / high_period) * 100.0 if high_period > 0 else 0.0
+    # True 52-week high (last 252 trading sessions)
+    lookback_52w = min(len(high), 252)
+    high_52w = float(high.iloc[-lookback_52w:].max())
+    dist_high_pct = ((high_52w - current_price) / high_52w) * 100.0 if high_52w > 0 else 0.0
 
     # Estimated daily turnover in Crores (Price * Avg Volume / 10,000,000)
     turnover_cr = (current_price * avg_vol_20) / 10_000_000.0
@@ -127,7 +120,7 @@ def compute_metrics_from_ohlcv(df: pd.DataFrame, symbol: str) -> Optional[Dict[s
         "ema_50": round(ema_50, 2),
         "ema_200": round(ema_200, 2) if ema_200 is not None else None,
         "rsi": round(rsi, 1),
-        "high_52w": round(high_period, 2),
+        "high_52w": round(high_52w, 2),
         "distance_52w_high_pct": round(dist_high_pct, 2),
         "breakout_20d": breakout_20d,
         "turnover_cr": round(turnover_cr, 2),
@@ -144,7 +137,8 @@ def generate_synthetic_yfinance_data(symbols: List[str]) -> List[Dict[str, Any]]
         seed = abs(hash(clean)) % (2**31)
         rng = np.random.default_rng(seed)
 
-        periods = 100
+        # 260 periods represents a full 52-week trading year
+        periods = 260
         base_price = 500.0 + (seed % 2500)
         daily_returns = rng.normal(0.001, 0.015, size=periods)
         price_series = base_price * np.cumprod(1 + daily_returns)
@@ -192,7 +186,7 @@ def scan_yfinance_universe(
     try:
         data = yf.download(
             tickers=formatted_tickers,
-            period="6mo",
+            period="1y",
             interval="1d",
             group_by="ticker",
             auto_adjust=True,

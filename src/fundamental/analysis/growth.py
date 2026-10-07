@@ -67,10 +67,23 @@ def analyze_growth(quarterly_is: Dict[str, Dict[str, float]], annual_is: Dict[st
         rev_cagr_3y = calculate_cagr(start_a.get("Total Revenue"), end_a.get("Total Revenue"), years=2.0)
         pat_cagr_3y = calculate_cagr(start_a.get("Net Income"), end_a.get("Net Income"), years=2.0)
 
+    # Rolling 4-Quarter TTM YoY growth (latest 4Q vs previous 4Q)
+    ttm_rev_yoy = None
+    ttm_pat_yoy = None
+    if len(sorted_q_dates) >= 8:
+        curr_ttm_rev = sum(quarterly_is[d].get("Total Revenue", 0.0) for d in sorted_q_dates[-4:])
+        prev_ttm_rev = sum(quarterly_is[d].get("Total Revenue", 0.0) for d in sorted_q_dates[-8:-4])
+        curr_ttm_pat = sum(quarterly_is[d].get("Net Income", 0.0) for d in sorted_q_dates[-4:])
+        prev_ttm_pat = sum(quarterly_is[d].get("Net Income", 0.0) for d in sorted_q_dates[-8:-4])
+        ttm_rev_yoy = calculate_pct_growth(curr_ttm_rev, prev_ttm_rev)
+        ttm_pat_yoy = calculate_pct_growth(curr_ttm_pat, prev_ttm_pat)
+
     return {
         "revenue_yoy": rev_yoy,
         "pat_yoy": pat_yoy,
         "eps_yoy": eps_yoy,
         "revenue_cagr_3y": rev_cagr_3y,
-        "pat_cagr_3y": pat_cagr_3y
+        "pat_cagr_3y": pat_cagr_3y,
+        "ttm_revenue_yoy": ttm_rev_yoy,
+        "ttm_pat_yoy": ttm_pat_yoy
     }

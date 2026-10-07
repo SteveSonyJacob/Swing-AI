@@ -4,15 +4,29 @@ from typing import Dict, Any, Optional
 import yfinance as yf
 
 
-def fetch_valuation_metrics(symbol: str, info_dict: Optional[Dict[str, Any]] = None) -> Dict[str, Optional[float]]:
+def fetch_valuation_metrics(
+    symbol: str,
+    info_dict: Optional[Dict[str, Any]] = None,
+    offline: bool = False
+) -> Dict[str, Optional[float]]:
     """Fetches key market valuation multiples."""
     if info_dict is None:
-        try:
-            ticker_sym = symbol if "." in symbol or "^" in symbol else f"{symbol}.NS"
-            t = yf.Ticker(ticker_sym)
-            info_dict = t.info or {}
-        except Exception:
-            info_dict = {}
+        if offline:
+            info_dict = {
+                "trailingPE": 22.0,
+                "forwardPE": 19.5,
+                "priceToBook": 2.1,
+                "enterpriseToEbitda": 11.5,
+                "dividendYield": 0.012,
+                "currentPrice": 1500.0
+            }
+        else:
+            try:
+                ticker_sym = symbol if "." in symbol or "^" in symbol else f"{symbol}.NS"
+                t = yf.Ticker(ticker_sym)
+                info_dict = t.info or {}
+            except Exception:
+                info_dict = {}
 
     pe = info_dict.get("trailingPE")
     forward_pe = info_dict.get("forwardPE")

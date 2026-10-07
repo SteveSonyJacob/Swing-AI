@@ -42,11 +42,12 @@ jobs:
           python run_screening.py --offline --run-agents --top-n 2
 
   full-test-suite:
-    name: Full Test Suite (Python ${{ matrix.python-version }})
-    runs-on: ubuntu-latest
+    name: Full Test Suite (${{ matrix.os }} / Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest]
         python-version: ["3.11", "3.12"]
     steps:
       - name: Checkout Code

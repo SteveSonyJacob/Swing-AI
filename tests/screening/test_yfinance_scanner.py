@@ -60,3 +60,27 @@ def test_scan_yfinance_universe_offline():
     assert "TCS" in found_symbols
     assert all("current_price" in r for r in res)
     assert all("rsi" in r for r in res)
+
+
+def test_52_week_high_lookback_bounded_to_252_sessions():
+    """Verify that 52-week high uses the last 252 trading sessions, excluding ancient peaks."""
+    total_candles = 300
+    dates = pd.date_range("2024-01-01", periods=total_candles, freq="B")
+    close = [100.0] * total_candles
+    high = [105.0] * total_candles
+    low = [95.0] * total_candles
+    volume = [500000] * total_candles
+
+    # An old spike > 252 trading sessions ago (e.g., candle index 10 is 290 sessions ago)
+    high[10] = 999.0
+
+    # A recent 52-week high within the last 252 sessions (e.g. candle index 200)
+    high[200] = 180.0
+
+    df = pd.DataFrame({"close": close, "high": high, "low": low, "volume": volume}, index=dates)
+    metrics = compute_metrics_from_ohlcv(df, "LOOKBACK_TEST")
+
+    assert metrics is not None
+    # Must pick up the 180.0 high within the last 252 days, NOT the ancient 999.0
+    assert metrics["high_52w"] == 180.0
+

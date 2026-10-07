@@ -8,6 +8,13 @@ ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+# Configure safe UTF-8 output with replacement on Windows consoles if supported
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 from src.fundamental.main import main
 
 if __name__ == "__main__":

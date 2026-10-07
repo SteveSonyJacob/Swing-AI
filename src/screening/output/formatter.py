@@ -76,7 +76,7 @@ def print_screening_summary_table(output_data: Dict[str, Any]) -> None:
     total = output_data.get("total_scanned", 0)
 
     print("\n" + "=" * 90)
-    print(f" AGENT 1 — SCREENING AGENT REPORT | Universe: {universe} | Scanned: {total} stocks")
+    print(f" AGENT 1 - SCREENING AGENT REPORT | Universe: {universe} | Scanned: {total} stocks")
     print("=" * 90)
 
     if not candidates:
@@ -85,7 +85,7 @@ def print_screening_summary_table(output_data: Dict[str, Any]) -> None:
         return
 
     # Header
-    header = f"{'Symbol':<12} {'Price (₹)':<10} {'Chg %':<8} {'Score':<7} {'Category':<16} {'Tags':<35}"
+    header = f"{'Symbol':<12} {'Price (INR)':<10} {'Chg %':<8} {'Score':<7} {'Category':<16} {'Tags':<35}"
     print(header)
     print("-" * 90)
 

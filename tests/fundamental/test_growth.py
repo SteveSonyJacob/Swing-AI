@@ -41,3 +41,21 @@ def test_analyze_growth_quarterly_and_annual():
     assert res["eps_yoy"] == 30.0
     assert res["revenue_cagr_3y"] is not None
     assert res["pat_cagr_3y"] is not None
+
+
+def test_analyze_growth_ttm():
+    """Verify rolling 4-quarter TTM YoY growth calculation when >= 8 quarters exist."""
+    q_is = {}
+    # Quarters 1-4: Revenue 1000 each (TTM = 4000), PAT 100 each (TTM = 400)
+    for i, d in enumerate(["2023-06-30", "2023-09-30", "2023-12-31", "2024-03-31"]):
+        q_is[d] = {"Total Revenue": 1000.0, "Net Income": 100.0}
+    # Quarters 5-8: Revenue 1250 each (TTM = 5000), PAT 150 each (TTM = 600)
+    for i, d in enumerate(["2024-06-30", "2024-09-30", "2024-12-31", "2025-03-31"]):
+        q_is[d] = {"Total Revenue": 1250.0, "Net Income": 150.0}
+
+    res = analyze_growth(q_is, {})
+    # TTM revenue growth: (5000 - 4000) / 4000 = 25%
+    assert res["ttm_revenue_yoy"] == 25.0
+    # TTM PAT growth: (600 - 400) / 400 = 50%
+    assert res["ttm_pat_yoy"] == 50.0
+

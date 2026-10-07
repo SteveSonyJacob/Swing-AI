@@ -58,3 +58,20 @@ def test_custom_weights():
     }
     res = compute_screening_score(cand, weights=custom_weights)
     assert 0 <= res["screening_score"] <= 100
+    # Trend with weight 50 and 20/25 raw points should scale to 40 points
+    assert res["score_breakdown"]["trend"] == 40
+
+
+def test_catalyst_status_tracking():
+    # If no earnings or results date provided, catalyst_status must be 'unavailable'
+    cand_no_earnings = {"price": 250.0, "volume": 500000}
+    res_no = compute_screening_score(cand_no_earnings)
+    assert res_no["catalyst_status"] == "unavailable"
+    assert res_no["score_breakdown"]["catalyst"] == 0
+
+    # If upcoming results within 14 days, catalyst_status must be 'upcoming'
+    cand_earnings = {"price": 250.0, "volume": 500000, "days_to_results": 5}
+    res_earn = compute_screening_score(cand_earnings)
+    assert res_earn["catalyst_status"] == "upcoming"
+    assert res_earn["score_breakdown"]["catalyst"] == 10
+
