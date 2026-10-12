@@ -10,7 +10,10 @@ outputs/*.json
 .env
 .venv/
 
-# Audit, Roadmap & Planning Documents
+# IDE & Editor artifacts
+.idea/
+.vscode/
+
 FEATURE_ROADMAP.md
 plan.md
 PHASE_1_IMPLEMENTATION_REPORT.md

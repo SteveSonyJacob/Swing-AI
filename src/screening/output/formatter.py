@@ -42,6 +42,9 @@ def format_screening_output(
             },
             "suggested_action": "pass_to_agent_2_and_3"
         }
+        if "llm_catalyst" in c:
+            formatted_c["llm_catalyst"] = c["llm_catalyst"]
+
         formatted_candidates.append(formatted_c)
 
     return {
@@ -98,4 +101,22 @@ def print_screening_summary_table(output_data: Dict[str, Any]) -> None:
         tags = ", ".join(c.get("tags", [])[:3])
         print(f"{sym:<12} {price:<10} {chg:<8} {score:<7} {cat:<16} {tags:<35}")
 
+    # Display AI Catalyst Analysis if present
+    candidates_with_llm = [c for c in candidates if c.get("llm_catalyst")]
+    if candidates_with_llm:
+        print("\n" + "-" * 90)
+        print(" AI QUALITATIVE CATALYST & NEWS ANALYSIS (Agent 1 LLM Engine)")
+        print("-" * 90)
+        for c in candidates_with_llm:
+            sym = c.get("symbol", "")
+            cat_data = c["llm_catalyst"]
+            cat_pts = cat_data.get("catalyst_score", 0)
+            sent = cat_data.get("sentiment", "NEUTRAL")
+            ctype = cat_data.get("catalyst_type", "GENERAL")
+            prov = cat_data.get("provider", "heuristic")
+            summary = cat_data.get("summary", "")
+            print(f"[{sym}] Catalyst Score: {cat_pts}/10 | Sentiment: {sent} | Type: {ctype} ({prov})")
+            print(f"  Summary: {summary}")
+
     print("=" * 90 + "\n")
+

@@ -22,6 +22,8 @@ from src.screening.filters.volume_filter import evaluate_volume_criteria
 from src.screening.filters.liquidity_filter import evaluate_liquidity_criteria
 from src.screening.filters.catalyst_filter import evaluate_catalyst_criteria
 from src.screening.scoring.screening_score import compute_screening_score
+from src.screening.llm.news_fetcher import fetch_candidate_news
+from src.screening.llm.catalyst_analyzer import analyze_catalyst_with_llm
 from src.screening.output.formatter import (
     format_screening_output,
     format_screening_error,
@@ -51,7 +53,8 @@ def run_screening(
     top_n: int = 10,
     offline: bool = False,
     config: Optional[Dict[str, Any]] = None,
-    custom_symbols: Optional[List[str]] = None
+    custom_symbols: Optional[List[str]] = None,
+    enable_llm: bool = False
 ) -> Dict[str, Any]:
     """
     Executes the end-to-end Indian equity screening pipeline across
@@ -137,12 +140,29 @@ def run_screening(
 
     # 3. Apply Filters and Compute Scores
     scored_candidates: List[Dict[str, Any]] = []
+    use_llm = enable_llm or bool((config or {}).get("llm", {}).get("enabled", False))
 
     for sym, cand in all_candidates_by_sym.items():
         # Evaluate Liquidity
         liq_eval = evaluate_liquidity_criteria(cand, thresholds)
         if liq_eval["is_penny_stock"]:
             continue  # Exclude penny stocks outright
+
+        # Optional qualitative news & catalyst analysis (Agent 1 LLM Engine)
+        if use_llm:
+            try:
+                max_h = (config or {}).get("llm", {}).get("max_headlines", 5)
+                news = fetch_candidate_news(sym, max_items=max_h, offline=offline)
+                cat_eval = analyze_catalyst_with_llm(
+                    symbol=sym,
+                    headlines=news,
+                    corporate_context={"days_to_results": cand.get("days_to_results")},
+                    config=config,
+                    offline=offline
+                )
+                cand["llm_catalyst"] = cat_eval
+            except Exception as e:
+                logger.warning(f"LLM catalyst analysis failed for {sym}: {e}")
 
         # Compute Score
         score_data = compute_screening_score(cand, weights=weights, thresholds=thresholds)
@@ -222,6 +242,11 @@ def main():
         help="Directly forward top screened candidates to Agent 2 and Agent 3"
     )
     parser.add_argument(
+        "--llm",
+        action="store_true",
+        help="Enable AI qualitative news and catalyst analysis for screened candidates"
+    )
+    parser.add_argument(
         "--output-file",
         type=str,
         default=None,
@@ -239,7 +264,8 @@ def main():
         min_score=args.min_score,
         top_n=args.top_n,
         offline=args.offline,
-        custom_symbols=custom_syms
+        custom_symbols=custom_syms,
+        enable_llm=args.llm
     )
 
     # Optional Multi-Agent Pipeline Dispatch

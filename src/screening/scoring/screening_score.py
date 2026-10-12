@@ -146,7 +146,30 @@ def compute_screening_score(
     max_cat = weights.get("catalyst", 10)
     cat_pts = 0
     catalyst_status = candidate.get("catalyst_status")
-    if days_to_results is not None and 0 <= days_to_results <= 14:
+    llm_cat = candidate.get("llm_catalyst")
+
+    if llm_cat and isinstance(llm_cat, dict) and "catalyst_score" in llm_cat:
+        # Qualitative Catalyst Scoring (Agent 1 LLM Engine)
+        llm_score = int(llm_cat.get("catalyst_score", 0))
+        cat_pts = max(0, min(10, llm_score))
+        sent = str(llm_cat.get("sentiment", "NEUTRAL")).upper()
+        if sent == "BULLISH":
+            catalyst_status = "bullish_catalyst"
+            if "LLM_CATALYST_BULLISH" not in tags:
+                tags.append("LLM_CATALYST_BULLISH")
+        elif sent == "BEARISH":
+            catalyst_status = "bearish_catalyst"
+            if "LLM_CATALYST_BEARISH" not in tags:
+                tags.append("LLM_CATALYST_BEARISH")
+        else:
+            catalyst_status = "neutral_catalyst"
+
+        # If upcoming calendar earnings also present within 14 days, ensure at least 8 pts
+        if days_to_results is not None and 0 <= days_to_results <= 14:
+            cat_pts = max(cat_pts, 8)
+            if "EARNINGS_CATALYST" not in tags:
+                tags.append("EARNINGS_CATALYST")
+    elif days_to_results is not None and 0 <= days_to_results <= 14:
         cat_pts += 10
         catalyst_status = "upcoming"
         if "EARNINGS_CATALYST" not in tags:

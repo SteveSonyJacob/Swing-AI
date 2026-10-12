@@ -9,7 +9,7 @@ on:
 
 jobs:
   agent-1-screening:
-    name: Agent 1 Screening Tests (Python 3.12)
+    name: Agent 1 Screening & LLM Catalyst Tests (Python 3.12)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -26,7 +26,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Agent 1 Unit Tests
+      - name: Run Agent 1 Unit & LLM Catalyst Tests
         run: |
           pytest tests/screening/ -v
 
@@ -38,8 +38,11 @@ jobs:
           echo "=== Testing Agent 1 Pure JSON Output ==="
           python run_screening.py --offline --json-only --top-n 3
 
+          echo "=== Testing Agent 1 AI Qualitative Catalyst (--llm) ==="
+          python run_screening.py --offline --llm --top-n 3
+
           echo "=== Testing Agent 1 -> Agent 2 -> Agent 3 Pipeline Dispatch ==="
-          python run_screening.py --offline --run-agents --top-n 2
+          python run_screening.py --offline --run-agents --top-n 2 --llm
 
   full-test-suite:
     name: Full Test Suite (${{ matrix.os }} / Python ${{ matrix.python-version }})
@@ -47,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         python-version: ["3.11", "3.12"]
     steps:
       - name: Checkout Code
@@ -64,6 +67,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run All Automated Unit Tests
+      - name: Run All Automated Unit Tests (78 Tests)
         run: |
           pytest tests/ -v
+
+      - name: Master Runner Test Suite Self-Check
+        run: |
+          python run_all.py --test
+
+      - name: Individual Agent CLI Smoke Tests
+        run: |
+          echo "=== Testing Agent 2 Technical Engine ==="
+          python run_technical.py --symbol RELIANCE --offline
+
+          echo "=== Testing Agent 3 Fundamental Engine ==="
+          python run_fundamental.py --symbol RELIANCE --offline --explain
+
+      - name: End-to-End Multi-Agent Pipeline Smoke Tests
+        run: |
+          echo "=== Testing End-to-End Pipeline with LLM Catalyst ==="
+          python run_all.py --offline --top-n 3 --llm
+
+          echo "=== Testing Single Stock Deep Pipeline ==="
+          python run_all.py --symbol RELIANCE --offline --llm

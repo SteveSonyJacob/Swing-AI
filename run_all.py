@@ -126,7 +126,8 @@ def run_pipeline(
     symbols: Optional[List[str]] = None,
     top_n: int = 5,
     min_score: int = 50,
-    offline: bool = False
+    offline: bool = False,
+    enable_llm: bool = False
 ) -> Dict[str, Any]:
     """Runs Agent 1 screening, forwards to Agent 2 and Agent 3, and generates composite verdicts."""
     screening_res = run_screening(
@@ -135,7 +136,8 @@ def run_pipeline(
         min_score=min_score,
         top_n=top_n,
         offline=offline,
-        custom_symbols=symbols
+        custom_symbols=symbols,
+        enable_llm=enable_llm
     )
 
     candidates = screening_res.get("candidates", [])
@@ -157,7 +159,7 @@ def run_pipeline(
     }
 
 
-def run_single_stock(symbol: str, offline: bool = False) -> Dict[str, Any]:
+def run_single_stock(symbol: str, offline: bool = False, enable_llm: bool = False) -> Dict[str, Any]:
     """Runs all three agents on a specific stock symbol."""
     sym = symbol.strip().upper().replace(".NS", "")
 
@@ -168,7 +170,8 @@ def run_single_stock(symbol: str, offline: bool = False) -> Dict[str, Any]:
         min_score=0,
         top_n=1,
         offline=offline,
-        custom_symbols=[sym]
+        custom_symbols=[sym],
+        enable_llm=enable_llm
     )
     screening_cand = screen_run["candidates"][0] if screen_run.get("candidates") else {}
     a1_score = screening_cand.get("screening_score", 50)
@@ -249,6 +252,11 @@ def main():
         help="Output raw canonical JSON only to stdout"
     )
     parser.add_argument(
+        "--llm",
+        action="store_true",
+        help="Enable AI qualitative news and catalyst analysis for screened candidates"
+    )
+    parser.add_argument(
         "--output-file",
         type=str,
         default=None,
@@ -276,7 +284,7 @@ def main():
 
     # Single stock deep analysis
     if args.symbol:
-        res = run_single_stock(args.symbol, offline=args.offline)
+        res = run_single_stock(args.symbol, offline=args.offline, enable_llm=args.llm)
         if args.json_only:
             print(json.dumps(res, indent=2))
         else:
@@ -297,7 +305,8 @@ def main():
         symbols=custom_syms,
         top_n=args.top_n,
         min_score=args.min_score,
-        offline=args.offline
+        offline=args.offline,
+        enable_llm=args.llm
     )
 
     if args.json_only:

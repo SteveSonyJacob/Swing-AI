@@ -33,6 +33,13 @@ thresholds:
   catalyst:
     earnings_lookahead_days: 14
 
+llm:
+  enabled: false
+  provider: "gemini"        # "gemini", "openai", or "heuristic"
+  model: "gemini-1.5-flash"
+  max_headlines: 5
+  temperature: 0.1
+
 moneycontrol:
   base_url: "https://www.moneycontrol.com"
   endpoints:
