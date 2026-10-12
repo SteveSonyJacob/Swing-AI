@@ -159,8 +159,10 @@ def run_screening(
         # Optional qualitative news & catalyst analysis (Agent 1 LLM Engine)
         if use_llm:
             try:
-                max_h = (config or {}).get("llm", {}).get("max_headlines", 5)
-                news = fetch_candidate_news(sym, max_items=max_h, offline=offline)
+                llm_cfg = (config or {}).get("llm", {})
+                max_h = llm_cfg.get("max_headlines", 5)
+                n_sources = llm_cfg.get("news_sources")
+                news = fetch_candidate_news(sym, sources=n_sources, max_items=max_h, offline=offline)
                 cat_eval = analyze_catalyst_with_llm(
                     symbol=sym,
                     headlines=news,

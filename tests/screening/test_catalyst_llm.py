@@ -13,15 +13,32 @@ from src.screening.main import run_screening
 from src.screening.output.formatter import print_screening_summary_table
 
 
-def test_fetch_candidate_news_offline():
-    """Verify offline deterministic news retrieval."""
-    news_trent = fetch_candidate_news("TRENT", max_items=3, offline=True)
+def test_fetch_candidate_news_offline(caplog):
+    """Verify offline Moneycontrol news retrieval and warning."""
+    import logging
+    with caplog.at_level(logging.WARNING):
+        news_trent = fetch_candidate_news("TRENT", max_items=3, offline=True)
     assert len(news_trent) > 0
-    assert any("Westside" in n["title"] or "profit" in n["title"].lower() for n in news_trent)
+    assert any("Moneycontrol" in n["source"] for n in news_trent)
+    assert any("offline" in record.message.lower() for record in caplog.records)
 
     news_unknown = fetch_candidate_news("XYZUNKNOWN", max_items=2, offline=True)
     assert len(news_unknown) > 0
-    assert "XYZUNKNOWN" in news_unknown[0]["title"]
+    assert "Moneycontrol" in news_unknown[0]["source"]
+
+
+def test_build_site_filter_query():
+    """Verify site query builder covers Moneycontrol and other financial websites."""
+    from src.screening.llm.news_fetcher import build_site_filter_query
+    q_all = build_site_filter_query()
+    assert "moneycontrol.com" in q_all
+    assert "economictimes.indiatimes.com" in q_all
+    assert "livemint.com" in q_all
+    assert "business-standard.com" in q_all
+
+    q_mc = build_site_filter_query(["moneycontrol"])
+    assert "moneycontrol.com" in q_mc
+    assert "economictimes" not in q_mc
 
 
 def test_heuristic_catalyst_positive():

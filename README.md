@@ -199,7 +199,7 @@ python run_technical.py --symbol RELIANCE --offline --json-only
 
 ## 4. Testing
 
-Run all 78 automated unit tests via pytest:
+Run all 79 automated unit tests via pytest:
 ```bash
 pytest -v
 ```
@@ -211,7 +211,7 @@ python run_all.py --test
 
 Run specific test suites:
 ```bash
-pytest -v tests/screening/    # Agent 1 screening & LLM catalyst tests (30 tests)
+pytest -v tests/screening/    # Agent 1 screening & LLM catalyst tests (31 tests)
 pytest -v tests/              # Agent 2 technical analysis tests (17 tests)
 pytest -v tests/fundamental/  # Agent 3 fundamental analysis tests (31 tests)
 ```
