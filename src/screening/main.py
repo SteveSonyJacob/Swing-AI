@@ -81,9 +81,17 @@ def run_screening(
 
     all_candidates_by_sym: Dict[str, Dict[str, Any]] = {}
     total_scanned_count = 0
+    screening_warnings: List[str] = []
+
+    active_source = source
+    if offline:
+        warn_msg = "Sources are offline: Skipping synthetic generation and using Moneycontrol as screening source."
+        logger.warning(warn_msg)
+        screening_warnings.append(warn_msg)
+        active_source = "moneycontrol"
 
     # 1. Moneycontrol Screening
-    if source in ["all", "moneycontrol"]:
+    if active_source in ["all", "moneycontrol"]:
         try:
             mc_candidates = fetch_moneycontrol_screeners(config=config, offline=offline)
             total_scanned_count += len(mc_candidates)
@@ -97,7 +105,7 @@ def run_screening(
             logger.warning(f"Error during Moneycontrol screening: {e}")
 
     # 2. yfinance Technical Scanning
-    if source in ["all", "yfinance"]:
+    if active_source in ["all", "yfinance"]:
         try:
             # If Moneycontrol already ran, prioritize those symbols plus universe
             if source == "all" and all_candidates_by_sym:
@@ -186,7 +194,8 @@ def run_screening(
         total_scanned=max(total_scanned_count, len(all_candidates_by_sym)),
         universe_name=universe if not custom_symbols else "custom",
         scan_timestamp=datetime.now().isoformat(),
-        market="NSE"
+        market="NSE",
+        warnings=screening_warnings if screening_warnings else None
     )
 
 

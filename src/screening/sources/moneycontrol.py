@@ -382,6 +382,18 @@ def fetch_moneycontrol_screeners(
     Deduplicates symbols and combines tags.
     """
     if offline:
+        logger.warning("Sources are offline: using cached Moneycontrol screener records.")
+        # Check local cache first if available
+        today_str = datetime.now().strftime("%Y%m%d")
+        cache_file = DATA_DIR / f"screening_moneycontrol_{today_str}.json"
+        if cache_file.exists():
+            try:
+                with open(cache_file, "r", encoding="utf-8") as f:
+                    cached_data = json.load(f)
+                    if cached_data and isinstance(cached_data, list):
+                        return cached_data
+            except Exception as e:
+                logger.warning(f"Failed to load Moneycontrol cache: {e}")
         return generate_synthetic_moneycontrol_data()
 
     if categories is None:

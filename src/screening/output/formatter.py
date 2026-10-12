@@ -10,7 +10,8 @@ def format_screening_output(
     total_scanned: int,
     universe_name: str,
     scan_timestamp: Optional[str] = None,
-    market: str = "NSE"
+    market: str = "NSE",
+    warnings: Optional[List[str]] = None
 ) -> Dict[str, Any]:
     """
     Constructs the canonical JSON output structure for Agent 1.
@@ -47,7 +48,7 @@ def format_screening_output(
 
         formatted_candidates.append(formatted_c)
 
-    return {
+    output: Dict[str, Any] = {
         "status": "success",
         "market": market,
         "scan_timestamp": scan_timestamp,
@@ -56,6 +57,9 @@ def format_screening_output(
         "candidates_count": len(formatted_candidates),
         "candidates": formatted_candidates
     }
+    if warnings:
+        output["warnings"] = warnings
+    return output
 
 
 def format_screening_error(error_message: str, universe_name: str = "unknown", market: str = "NSE") -> Dict[str, Any]:
@@ -81,6 +85,12 @@ def print_screening_summary_table(output_data: Dict[str, Any]) -> None:
     print("\n" + "=" * 90)
     print(f" AGENT 1 - SCREENING AGENT REPORT | Universe: {universe} | Scanned: {total} stocks")
     print("=" * 90)
+
+    warnings = output_data.get("warnings", [])
+    if warnings:
+        for w in warnings:
+            print(f" [!] WARNING: {w}")
+        print("-" * 90)
 
     if not candidates:
         print("  No candidate stocks met the minimum screening criteria.")
