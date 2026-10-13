@@ -19,6 +19,8 @@ def test_run_screening_offline_pipeline():
     assert res["market"] == "NSE"
     assert res["total_scanned"] > 0
     assert len(res["candidates"]) <= 5
+    assert "warnings" in res
+    assert any("offline" in w.lower() for w in res["warnings"])
     for cand in res["candidates"]:
         assert "symbol" in cand
         assert "screening_score" in cand
@@ -32,9 +34,12 @@ def test_run_screening_source_filters():
     assert res_mc["status"] == "success"
     assert len(res_mc["candidates"]) > 0
 
+    # In offline mode, sources are warned as offline and Moneycontrol is used as source
     res_yf = run_screening(source="yfinance", universe="nifty50", offline=True)
     assert res_yf["status"] == "success"
     assert len(res_yf["candidates"]) > 0
+    assert "warnings" in res_yf
+    assert any("moneycontrol" in w.lower() for w in res_yf["warnings"])
 
 
 def test_pipe_to_agents_offline():

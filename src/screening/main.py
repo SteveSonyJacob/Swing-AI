@@ -22,6 +22,8 @@ from src.screening.filters.volume_filter import evaluate_volume_criteria
 from src.screening.filters.liquidity_filter import evaluate_liquidity_criteria
 from src.screening.filters.catalyst_filter import evaluate_catalyst_criteria
 from src.screening.scoring.screening_score import compute_screening_score
+from src.screening.llm.news_fetcher import fetch_candidate_news
+from src.screening.llm.catalyst_analyzer import analyze_catalyst_with_llm
 from src.screening.output.formatter import (
     format_screening_output,
     format_screening_error,
@@ -51,7 +53,8 @@ def run_screening(
     top_n: int = 10,
     offline: bool = False,
     config: Optional[Dict[str, Any]] = None,
-    custom_symbols: Optional[List[str]] = None
+    custom_symbols: Optional[List[str]] = None,
+    enable_llm: bool = False
 ) -> Dict[str, Any]:
     """
     Executes the end-to-end Indian equity screening pipeline across
@@ -78,9 +81,17 @@ def run_screening(
 
     all_candidates_by_sym: Dict[str, Dict[str, Any]] = {}
     total_scanned_count = 0
+    screening_warnings: List[str] = []
+
+    active_source = source
+    if offline:
+        warn_msg = "Sources are offline: Skipping synthetic generation and using Moneycontrol as screening source."
+        logger.warning(warn_msg)
+        screening_warnings.append(warn_msg)
+        active_source = "moneycontrol"
 
     # 1. Moneycontrol Screening
-    if source in ["all", "moneycontrol"]:
+    if active_source in ["all", "moneycontrol"]:
         try:
             mc_candidates = fetch_moneycontrol_screeners(config=config, offline=offline)
             total_scanned_count += len(mc_candidates)
@@ -94,7 +105,7 @@ def run_screening(
             logger.warning(f"Error during Moneycontrol screening: {e}")
 
     # 2. yfinance Technical Scanning
-    if source in ["all", "yfinance"]:
+    if active_source in ["all", "yfinance"]:
         try:
             # If Moneycontrol already ran, prioritize those symbols plus universe
             if source == "all" and all_candidates_by_sym:
@@ -137,12 +148,31 @@ def run_screening(
 
     # 3. Apply Filters and Compute Scores
     scored_candidates: List[Dict[str, Any]] = []
+    use_llm = enable_llm or bool((config or {}).get("llm", {}).get("enabled", False))
 
     for sym, cand in all_candidates_by_sym.items():
         # Evaluate Liquidity
         liq_eval = evaluate_liquidity_criteria(cand, thresholds)
         if liq_eval["is_penny_stock"]:
             continue  # Exclude penny stocks outright
+
+        # Optional qualitative news & catalyst analysis (Agent 1 LLM Engine)
+        if use_llm:
+            try:
+                llm_cfg = (config or {}).get("llm", {})
+                max_h = llm_cfg.get("max_headlines", 5)
+                n_sources = llm_cfg.get("news_sources")
+                news = fetch_candidate_news(sym, sources=n_sources, max_items=max_h, offline=offline)
+                cat_eval = analyze_catalyst_with_llm(
+                    symbol=sym,
+                    headlines=news,
+                    corporate_context={"days_to_results": cand.get("days_to_results")},
+                    config=config,
+                    offline=offline
+                )
+                cand["llm_catalyst"] = cat_eval
+            except Exception as e:
+                logger.warning(f"LLM catalyst analysis failed for {sym}: {e}")
 
         # Compute Score
         score_data = compute_screening_score(cand, weights=weights, thresholds=thresholds)
@@ -166,7 +196,8 @@ def run_screening(
         total_scanned=max(total_scanned_count, len(all_candidates_by_sym)),
         universe_name=universe if not custom_symbols else "custom",
         scan_timestamp=datetime.now().isoformat(),
-        market="NSE"
+        market="NSE",
+        warnings=screening_warnings if screening_warnings else None
     )
 
 
@@ -222,6 +253,11 @@ def main():
         help="Directly forward top screened candidates to Agent 2 and Agent 3"
     )
     parser.add_argument(
+        "--llm",
+        action="store_true",
+        help="Enable AI qualitative news and catalyst analysis for screened candidates"
+    )
+    parser.add_argument(
         "--output-file",
         type=str,
         default=None,
@@ -239,7 +275,8 @@ def main():
         min_score=args.min_score,
         top_n=args.top_n,
         offline=args.offline,
-        custom_symbols=custom_syms
+        custom_symbols=custom_syms,
+        enable_llm=args.llm
     )
 
     # Optional Multi-Agent Pipeline Dispatch

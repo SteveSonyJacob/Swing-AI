@@ -178,6 +178,7 @@ def scan_yfinance_universe(
         return []
 
     if offline:
+        logger.warning("Sources are offline: external yfinance market scanning is unavailable.")
         return generate_synthetic_yfinance_data(symbols)
 
     formatted_tickers = [format_symbol_for_yf(s) for s in symbols]
