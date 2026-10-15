@@ -10,28 +10,16 @@ def test_cli_summary_table_encodes_cp1252():
     sample_data = {
         "status": "success",
         "market": "NSE",
-        "scan_timestamp": "2026-10-06T12:00:00",
-        "universe": "nifty50",
-        "total_scanned": 50,
-        "candidates_count": 2,
-        "candidates": [
-            {
-                "symbol": "RELIANCE",
-                "current_price": 2450.50,
-                "change_pct": 2.15,
-                "screening_score": 82,
-                "category": "PRIME_SETUP",
-                "tags": ["VOLUME_SHOCKER", "52W_HIGH_BREAKOUT"]
-            },
-            {
-                "symbol": "TCS",
-                "current_price": 3800.00,
-                "change_pct": -0.45,
-                "screening_score": 68,
-                "category": "WATCHLIST",
-                "tags": ["BULLISH_TREND"]
-            }
-        ]
+        "discovery_timestamp": "2026-10-15T12:00:00",
+        "universe_mode": "broad_market",
+        "total_eligible": 2,
+        "symbols": ["RELIANCE", "TCS"],
+        "metadata": {
+            "total_discovered": 2,
+            "total_eligible": 2,
+            "coverage_status": "complete",
+            "data_source": "NSE_EQUITY_MASTER"
+        }
     }
 
     # Capture stdout in a string buffer
@@ -45,9 +33,9 @@ def test_cli_summary_table_encodes_cp1252():
         sys.stdout = old_stdout
 
     output_str = buf.getvalue()
-    assert "AGENT 1 - SCREENING AGENT REPORT" in output_str
-    assert "Price (INR)" in output_str
+    assert "AGENT 1 - STOCK DISCOVERY REPORT" in output_str
     assert "RELIANCE" in output_str
+    assert "TCS" in output_str
 
     # Must encode cleanly to cp1252 and ascii without exception
     encoded_cp1252 = output_str.encode("cp1252")
@@ -57,9 +45,15 @@ def test_cli_summary_table_encodes_cp1252():
 def test_cli_summary_table_empty_candidates():
     sample_data = {
         "status": "success",
-        "universe": "nifty50",
-        "total_scanned": 10,
-        "candidates": []
+        "market": "NSE",
+        "universe_mode": "broad_market",
+        "total_eligible": 0,
+        "symbols": [],
+        "metadata": {
+            "total_discovered": 0,
+            "total_eligible": 0,
+            "coverage_status": "empty"
+        }
     }
     buf = io.StringIO()
     import sys
@@ -71,4 +65,4 @@ def test_cli_summary_table_empty_candidates():
         sys.stdout = old_stdout
 
     output_str = buf.getvalue()
-    assert "No candidate stocks met the minimum screening criteria." in output_str
+    assert "No eligible equity symbols discovered." in output_str

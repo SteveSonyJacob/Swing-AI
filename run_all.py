@@ -65,11 +65,12 @@ def print_single_stock_summary(symbol: str, res: Dict[str, Any]):
     print(f"RATIONALE               : {reason}")
     print("-" * 90)
 
-    # Scores
-    a1_score = s.get("screening_score", "N/A")
+    # Status & Scores
+    sc = res.get("screening", {})
+    sc_status = "Eligible (NSE)" if sc.get("eligible") else "Unverified"
     a2_score = t.get("technical_score", "N/A")
     a3_score = f.get("fundamental_score", "N/A")
-    print(f"Agent Scores            : Screening: {a1_score}/100 | Technical: {a2_score}/100 | Fundamental: {a3_score}/100")
+    print(f"Agent Evaluations       : Discovery: {sc_status} | Technical: {a2_score}/100 | Fundamental: {a3_score}/100")
 
     # Technical Details
     print("\n[AGENT 2 - TECHNICAL SWING SETUP]")
@@ -122,30 +123,31 @@ def print_single_stock_summary(symbol: str, res: Dict[str, Any]):
 
 
 def run_pipeline(
-    universe: str = "nifty50",
+    universe: str = "broad_market",
     symbols: Optional[List[str]] = None,
-    top_n: int = 5,
-    min_score: int = 50,
+    max_symbols: int = 10,
+    top_n: Optional[int] = None,
+    refresh_universe: bool = False,
     offline: bool = False,
-    enable_llm: bool = False
+    enable_llm: bool = False,
+    **kwargs
 ) -> Dict[str, Any]:
-    """Runs Agent 1 screening, forwards to Agent 2 and Agent 3, and generates composite verdicts."""
+    """Runs Agent 1 broad discovery, forwards eligible symbols to Agent 2 and Agent 3, and generates composite verdicts."""
+    limit = top_n if top_n is not None else max_symbols
     screening_res = run_screening(
         universe=universe,
-        source="all",
-        min_score=min_score,
-        top_n=top_n,
         offline=offline,
         custom_symbols=symbols,
+        refresh_universe=refresh_universe,
         enable_llm=enable_llm
     )
 
-    candidates = screening_res.get("candidates", [])
+    discovered_symbols = screening_res.get("symbols", [])
     pipeline_results = []
-    if candidates:
+    if discovered_symbols:
         pipeline_results = pipe_to_agents(
-            candidates=candidates,
-            top_n=top_n,
+            symbols_or_candidates=discovered_symbols,
+            max_symbols_to_analyze=limit,
             offline=offline
         )
 
@@ -163,31 +165,26 @@ def run_single_stock(symbol: str, offline: bool = False, enable_llm: bool = Fals
     """Runs all three agents on a specific stock symbol."""
     sym = symbol.strip().upper().replace(".NS", "")
 
-    # 1. Screening evaluation
+    # 1. Agent 1: Screening discovery verification
     screen_run = run_screening(
         universe="custom",
-        source="all",
-        min_score=0,
-        top_n=1,
         offline=offline,
         custom_symbols=[sym],
         enable_llm=enable_llm
     )
-    screening_cand = screen_run["candidates"][0] if screen_run.get("candidates") else {}
-    a1_score = screening_cand.get("screening_score", 50)
+    is_discovered = sym in screen_run.get("symbols", [])
 
-    # 2. Agent 2 Technical
+    # 2. Agent 2: Technical Analysis
     tech_res = run_technical_analysis(symbol=sym, offline=offline)
     a2_score = tech_res.get("technical_score")
     daily_trend = tech_res.get("trend", {}).get("daily")
 
-    # 3. Agent 3 Fundamental
+    # 3. Agent 3: Fundamental Analysis
     fund_res = run_fundamental_analysis(symbol=sym, offline=offline)
     a3_score = fund_res.get("fundamental_score")
 
-    # 4. Gated Composite Verdict
+    # 4. Gated Composite Verdict (Technical + Fundamental)
     comp_score, verdict, reason = evaluate_composite_verdict(
-        agent_1_score=a1_score,
         agent_2_score=a2_score,
         agent_3_score=a3_score,
         daily_trend=daily_trend,
@@ -201,7 +198,11 @@ def run_single_stock(symbol: str, offline: bool = False, enable_llm: bool = Fals
         "composite_score": comp_score,
         "composite_verdict": verdict,
         "verdict_reason": reason,
-        "screening": screening_cand,
+        "screening": {
+            "eligible": is_discovered,
+            "status": "discovered" if is_discovered else "not_found",
+            "metadata": screen_run.get("metadata", {})
+        },
         "technical": tech_res,
         "fundamental": fund_res
     }
@@ -220,8 +221,8 @@ def main():
     parser.add_argument(
         "--universe",
         type=str,
-        default="nifty50",
-        help="Universe preset: nifty50, nifty_next50, midcap_picks, or all (default: nifty50)"
+        default="broad_market",
+        help="Universe mode: broad_market (all NSE equities) or optional preset (default: broad_market)"
     )
     parser.add_argument(
         "--symbols",
@@ -230,16 +231,27 @@ def main():
         help="Comma-separated custom symbols to scan (e.g. RELIANCE,TCS,TRENT,HAL,BEL)"
     )
     parser.add_argument(
+        "--max-symbols",
+        type=int,
+        default=10,
+        help="Maximum number of discovered candidates to analyze through downstream agents (default: 10)"
+    )
+    parser.add_argument(
         "--top-n",
         type=int,
-        default=5,
-        help="Number of top candidates to evaluate through the pipeline (default: 5)"
+        default=None,
+        help="Alias for --max-symbols (backward compatibility)"
+    )
+    parser.add_argument(
+        "--refresh-universe",
+        action="store_true",
+        help="Force re-fetch official NSE security master equity list from exchange archives"
     )
     parser.add_argument(
         "--min-score",
         type=int,
-        default=50,
-        help="Minimum Agent 1 screening score (default: 50)"
+        default=None,
+        help="Deprecated: Agent 1 does not score or rank stocks"
     )
     parser.add_argument(
         "--offline",
@@ -281,6 +293,7 @@ def main():
         print("[+] All unit and integration tests passed.\n")
 
     custom_syms = [s.strip().upper() for s in args.symbols.split(",")] if args.symbols else None
+    analysis_limit = args.top_n if args.top_n is not None else args.max_symbols
 
     # Single stock deep analysis
     if args.symbol:
@@ -303,8 +316,8 @@ def main():
     results = run_pipeline(
         universe=args.universe,
         symbols=custom_syms,
-        top_n=args.top_n,
-        min_score=args.min_score,
+        max_symbols=analysis_limit,
+        refresh_universe=args.refresh_universe,
         offline=args.offline,
         enable_llm=args.llm
     )
@@ -320,16 +333,16 @@ def main():
             print("\n" + "=" * 90)
             print(" MULTI-AGENT COMPOSITE VERDICTS (Agent 1 -> Agent 2 -> Agent 3)")
             print("=" * 90)
-            print(f"{'Symbol':<12} {'A1 (Screen)':<12} {'A2 (Tech)':<12} {'A3 (Fund)':<12} {'Composite':<12} {'Verdict':<25}")
+            print(f"{'Symbol':<12} {'Discovery':<14} {'A2 (Tech)':<12} {'A3 (Fund)':<12} {'Composite':<12} {'Verdict':<25}")
             print("-" * 90)
             for item in pipeline_items:
                 sym = item["symbol"]
-                a1 = f"{item['agent_1_score']}/100"
+                disc = "Discovered"
                 a2 = f"{item.get('agent_2_score')}/100" if item.get('agent_2_score') is not None else "-"
                 a3 = f"{item.get('agent_3_score')}/100" if item.get('agent_3_score') is not None else "-"
-                comp = f"{item.get('composite_score')}/100"
+                comp = f"{item.get('composite_score')}/100" if item.get('composite_score') is not None else "-"
                 verdict = item.get("composite_verdict", "-")
-                print(f"{sym:<12} {a1:<12} {a2:<12} {a3:<12} {comp:<12} {verdict:<25}")
+                print(f"{sym:<12} {disc:<14} {a2:<12} {a3:<12} {comp:<12} {verdict:<25}")
             print("=" * 90)
 
             print("\n" + "=" * 90)

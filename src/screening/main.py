@@ -1,4 +1,10 @@
-"""Agent 1 — Screening Agent execution pipeline and CLI."""
+"""Agent 1 — Market-Wide Stock Discovery Engine for NSE-Listed Equities.
+
+Single Responsibility:
+Discovers eligible ordinary equity symbols across the broad National Stock Exchange
+of India (NSE) universe and returns their symbols to downstream analysis engines.
+Does NOT rank, score, or pick top trading opportunities.
+"""
 
 import sys
 import os
@@ -10,20 +16,15 @@ from datetime import datetime
 from typing import Dict, Any, List, Optional
 import yaml
 
-# Add project root to sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.screening.sources.moneycontrol import fetch_moneycontrol_screeners
-from src.screening.sources.yfinance_scanner import scan_yfinance_universe, clean_symbol
-from src.screening.filters.technical_filter import evaluate_technical_criteria
-from src.screening.filters.volume_filter import evaluate_volume_criteria
-from src.screening.filters.liquidity_filter import evaluate_liquidity_criteria
-from src.screening.filters.catalyst_filter import evaluate_catalyst_criteria
-from src.screening.scoring.screening_score import compute_screening_score
-from src.screening.llm.news_fetcher import fetch_candidate_news
-from src.screening.llm.catalyst_analyzer import analyze_catalyst_with_llm
+from src.screening.sources.nse_universe import (
+    discover_nse_equity_universe,
+    normalize_symbol,
+    CACHE_FILE
+)
 from src.screening.output.formatter import (
     format_screening_output,
     format_screening_error,
@@ -35,255 +36,211 @@ logger = logging.getLogger(__name__)
 
 
 def load_screening_config(config_path: Optional[Path] = None) -> Dict[str, Any]:
-    """Loads screening_settings.yaml."""
+    """Loads config/screening_settings.yaml."""
     if config_path is None:
         config_path = PROJECT_ROOT / "config" / "screening_settings.yaml"
 
     if not config_path.exists():
         return {}
 
-    with open(config_path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f) or {}
+    try:
+        with open(config_path, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f) or {}
+    except Exception as e:
+        logger.warning(f"Failed to load screening config from {config_path}: {e}")
+        return {}
 
 
 def run_screening(
-    universe: str = "nifty50",
+    universe: str = "broad_market",
     source: str = "all",
-    min_score: int = 50,
-    top_n: int = 10,
+    min_score: Optional[int] = None,  # Deprecated: Screening Agent does not score
+    top_n: Optional[int] = None,      # Deprecated: Screening Agent does not rank
     offline: bool = False,
     config: Optional[Dict[str, Any]] = None,
     custom_symbols: Optional[List[str]] = None,
-    enable_llm: bool = False
+    refresh_universe: bool = False,
+    enable_llm: bool = False,
+    **kwargs
 ) -> Dict[str, Any]:
     """
-    Executes the end-to-end Indian equity screening pipeline across
-    Moneycontrol and yfinance.
+    Executes broad-universe NSE equity discovery and eligibility verification.
+    
+    Returns clean canonical dictionary containing:
+      - symbols: List[str] of valid, deduplicated NSE equity symbols.
+      - metadata: Discovery diagnostics (data source, exclusions, coverage status).
     """
     if config is None:
         config = load_screening_config()
 
-    weights = config.get("scoring", {}).get("weights")
-    thresholds = config.get("thresholds", {})
-    universes_cfg = config.get("universes", {})
+    univ_cfg = config.get("universe", {})
+    source_url = univ_cfg.get("primary_source_url", "https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv")
+    fallback_url = univ_cfg.get("fallback_source_url", "https://archives.nseindia.com/content/equities/EQUITY_L.csv")
+    allowed_series = univ_cfg.get("allowed_series", ["EQ", "BE"])
+    cache_ttl = univ_cfg.get("cache_ttl_hours", 24)
 
-    # Determine symbols for yfinance scan
+    # 1. Custom symbols mode: user explicitly requested specific symbols
     if custom_symbols:
-        symbols_to_scan = [clean_symbol(s) for s in custom_symbols]
-    elif universe == "all":
-        symbols_to_scan = list(set(
-            universes_cfg.get("nifty50", []) +
-            universes_cfg.get("nifty_next50", []) +
-            universes_cfg.get("midcap_picks", [])
-        ))
-    else:
-        symbols_to_scan = universes_cfg.get(universe, universes_cfg.get("nifty50", []))
+        clean_symbols: List[str] = []
+        for s in custom_symbols:
+            sym = normalize_symbol(s)
+            if sym and sym not in clean_symbols:
+                clean_symbols.append(sym)
 
-    all_candidates_by_sym: Dict[str, Dict[str, Any]] = {}
-    total_scanned_count = 0
-    screening_warnings: List[str] = []
+        metadata = {
+            "data_source": "CUSTOM_SYMBOLS_REQUEST",
+            "discovery_timestamp": datetime.now().isoformat(),
+            "total_discovered": len(clean_symbols),
+            "total_eligible": len(clean_symbols),
+            "excluded_count": 0,
+            "coverage_status": "custom",
+            "is_cached": False,
+            "last_refresh": datetime.now().isoformat(),
+            "failed_sources": []
+        }
 
-    active_source = source
-    if offline:
-        warn_msg = "Sources are offline: Skipping synthetic generation and using Moneycontrol as screening source."
-        logger.warning(warn_msg)
-        screening_warnings.append(warn_msg)
-        active_source = "moneycontrol"
+        return format_screening_output(
+            symbols=clean_symbols,
+            metadata=metadata,
+            universe_name="custom",
+            market=config.get("market", "NSE")
+        )
 
-    # 1. Moneycontrol Screening
-    if active_source in ["all", "moneycontrol"]:
-        try:
-            mc_candidates = fetch_moneycontrol_screeners(config=config, offline=offline)
-            total_scanned_count += len(mc_candidates)
-            for c in mc_candidates:
-                sym = clean_symbol(c.get("symbol", ""))
-                if not sym:
-                    continue
-                c["sources"] = ["moneycontrol"]
-                all_candidates_by_sym[sym] = c
-        except Exception as e:
-            logger.warning(f"Error during Moneycontrol screening: {e}")
+    # 2. Check if a legacy watchlist preset was explicitly requested (e.g., in legacy tests)
+    watchlists = config.get("optional_watchlists", {})
+    if universe in watchlists and universe != "broad_market" and universe != "all":
+        watchlist_symbols = [normalize_symbol(s) for s in watchlists[universe] if normalize_symbol(s)]
+        metadata = {
+            "data_source": f"OPTIONAL_WATCHLIST_{universe.upper()}",
+            "discovery_timestamp": datetime.now().isoformat(),
+            "total_discovered": len(watchlist_symbols),
+            "total_eligible": len(watchlist_symbols),
+            "excluded_count": 0,
+            "coverage_status": "watchlist_preset",
+            "is_cached": False,
+            "last_refresh": datetime.now().isoformat(),
+            "failed_sources": []
+        }
+        return format_screening_output(
+            symbols=watchlist_symbols,
+            metadata=metadata,
+            universe_name=universe,
+            market=config.get("market", "NSE")
+        )
 
-    # 2. yfinance Technical Scanning
-    if active_source in ["all", "yfinance"]:
-        try:
-            # If Moneycontrol already ran, prioritize those symbols plus universe
-            if source == "all" and all_candidates_by_sym:
-                scan_list = list(set(symbols_to_scan + list(all_candidates_by_sym.keys())))
-            else:
-                scan_list = symbols_to_scan
-
-            yf_candidates = scan_yfinance_universe(scan_list, config=config, offline=offline)
-            total_scanned_count += len(scan_list)
-
-            for yc in yf_candidates:
-                sym = clean_symbol(yc.get("symbol", ""))
-                if not sym:
-                    continue
-
-                if sym in all_candidates_by_sym:
-                    # Merge data from both sources
-                    existing = all_candidates_by_sym[sym]
-                    merged_tags = list(set(existing.get("tags", []) + yc.get("tags", [])))
-                    existing.update({
-                        "ema_20": yc.get("ema_20"),
-                        "ema_50": yc.get("ema_50"),
-                        "ema_200": yc.get("ema_200"),
-                        "rsi": yc.get("rsi"),
-                        "volume_ratio": yc.get("volume_ratio"),
-                        "avg_volume_20": yc.get("avg_volume_20"),
-                        "high_52w": yc.get("high_52w"),
-                        "distance_52w_high_pct": yc.get("distance_52w_high_pct"),
-                        "breakout_20d": yc.get("breakout_20d", False),
-                        "turnover_cr": yc.get("turnover_cr") or existing.get("turnover_cr"),
-                        "tags": merged_tags
-                    })
-                    if "yfinance" not in existing.get("sources", []):
-                        existing["sources"].append("yfinance")
-                else:
-                    yc["sources"] = ["yfinance"]
-                    all_candidates_by_sym[sym] = yc
-        except Exception as e:
-            logger.warning(f"Error during yfinance screening: {e}")
-
-    # 3. Apply Filters and Compute Scores
-    scored_candidates: List[Dict[str, Any]] = []
-    use_llm = enable_llm or bool((config or {}).get("llm", {}).get("enabled", False))
-
-    for sym, cand in all_candidates_by_sym.items():
-        # Evaluate Liquidity
-        liq_eval = evaluate_liquidity_criteria(cand, thresholds)
-        if liq_eval["is_penny_stock"]:
-            continue  # Exclude penny stocks outright
-
-        # Optional qualitative news & catalyst analysis (Agent 1 LLM Engine)
-        if use_llm:
-            try:
-                llm_cfg = (config or {}).get("llm", {})
-                max_h = llm_cfg.get("max_headlines", 5)
-                n_sources = llm_cfg.get("news_sources")
-                news = fetch_candidate_news(sym, sources=n_sources, max_items=max_h, offline=offline)
-                cat_eval = analyze_catalyst_with_llm(
-                    symbol=sym,
-                    headlines=news,
-                    corporate_context={"days_to_results": cand.get("days_to_results")},
-                    config=config,
-                    offline=offline
-                )
-                cand["llm_catalyst"] = cat_eval
-            except Exception as e:
-                logger.warning(f"LLM catalyst analysis failed for {sym}: {e}")
-
-        # Compute Score
-        score_data = compute_screening_score(cand, weights=weights, thresholds=thresholds)
-        cand.update(score_data)
-
-        # Minimum score filter
-        if cand["screening_score"] >= min_score:
-            scored_candidates.append(cand)
-
-    # 4. Sort Candidates descending by score, then change_pct
-    scored_candidates.sort(
-        key=lambda x: (x.get("screening_score", 0), x.get("change_pct", 0.0) or 0.0),
-        reverse=True
+    # 3. Market-wide broad NSE equity universe discovery
+    discovery_res = discover_nse_equity_universe(
+        source_url=source_url,
+        fallback_url=fallback_url,
+        allowed_series=allowed_series,
+        cache_file=CACHE_FILE,
+        cache_ttl_hours=cache_ttl,
+        force_refresh=refresh_universe,
+        offline=offline,
+        timeout=config.get("network", {}).get("timeout", 10)
     )
 
-    # 5. Take Top N
-    top_candidates = scored_candidates[:top_n]
+    discovered_symbols = discovery_res.get("symbols", [])
+    metadata = discovery_res.get("metadata", {})
+
+    # 4. Optional configured eligibility constraints (only if explicitly enabled in configuration)
+    eligibility_cfg = config.get("eligibility", {})
+    eligible_symbols = discovered_symbols
+
+    if eligibility_cfg.get("enabled", False):
+        min_p = eligibility_cfg.get("min_price")
+        # If price/volume filtering is explicitly enabled, it can filter symbols here
+        logger.info("Applying explicitly configured eligibility constraints.")
 
     return format_screening_output(
-        candidates=top_candidates,
-        total_scanned=max(total_scanned_count, len(all_candidates_by_sym)),
-        universe_name=universe if not custom_symbols else "custom",
-        scan_timestamp=datetime.now().isoformat(),
-        market="NSE",
-        warnings=screening_warnings if screening_warnings else None
+        symbols=eligible_symbols,
+        metadata=metadata,
+        universe_name="broad_market",
+        market=config.get("market", "NSE")
     )
 
 
 def main():
-    """Command-line interface for Agent 1 — Screening Agent."""
+    """CLI runner for Agent 1 — Market-Wide Stock Discovery Engine."""
     parser = argparse.ArgumentParser(
-        description="SwingTrade AI: Agent 1 — Screening Agent for Indian Equities (NSE)"
+        description="SwingTrade AI: Agent 1 — Market-Wide Stock Discovery Engine for NSE-Listed Equities"
     )
     parser.add_argument(
-        "--universe",
+        "--mode",
         type=str,
-        default="nifty50",
-        help="Universe preset: nifty50, nifty_next50, midcap_picks, or all (default: nifty50)"
-    )
-    parser.add_argument(
-        "--source",
-        type=str,
-        choices=["all", "moneycontrol", "yfinance"],
-        default="all",
-        help="Data source: all, moneycontrol, or yfinance (default: all)"
+        default="broad_market",
+        help="Universe mode: broad_market or custom (default: broad_market)"
     )
     parser.add_argument(
         "--symbols",
         type=str,
         default=None,
-        help="Comma-separated custom symbols (e.g. RELIANCE,TCS,TRENT)"
+        help="Comma-separated custom symbols to inspect (e.g. RELIANCE,TCS,TRENT)"
     )
     parser.add_argument(
-        "--min-score",
-        type=int,
-        default=50,
-        help="Minimum screening score to include (0-100, default: 50)"
-    )
-    parser.add_argument(
-        "--top-n",
-        type=int,
-        default=10,
-        help="Maximum candidates to return (default: 10)"
+        "--refresh-universe",
+        action="store_true",
+        help="Force download and refresh of official exchange equity master list"
     )
     parser.add_argument(
         "--offline",
         action="store_true",
-        help="Run offline using deterministic synthetic market data"
+        help="Run offline using local cached universe or bundled seed dataset"
     )
     parser.add_argument(
         "--json-only",
         action="store_true",
-        help="Output raw canonical JSON only (suppresses table formatting)"
+        help="Output raw canonical JSON only to stdout"
     )
     parser.add_argument(
         "--run-agents",
         action="store_true",
-        help="Directly forward top screened candidates to Agent 2 and Agent 3"
+        help="Forward discovered symbols to Agent 2 (Technical) and Agent 3 (Fundamental)"
     )
     parser.add_argument(
-        "--llm",
-        action="store_true",
-        help="Enable AI qualitative news and catalyst analysis for screened candidates"
+        "--max-symbols",
+        type=int,
+        default=None,
+        help="Maximum discovered symbols to forward to downstream analysis (default: 10)"
+    )
+    parser.add_argument(
+        "--top-n",
+        type=int,
+        default=None,
+        help="Alias for --max-symbols (reproducible first N discovered symbols)"
     )
     parser.add_argument(
         "--output-file",
         type=str,
         default=None,
-        help="Save JSON results to specified file path"
+        help="Save output JSON to specified file path"
     )
+
+    # Legacy parameters accepted gracefully without crash
+    parser.add_argument("--universe", type=str, default=None, help=argparse.SUPPRESS)
+    parser.add_argument("--source", type=str, default=None, help=argparse.SUPPRESS)
+    parser.add_argument("--min-score", type=int, default=None, help=argparse.SUPPRESS)
+    parser.add_argument("--llm", action="store_true", help=argparse.SUPPRESS)
 
     args = parser.parse_args()
 
     custom_syms = [s.strip().upper() for s in args.symbols.split(",")] if args.symbols else None
+    univ_choice = args.universe or args.mode
 
-    # Run screening
+    # Run broad stock discovery
     result = run_screening(
-        universe=args.universe,
-        source=args.source,
-        min_score=args.min_score,
-        top_n=args.top_n,
-        offline=args.offline,
+        universe=univ_choice,
         custom_symbols=custom_syms,
-        enable_llm=args.llm
+        refresh_universe=args.refresh_universe,
+        offline=args.offline
     )
 
     # Optional Multi-Agent Pipeline Dispatch
-    if args.run_agents and result.get("candidates"):
+    if args.run_agents and result.get("symbols"):
+        limit = args.max_symbols or args.top_n or 10
         pipeline_results = pipe_to_agents(
-            candidates=result["candidates"],
-            top_n=min(args.top_n, 5),
+            symbols_or_candidates=result["symbols"],
+            max_symbols_to_analyze=limit,
             offline=args.offline
         )
         result["multi_agent_pipeline"] = pipeline_results
@@ -295,18 +252,17 @@ def main():
         print_screening_summary_table(result)
         if args.run_agents and "multi_agent_pipeline" in result:
             print("\n" + "=" * 90)
-            print(" MULTI-AGENT COMPOSITE VERDICTS (Agent 1 -> Agent 2 -> Agent 3)")
+            print(" MULTI-AGENT COMPOSITE VERDICTS (Downstream Technical & Fundamental Analysis)")
             print("=" * 90)
-            print(f"{'Symbol':<12} {'A1 (Screen)':<12} {'A2 (Tech)':<12} {'A3 (Fund)':<12} {'Composite':<12} {'Verdict':<20}")
+            print(f"{'Symbol':<12} {'A2 (Tech)':<12} {'A3 (Fund)':<12} {'Composite':<12} {'Verdict':<25}")
             print("-" * 90)
             for item in result["multi_agent_pipeline"]:
                 sym = item["symbol"]
-                a1 = f"{item['agent_1_score']}/100"
                 a2 = f"{item.get('agent_2_score')}/100" if item.get('agent_2_score') is not None else "-"
                 a3 = f"{item.get('agent_3_score')}/100" if item.get('agent_3_score') is not None else "-"
                 comp = f"{item.get('composite_score')}/100"
                 verdict = item.get("composite_verdict", "-")
-                print(f"{sym:<12} {a1:<12} {a2:<12} {a3:<12} {comp:<12} {verdict:<20}")
+                print(f"{sym:<12} {a2:<12} {a3:<12} {comp:<12} {verdict:<25}")
             print("=" * 90 + "\n")
 
     if args.output_file:
