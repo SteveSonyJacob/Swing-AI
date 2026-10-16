@@ -1,132 +1,161 @@
-"""JSON and CLI table output formatters for Agent 1 — Screening Agent."""
+"""Output formatters for Agent 1 — Market-Wide Stock Discovery Engine.
 
+Conforms to Section 6 clean output contract:
+- Primary output: eligible symbols collection (no scores or rankings).
+- Separate operational metadata and discovery diagnostics.
+"""
+
+import sys
 from typing import Dict, Any, List, Optional
-import json
 from datetime import datetime
 
 
 def format_screening_output(
-    candidates: List[Dict[str, Any]],
-    total_scanned: int,
-    universe_name: str,
+    symbols: Optional[List[str]] = None,
+    metadata: Optional[Dict[str, Any]] = None,
+    total_scanned: Optional[int] = None,
+    universe_name: str = "broad_market",
     scan_timestamp: Optional[str] = None,
     market: str = "NSE",
-    warnings: Optional[List[str]] = None
+    warnings: Optional[List[str]] = None,
+    candidates: Optional[List[Any]] = None  # Legacy compatibility parameter
 ) -> Dict[str, Any]:
     """
     Constructs the canonical JSON output structure for Agent 1.
+    Primary output is 'symbols', completely decoupled from ranking or scores.
     """
+    if symbols is None:
+        if candidates is not None:
+            symbols = [
+                c.get("symbol", "").upper().replace(".NS", "")
+                if isinstance(c, dict) else str(c).upper().replace(".NS", "")
+                for c in candidates
+                if c
+            ]
+        else:
+            symbols = []
+
+    # Clean and deduplicate symbols preserving order
+    clean_symbols: List[str] = []
+    for s in symbols:
+        sym = str(s).strip().upper().replace(".NS", "")
+        if sym and sym not in clean_symbols:
+            clean_symbols.append(sym)
+
     if scan_timestamp is None:
         scan_timestamp = datetime.now().isoformat()
 
-    formatted_candidates: List[Dict[str, Any]] = []
-
-    for c in candidates:
-        price = c.get("current_price") or c.get("price")
-        formatted_c = {
-            "symbol": str(c.get("symbol", "")).upper().replace(".NS", ""),
-            "name": str(c.get("name", c.get("symbol", ""))),
-            "current_price": round(float(price), 2) if price is not None else None,
-            "change_pct": round(float(c.get("change_pct", 0.0)), 2) if c.get("change_pct") is not None else None,
-            "screening_score": int(c.get("screening_score", 0)),
-            "category": str(c.get("category", "WATCHLIST")),
-            "score_breakdown": c.get("score_breakdown", {}),
-            "tags": c.get("tags", []),
-            "source": c.get("sources", [c.get("screener_source", "unknown")]),
-            "metrics": {
-                "volume_ratio": c.get("volume_ratio"),
-                "rsi": c.get("rsi"),
-                "distance_52w_high_pct": c.get("distance_52w_high_pct"),
-                "breakout_20d": c.get("breakout_20d", False),
-                "turnover_cr": c.get("turnover_cr"),
-                "days_to_results": c.get("days_to_results")
-            },
-            "suggested_action": "pass_to_agent_2_and_3"
-        }
-        if "llm_catalyst" in c:
-            formatted_c["llm_catalyst"] = c["llm_catalyst"]
-
-        formatted_candidates.append(formatted_c)
+    meta = dict(metadata or {})
+    if "discovery_timestamp" not in meta:
+        meta["discovery_timestamp"] = scan_timestamp
+    if "total_eligible" not in meta:
+        meta["total_eligible"] = len(clean_symbols)
+    if "total_discovered" not in meta:
+        meta["total_discovered"] = total_scanned or len(clean_symbols)
+    if "coverage_status" not in meta:
+        meta["coverage_status"] = "complete" if not meta.get("is_cached") else "cached"
+    if "data_source" not in meta:
+        meta["data_source"] = "NSE_OFFICIAL_EQUITY_MASTER"
+    if warnings:
+        meta["warnings"] = warnings
 
     output: Dict[str, Any] = {
         "status": "success",
         "market": market,
-        "scan_timestamp": scan_timestamp,
-        "universe": universe_name,
-        "total_scanned": total_scanned,
-        "candidates_count": len(formatted_candidates),
-        "candidates": formatted_candidates
+        "discovery_timestamp": scan_timestamp,
+        "universe_mode": universe_name,
+        "total_eligible": len(clean_symbols),
+        "symbols": clean_symbols,
+        "metadata": meta
     }
-    if warnings:
-        output["warnings"] = warnings
+
+    # Maintain backward compatibility for legacy test harnesses expecting candidates field
+    if candidates is not None or "candidates" in meta:
+        output["candidates"] = [
+            {"symbol": s, "suggested_action": "pass_to_agent_2_and_3"}
+            for s in clean_symbols
+        ]
+        output["candidates_count"] = len(clean_symbols)
+        output["total_scanned"] = meta.get("total_discovered", len(clean_symbols))
+
     return output
 
 
-def format_screening_error(error_message: str, universe_name: str = "unknown", market: str = "NSE") -> Dict[str, Any]:
-    """Constructs error output structure."""
+def format_screening_error(
+    error_message: str,
+    universe_name: str = "broad_market",
+    market: str = "NSE"
+) -> Dict[str, Any]:
+    """Constructs diagnostic error output structure."""
     return {
         "status": "error",
         "market": market,
-        "scan_timestamp": datetime.now().isoformat(),
-        "universe": universe_name,
-        "total_scanned": 0,
-        "candidates_count": 0,
-        "candidates": [],
-        "error": str(error_message)
+        "discovery_timestamp": datetime.now().isoformat(),
+        "universe_mode": universe_name,
+        "total_eligible": 0,
+        "symbols": [],
+        "metadata": {
+            "coverage_status": "failed",
+            "error": str(error_message)
+        }
     }
 
 
 def print_screening_summary_table(output_data: Dict[str, Any]) -> None:
-    """Pretty-prints candidates in a clean CLI table format."""
-    candidates = output_data.get("candidates", [])
-    universe = output_data.get("universe", "unknown")
-    total = output_data.get("total_scanned", 0)
+    """Pretty-prints broad discovery diagnostics and eligible symbols preview to CLI."""
+    symbols = output_data.get("symbols", [])
+    if not symbols and "candidates" in output_data:
+        symbols = [c.get("symbol", "") if isinstance(c, dict) else str(c) for c in output_data["candidates"]]
+
+    meta = output_data.get("metadata", {})
+    universe = output_data.get("universe_mode", output_data.get("universe", "broad_market"))
+    total_disc = meta.get("total_discovered", len(symbols))
+    total_elig = meta.get("total_eligible", len(symbols))
+    source = meta.get("data_source", "NSE_EQUITY_MASTER")
+    coverage = meta.get("coverage_status", "complete").upper()
+    is_cached = meta.get("is_cached", False)
+    last_refresh = meta.get("last_refresh") or meta.get("discovery_timestamp", "N/A")
 
     print("\n" + "=" * 90)
-    print(f" AGENT 1 - SCREENING AGENT REPORT | Universe: {universe} | Scanned: {total} stocks")
+    print(f" AGENT 1 - STOCK DISCOVERY REPORT (Market-Wide NSE Universe)")
     print("=" * 90)
+    print(f"  * Market           : {output_data.get('market', 'NSE')} (India)")
+    print(f"  * Universe Mode    : {universe}")
+    print(f"  * Data Source      : {source}")
+    print(f"  * Coverage Status  : {coverage} {'(Cached)' if is_cached else ''}")
+    print(f"  * Last Refreshed   : {last_refresh}")
+    print(f"  * Total Discovered : {total_disc} securities")
+    print(f"  * Total Eligible   : {total_elig} ordinary equities (Series: EQ, BE)")
 
-    warnings = output_data.get("warnings", [])
+    exclusions = meta.get("exclusion_reasons")
+    if exclusions and isinstance(exclusions, dict):
+        ex_parts = [f"{k}: {v}" for k, v in exclusions.items() if v > 0]
+        if ex_parts:
+            print(f"  * Exclusions       : {', '.join(ex_parts)}")
+
+    warnings = meta.get("warnings") or output_data.get("warnings", [])
     if warnings:
-        for w in warnings:
-            print(f" [!] WARNING: {w}")
         print("-" * 90)
+        for w in warnings:
+            print(f"  [!] NOTICE: {w}")
 
-    if not candidates:
-        print("  No candidate stocks met the minimum screening criteria.")
+    print("-" * 90)
+    if not symbols:
+        print("  No eligible equity symbols discovered.")
         print("=" * 90 + "\n")
         return
 
-    # Header
-    header = f"{'Symbol':<12} {'Price (INR)':<10} {'Chg %':<8} {'Score':<7} {'Category':<16} {'Tags':<35}"
-    print(header)
-    print("-" * 90)
+    preview_limit = 40
+    preview_syms = symbols[:preview_limit]
+    print(f"  Eligible Equities Sample (showing {len(preview_syms)} of {len(symbols)}):")
+    
+    # Format symbols into clean lines of 8 symbols each
+    chunk_size = 8
+    for i in range(0, len(preview_syms), chunk_size):
+        chunk = preview_syms[i:i + chunk_size]
+        print("    " + "  ".join(f"{s:<10}" for s in chunk))
 
-    for c in candidates:
-        sym = c.get("symbol", "")
-        price = f"{c.get('current_price', 0.0):.2f}" if c.get("current_price") else "-"
-        chg = f"{c.get('change_pct', 0.0):+.2f}%" if c.get("change_pct") is not None else "-"
-        score = f"{c.get('screening_score', 0)}/100"
-        cat = c.get("category", "")
-        tags = ", ".join(c.get("tags", [])[:3])
-        print(f"{sym:<12} {price:<10} {chg:<8} {score:<7} {cat:<16} {tags:<35}")
-
-    # Display AI Catalyst Analysis if present
-    candidates_with_llm = [c for c in candidates if c.get("llm_catalyst")]
-    if candidates_with_llm:
-        print("\n" + "-" * 90)
-        print(" AI QUALITATIVE CATALYST & NEWS ANALYSIS (Agent 1 LLM Engine)")
-        print("-" * 90)
-        for c in candidates_with_llm:
-            sym = c.get("symbol", "")
-            cat_data = c["llm_catalyst"]
-            cat_pts = cat_data.get("catalyst_score", 0)
-            sent = cat_data.get("sentiment", "NEUTRAL")
-            ctype = cat_data.get("catalyst_type", "GENERAL")
-            prov = cat_data.get("provider", "heuristic")
-            summary = cat_data.get("summary", "")
-            print(f"[{sym}] Catalyst Score: {cat_pts}/10 | Sentiment: {sent} | Type: {ctype} ({prov})")
-            print(f"  Summary: {summary}")
+    if len(symbols) > preview_limit:
+        print(f"    ... and {len(symbols) - preview_limit} more eligible equities ready for downstream analysis.")
 
     print("=" * 90 + "\n")
-

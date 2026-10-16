@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swing-AI — Financial Analytics & Research Terminal</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Chart.js for real historical market visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand-section">
+        <div class="brand-logo">S</div>
+        <div>
+          <div class="brand-name">Swing-AI</div>
+        </div>
+        <span class="brand-tag">v2.0</span>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item active" data-view="overview">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          Overview
+        </li>
+        <li class="nav-item" data-view="scanner">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          Market Scanner
+        </li>
+        <li class="nav-item" data-view="analysis">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+          Stock Analysis
+        </li>
+        <li class="nav-item" data-view="history">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+          Analysis History
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="market-badge">
+          <span class="market-dot"></span>
+          <span>NSE · India</span>
+        </div>
+        <div>Multi-Agent Trading Intelligence</div>
+      </div>
+    </aside>
+
+    <!-- Main Content Workspace -->
+    <div class="main-wrapper">
+      <!-- Top Application Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <h1 class="page-title" id="page-title">Overview</h1>
+        </div>
+
+        <div class="header-right">
+          <!-- Quick Stock Search -->
+          <div class="quick-search-box">
+            <input type="text" id="quick-symbol-input" placeholder="Jump to symbol (e.g. RELIANCE)..." maxlength="15">
+          </div>
+
+          <!-- Market Mode Pill -->
+          <span class="mode-pill" id="global-mode-pill">● LIVE</span>
+
+          <!-- Global Refresh -->
+          <button class="btn btn-secondary btn-sm" id="btn-global-refresh" title="Refresh health & state">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            Refresh
+          </button>
+        </div>
+      </header>
+
+      <!-- Page Scroll Body -->
+      <main class="page-container">
+        
+        <!-- ====================================================================
+             1. OVERVIEW VIEW
+             ==================================================================== -->
+        <section class="view-section active" id="view-overview">
+          <!-- Summary Metrics Cards -->
+          <div class="grid-cards">
+            <div class="stat-card">
+              <span class="stat-label">Discovered Equities</span>
+              <span class="stat-value" id="ov-stat-discovered">--</span>
+              <span class="stat-meta">Official NSE Security Master</span>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-label">Coverage Status</span>
+              <span class="stat-value" id="ov-stat-coverage" style="font-size: 18px;">--</span>
+              <span class="stat-meta" id="ov-stat-cache">Checking cache...</span>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-label">Analyzed Stocks</span>
+              <span class="stat-value" id="ov-stat-analyzed">0</span>
+              <span class="stat-meta">Persistent Local History</span>
+            </div>
+
+            <div class="stat-card">
+              <span class="stat-label">Confirmed Setups</span>
+              <span class="stat-value" id="ov-stat-setups" style="color: var(--accent-green);">0</span>
+              <span class="stat-meta">Strong / Moderate Buy Candidates</span>
+            </div>
+          </div>
+
+          <!-- Quick Actions & Scanner Shortcut -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Quick Actions</div>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button class="btn btn-primary" onclick="app.navTo('scanner')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                Open Market Scanner
+              </button>
+              <button class="btn btn-secondary" onclick="app.analyzePromptSymbol()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                Analyze Specific Stock
+              </button>
+              <button class="btn btn-secondary" onclick="app.refreshUniverse()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                Refresh Official NSE Master
+              </button>
+            </div>
+          </div>
+
+          <!-- Latest Analyses Table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Recent Multi-Agent Analysis Results</div>
+              <button class="btn btn-secondary btn-sm" onclick="app.loadRecentAnalyses()">Refresh</button>
+            </div>
+            <div class="table-container">
+              <table class="data-table" id="ov-results-table">
+                <thead>
+                  <tr>
+                    <th>Symbol</th>
+                    <th>Action</th>
+                    <th>Verdict</th>
+                    <th>Technical Score</th>
+                    <th>Fundamental Score</th>
+                    <th>Decision Score</th>
+                    <th>Mode</th>
+                    <th>Inspect</th>
+                  </tr>
+                </thead>
+                <tbody id="ov-results-tbody">
+                  <tr>
+                    <td colspan="8" class="empty-state">
+                      <div class="empty-state-title">No stock analyses recorded yet</div>
+                      <div class="empty-state-desc">Run a market scan or analyze an individual stock to generate results.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             2. MARKET SCANNER VIEW
+             ==================================================================== -->
+        <section class="view-section" id="view-scanner">
+          <!-- Scanner Controls Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Market Scanner Controls</div>
+              <span id="scan-status-badge" class="badge badge-hold">IDLE</span>
+            </div>
+
+            <div class="control-row">
+              <div class="form-group">
+                <label class="form-label">Mode</label>
+                <select class="form-control" id="scan-mode-select">
+                  <option value="offline" selected>Offline (Deterministic Synthetic)</option>
+                  <option value="live">Live (Exchange / Yahoo APIs)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Max Stocks to Analyze Downstream</label>
+                <input type="number" class="form-control" id="scan-max-symbols" value="10" min="1" max="50">
+              </div>
+
+              <div class="form-group" style="justify-content: flex-end;">
+                <label class="form-check">
+                  <input type="checkbox" id="scan-refresh-univ">
+                  <span>Force Re-fetch Official NSE Master</span>
+                </label>
+              </div>
+
+              <div class="form-group" style="justify-content: flex-end;">
+                <button class="btn btn-primary" id="btn-run-scan" onclick="app.startMarketScan()">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  Run Market Scan
+                </button>
+              </div>
+            </div>
+
+            <!-- Live Progress Bar / Message -->
+            <div id="scan-progress-box" style="padding: 10px 14px; background: var(--bg-input); border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-size: 12px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between;">
+              <span id="scan-progress-text">Ready to scan. Discovery covers all ordinary NSE equities (EQ, BE series).</span>
+              <span id="scan-elapsed" class="mono" style="font-size: 11px;"></span>
+            </div>
+          </div>
+
+          <!-- Universe Diagnostics Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">NSE Equity Universe Diagnostics</div>
+              <button class="btn btn-secondary btn-sm" onclick="app.loadUniverse(1)">Reload Universe</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+              <div style="font-size: 12px;"><span style="color: var(--text-dim);">Source:</span> <strong id="diag-source">NSE Archive</strong></div>
+              <div style="font-size: 12px;"><span style="color: var(--text-dim);">Coverage:</span> <strong id="diag-coverage">--</strong></div>
+              <div style="font-size: 12px;"><span style="color: var(--text-dim);">Total Discovered:</span> <strong id="diag-discovered" class="mono">--</strong></div>
+              <div style="font-size: 12px;"><span style="color: var(--text-dim);">Allowed Series:</span> <strong id="diag-series" class="mono">EQ, BE</strong></div>
+              <div style="font-size: 12px;"><span style="color: var(--text-dim);">Excluded Non-Equity:</span> <strong id="diag-excluded" class="mono">--</strong></div>
+            </div>
+
+            <!-- Search & Pagination for Discovered Universe -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px; flex-wrap: wrap;">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="text" id="universe-search-input" class="form-control" placeholder="Search symbols (e.g. TATA, 360, ZOMATO)..." style="width: 280px;" oninput="app.onUniverseSearch(this.value)">
+              </div>
+              <div class="pagination-info" id="universe-pagination-info" style="font-size: 12px; color: var(--text-muted);">Showing 0 of 0</div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table" id="universe-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Symbol</th>
+                    <th>Exchange</th>
+                    <th>Series</th>
+                    <th>Instrument Type</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="universe-tbody">
+                  <tr><td colspan="6" style="text-align: center; padding: 20px;">Loading NSE equity universe...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="pagination">
+              <span id="page-indicator">Page 1 of 1</span>
+              <div class="pagination-buttons">
+                <button class="btn btn-secondary btn-sm" id="btn-prev-page" onclick="app.prevUniversePage()">Previous</button>
+                <button class="btn btn-secondary btn-sm" id="btn-next-page" onclick="app.nextUniversePage()">Next</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scan Downstream Pipeline Results -->
+          <div class="card" id="scan-results-card">
+            <div class="card-header">
+              <div class="card-title">Downstream Multi-Agent Pipeline Results (Agent 1 -> Agent 2 -> Agent 3)</div>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Symbol</th>
+                    <th>Action</th>
+                    <th>Verdict</th>
+                    <th>Confidence</th>
+                    <th>Technical Score</th>
+                    <th>Fundamental Score</th>
+                    <th>Decision Score</th>
+                    <th>Entry Zone</th>
+                    <th>Stop Loss</th>
+                    <th>Target 1</th>
+                    <th>Inspect</th>
+                  </tr>
+                </thead>
+                <tbody id="scan-results-tbody">
+                  <tr>
+                    <td colspan="11" class="empty-state">
+                      <div class="empty-state-title">No pipeline evaluations yet</div>
+                      <div class="empty-state-desc">Click "Run Market Scan" above to evaluate discovered stocks through Agent 2 and Agent 3.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             3. STOCK ANALYSIS VIEW
+             ==================================================================== -->
+        <section class="view-section" id="view-analysis">
+          <!-- Symbol Search Bar -->
+          <div class="card" style="margin-bottom: 20px;">
+            <div class="control-row" style="margin-bottom: 8px;">
+              <div class="form-group" style="flex: 1; min-width: 200px;">
+                <label class="form-label">NSE Equity Symbol</label>
+                <input type="text" class="form-control" id="analysis-symbol-input" placeholder="e.g. RELIANCE, INFY, TCS, 360ONE, ZOMATO" style="font-family: var(--font-mono); text-transform: uppercase; font-size: 15px; font-weight: 700;">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Market Mode</label>
+                <select class="form-control" id="analysis-mode-select">
+                  <option value="offline" selected>Offline (Deterministic Synthetic)</option>
+                  <option value="live">Live (Yahoo Finance & NSE)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="justify-content: flex-end;">
+                <button class="btn btn-primary" id="btn-run-analysis" onclick="app.runAnalysis()" style="height: 37px; padding: 0 20px;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                  Run Multi-Agent Analysis
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Symbol Suggestions -->
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <span style="font-size: 11px; color: var(--text-dim);">Suggestions:</span>
+              <span class="badge badge-hold" style="cursor: pointer;" onclick="app.setAnalysisSymbol('RELIANCE')">RELIANCE</span>
+              <span class="badge badge-hold" style="cursor: pointer;" onclick="app.setAnalysisSymbol('INFY')">INFY</span>
+              <span class="badge badge-hold" style="cursor: pointer;" onclick="app.setAnalysisSymbol('TCS')">TCS</span>
+              <span class="badge badge-hold" style="cursor: pointer;" onclick="app.setAnalysisSymbol('360ONE')">360ONE</span>
+              <span class="badge badge-hold" style="cursor: pointer;" onclick="app.setAnalysisSymbol('20MICRONS')">20MICRONS</span>
+              <span class="badge badge-hold" style="cursor: pointer;" onclick="app.setAnalysisSymbol('ZOMATO')">ZOMATO</span>
+            </div>
+          </div>
+
+          <!-- Empty State before analysis -->
+          <div id="analysis-empty-placeholder" class="card empty-state">
+            <div class="empty-state-title">Select a stock to inspect</div>
+            <div class="empty-state-desc">Enter an NSE equity symbol above or pick a candidate from the Market Scanner.</div>
+          </div>
+
+          <!-- Loading Indicator -->
+          <div id="analysis-loading" class="card empty-state" style="display: none;">
+            <div class="empty-state-title">Running Multi-Agent Analysis...</div>
+            <div class="empty-state-desc">Querying Agent 1 (Discovery) → Agent 2 (Technical) → Agent 3 (Fundamental) → Decision Engine</div>
+          </div>
+
+          <!-- Analysis Results Workspace -->
+          <div id="analysis-content-workspace" style="display: none;">
+            <!-- Gated Composite Verdict Banner -->
+            <div class="verdict-banner">
+              <div class="verdict-header">
+                <div class="verdict-title-box">
+                  <span class="symbol-callout" id="an-symbol">--</span>
+                  <span class="badge badge-hold" id="an-verdict-badge">PENDING</span>
+                  <span class="badge badge-hold" id="an-direction-badge">DIRECTION: NONE</span>
+                  <span class="badge badge-hold" id="an-action-badge">ACTION: --</span>
+                  <span class="badge badge-hold" id="an-confidence-badge">CONF: --</span>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                  <span style="font-size: 12px; color: var(--text-muted);">Decision Score:</span>
+                  <span class="score-pill" id="an-composite-score">--/100</span>
+                </div>
+              </div>
+              <div class="verdict-reason" id="an-verdict-reason">
+                Decision engine rationale will be displayed here.
+              </div>
+            </div>
+
+            <!-- Agent Evaluations Summary Grid -->
+            <div class="grid-cards" style="margin-bottom: 20px;">
+              <div class="stat-card">
+                <span class="stat-label">Agent 1: Discovery</span>
+                <span class="stat-value" id="an-a1-status" style="font-size: 16px; color: var(--accent-green);">Eligible (NSE)</span>
+                <span class="stat-meta">Series EQ/BE Ordinary Equity</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Agent 2: Technical Score</span>
+                <span class="stat-value" id="an-a2-score">--/100</span>
+                <span class="stat-meta" id="an-a2-trend">Daily: -- | Hourly: --</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Agent 3: Fundamental Score</span>
+                <span class="stat-value" id="an-a3-score">--/100</span>
+                <span class="stat-meta" id="an-a3-assessment">Financial Quality</span>
+              </div>
+            </div>
+
+            <!-- Decision Engine 100-Point Scoring Rubrics & Execution Plan Card -->
+            <div class="card" id="an-decision-engine-card">
+              <div class="card-header">
+                <div class="card-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                  Decision Engine — 100-Point Scoring Rubrics & Confirmation System
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <span style="font-size: 11px; color: var(--text-dim);">Composite Decision Score:</span>
+                  <span class="score-pill" id="rubric-total-pill">--/100</span>
+                </div>
+              </div>
+
+              <!-- Execution Plan & Sizing Guidance Bar -->
+              <div class="plan-bar">
+                <div class="plan-item">
+                  <span class="plan-label">Execution Action</span>
+                  <span class="plan-val" id="plan-action">--</span>
+                </div>
+                <div class="plan-item">
+                  <span class="plan-label">Setup Direction</span>
+                  <span class="plan-val" id="plan-direction">--</span>
+                </div>
+                <div class="plan-item">
+                  <span class="plan-label">Conviction Level</span>
+                  <span class="plan-val" id="plan-confidence">--</span>
+                </div>
+                <div class="plan-item" style="flex: 1; min-width: 240px;">
+                  <span class="plan-label">Capital Allocation Guidance</span>
+                  <span class="plan-val" id="plan-sizing" style="font-family: var(--font-sans); font-size: 12px; color: var(--accent-green);">--</span>
+                </div>
+              </div>
+
+              <!-- 5 Rubric Dimension Cards Grid -->
+              <div class="rubrics-grid">
+                <!-- Rubric 1: Technical Trend Alignment (30 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">1. Technical Foundation</span>
+                    <span class="rubric-dim-score" id="rubric-score-tech">--/30 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-tech" style="width: 0%; background: #3b82f6;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-tech">
+                    <li>Evaluating daily and hourly trend synchronization...</li>
+                  </ul>
+                </div>
+
+                <!-- Rubric 2: Fundamental Health & Safety (25 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">2. Fundamental Quality</span>
+                    <span class="rubric-dim-score" id="rubric-score-fund">--/25 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-fund" style="width: 0%; background: #10b981;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-fund">
+                    <li>Evaluating business quality and balance sheet leverage...</li>
+                  </ul>
+                </div>
+
+                <!-- Rubric 3: Momentum & Volume Surge (20 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">3. Momentum & Volume</span>
+                    <span class="rubric-dim-score" id="rubric-score-mom">--/20 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-mom" style="width: 0%; background: #8b5cf6;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-mom">
+                    <li>Checking RSI swing sweet-spot and institutional volume...</li>
+                  </ul>
+                </div>
+
+                <!-- Rubric 4: Risk-to-Reward Setup (15 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">4. Risk / Reward Geometry</span>
+                    <span class="rubric-dim-score" id="rubric-score-rr">--/15 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-rr" style="width: 0%; background: #f59e0b;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-rr">
+                    <li>Checking stop-loss tightness and target asymmetry...</li>
+                  </ul>
+                </div>
+
+                <!-- Rubric 5: Valuation & Catalyst (10 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">5. Valuation & Catalyst</span>
+                    <span class="rubric-dim-score" id="rubric-score-val">--/10 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-val" style="width: 0%; background: #06b6d4;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-val">
+                    <li>Comparing multiples vs sector medians and news sentiment...</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Multi-Agent Confirmation Verification Checklist -->
+              <div style="margin-top: 14px; border-top: 1px solid var(--border-color); padding-top: 14px;">
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px;">
+                  Multi-Agent Confirmation Verification Gates
+                </div>
+                <div class="checklist-grid" id="confirmation-checklist-grid">
+                  <!-- Populated dynamically by app.js -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Real Interactive Price & Indicator Chart -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
+                  Historical Market Price & Indicator Visualization (Daily)
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center; font-size: 11px;">
+                  <span style="color: #10b981;">● Close</span>
+                  <span style="color: #3b82f6;">● EMA 20</span>
+                  <span style="color: #f59e0b;">● EMA 50</span>
+                  <span style="color: #ef4444;">● EMA 200</span>
+                </div>
+              </div>
+              <div class="chart-container">
+                <canvas id="price-chart-canvas"></canvas>
+              </div>
+              <div class="card-header" style="margin-top: 10px; margin-bottom: 8px;">
+                <div class="card-title" style="font-size: 13px;">RSI (14) Relative Strength Index</div>
+              </div>
+              <div class="chart-sub-container">
+                <canvas id="rsi-chart-canvas"></canvas>
+              </div>
+            </div>
+
+            <!-- Two-Column Deep Inspection Grid -->
+            <div class="two-col-grid">
+              <!-- Left: Agent 2 Technical Swing Setup -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                    Agent 2: Technical Swing Setup
+                  </div>
+                  <span class="badge badge-hold" id="tech-trend-badge">TREND</span>
+                </div>
+
+                <div class="metric-list">
+                  <div class="metric-item">
+                    <span class="metric-name">Daily Trend</span>
+                    <span class="metric-val" id="t-daily-trend">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Hourly Trend</span>
+                    <span class="metric-val" id="t-hourly-trend">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Daily RSI (14)</span>
+                    <span class="metric-val" id="t-rsi">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Daily MACD</span>
+                    <span class="metric-val" id="t-macd">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Relative Volume (RVOL)</span>
+                    <span class="metric-val" id="t-rvol">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Support / Resistance</span>
+                    <span class="metric-val" id="t-sr">--</span>
+                  </div>
+                </div>
+
+                <!-- Confirmed Execution Levels -->
+                <div class="trade-setup-box">
+                  <div class="trade-setup-title">Execution Parameters</div>
+                  <div class="metric-list">
+                    <div class="metric-item">
+                      <span class="metric-name">Entry Zone</span>
+                      <span class="metric-val" id="t-entry">--</span>
+                    </div>
+                    <div class="metric-item">
+                      <span class="metric-name">Stop Loss</span>
+                      <span class="metric-val" id="t-stop" style="color: var(--accent-red);">--</span>
+                    </div>
+                    <div class="metric-item">
+                      <span class="metric-name">Target 1 / 2</span>
+                      <span class="metric-val" id="t-targets" style="color: var(--accent-green);">--</span>
+                    </div>
+                    <div class="metric-item">
+                      <span class="metric-name">Risk / Reward</span>
+                      <span class="metric-val" id="t-rr">--</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Agent 3 Fundamental Quality -->
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    Agent 3: Fundamental Quality
+                  </div>
+                  <span class="badge badge-hold" id="fund-val-badge">VALUATION</span>
+                </div>
+
+                <div class="metric-list">
+                  <div class="metric-item">
+                    <span class="metric-name">Revenue YoY Growth</span>
+                    <span class="metric-val" id="f-rev-growth">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">PAT YoY Growth</span>
+                    <span class="metric-val" id="f-pat-growth">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">ROE / ROCE</span>
+                    <span class="metric-val" id="f-roe">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Operating Margin</span>
+                    <span class="metric-val" id="f-margin">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Debt / Equity</span>
+                    <span class="metric-val" id="f-de">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Valuation (P/E vs Sector)</span>
+                    <span class="metric-val" id="f-pe">--</span>
+                  </div>
+                  <div class="metric-item">
+                    <span class="metric-name">Ownership (Promoter / Inst)</span>
+                    <span class="metric-val" id="f-own">--</span>
+                  </div>
+                </div>
+
+                <!-- Fundamental Warnings -->
+                <div id="fund-warnings-box" style="margin-top: 14px; display: none;">
+                  <div style="font-size: 11px; font-weight: 700; color: var(--accent-amber); text-transform: uppercase; margin-bottom: 6px;">
+                    Risk Factors & Warnings
+                  </div>
+                  <ul id="fund-warnings-list" style="padding-left: 18px; font-size: 12px; color: var(--text-muted); line-height: 1.5;"></ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Catalyst Analysis Card (if available) -->
+            <div class="card" id="catalyst-card" style="display: none;">
+              <div class="card-header">
+                <div class="card-title">Qualitative News & Catalyst Analysis</div>
+                <span class="badge badge-hold" id="catalyst-sentiment-badge">NEUTRAL</span>
+              </div>
+              <div id="catalyst-summary-text" style="font-size: 13px; color: var(--text-muted); line-height: 1.6;"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             4. ANALYSIS HISTORY VIEW
+             ==================================================================== -->
+        <section class="view-section" id="view-history">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Persistent Analysis History</div>
+              <button class="btn btn-secondary btn-sm" onclick="app.loadFullHistory()">Refresh History</button>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 14px;">
+              <input type="text" class="form-control" id="history-search-input" placeholder="Filter by symbol or verdict..." style="max-width: 300px;" oninput="app.filterHistory(this.value)">
+            </div>
+
+            <div class="table-container">
+              <table class="data-table" id="history-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Symbol</th>
+                    <th>Action</th>
+                    <th>Verdict</th>
+                    <th>Technical Score</th>
+                    <th>Fundamental Score</th>
+                    <th>Decision Score</th>
+                    <th>Mode</th>
+                    <th>Inspect</th>
+                  </tr>
+                </thead>
+                <tbody id="history-tbody">
+                  <tr>
+                    <td colspan="9" class="empty-state">
+                      <div class="empty-state-title">No analysis history recorded yet</div>
+                      <div class="empty-state-desc">All completed stock analyses are automatically preserved here.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

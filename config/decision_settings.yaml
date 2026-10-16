@@ -1,0 +1,41 @@
+# Decision Engine Configuration and Scoring Rubrics
+scoring:
+  rubric_weights:
+    technical_alignment: 30
+    fundamental_quality: 25
+    momentum_volume: 20
+    risk_reward: 15
+    valuation_catalyst: 10
+
+  score_categories:
+    weak_max: 45
+    neutral_max: 55
+    moderate_max: 65
+    strong_max: 80
+    prime_max: 100
+
+thresholds:
+  technical:
+    veto_threshold: 45       # Below this is considered broken/failing technicals
+    minimum_threshold: 55    # Minimum technical score for consideration
+    strong_threshold: 65     # Confirmed bullish swing momentum
+  fundamental:
+    distressed_threshold: 40 # Below this is considered distressed/poor fundamentals
+    adequate_threshold: 45   # Basic fundamental health
+    strong_threshold: 60     # Quality fundamental health
+  decision:
+    strong_buy_min: 65
+    moderate_buy_min: 55
+  risk_reward:
+    minimum_rr: 1.5
+    preferred_rr: 2.0
+    exceptional_rr: 2.5
+
+execution:
+  position_sizing:
+    strong_buy: "Standard swing allocation (2.0% - 3.0% capital risk)"
+    moderate_buy: "Conservative swing allocation (1.0% - 1.5% capital risk)"
+    speculative: "Reduced speculative allocation (0.5% capital risk)"
+    watchlist: "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+    avoid: "No capital allocation (Setup does not satisfy risk parameters)"
+    hold: "No capital allocation (Insufficient data)"

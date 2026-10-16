@@ -114,61 +114,25 @@ def test_llm_catalyst_integration_in_screening_score():
 
 
 def test_run_screening_with_llm_offline():
-    """End-to-end screening pipeline with enable_llm=True in offline mode."""
+    """End-to-end screening discovery with enable_llm=True in offline mode."""
     res = run_screening(
-        universe="nifty50",
-        min_score=50,
-        top_n=3,
         offline=True,
         enable_llm=True
     )
     assert res["status"] == "success"
-    assert len(res["candidates"]) > 0
-
-    # Candidates should have llm_catalyst attached
-    first = res["candidates"][0]
-    assert "llm_catalyst" in first
-    assert "catalyst_score" in first["llm_catalyst"]
-    assert "sentiment" in first["llm_catalyst"]
-    assert "summary" in first["llm_catalyst"]
+    assert len(res["symbols"]) > 0
+    assert "metadata" in res
+    assert res["market"] == "NSE"
+    # Agent 1 returns symbols, not ranked candidates
+    for sym in res["symbols"]:
+        assert isinstance(sym, str)
 
 
-def test_formatter_displays_llm_catalyst():
-    """Verify CLI table formatter displays AI catalyst analysis without encoding issues."""
-    sample_data = {
-        "status": "success",
-        "universe": "nifty50",
-        "total_scanned": 10,
-        "candidates": [
-            {
-                "symbol": "TRENT",
-                "current_price": 2880.0,
-                "change_pct": 4.5,
-                "screening_score": 85,
-                "category": "PRIME_SETUP",
-                "tags": ["VOLUME_SHOCKER"],
-                "llm_catalyst": {
-                    "catalyst_score": 9,
-                    "sentiment": "BULLISH",
-                    "catalyst_type": "ORDER_WIN",
-                    "provider": "heuristic",
-                    "summary": "Q2 profit surges 46% YoY with strong retail demand."
-                }
-            }
-        ]
-    }
-
-    buf = io.StringIO()
-    old_stdout = sys.stdout
-    try:
-        sys.stdout = buf
-        print_screening_summary_table(sample_data)
-    finally:
-        sys.stdout = old_stdout
-
-    out = buf.getvalue()
-    assert "AI QUALITATIVE CATALYST & NEWS ANALYSIS" in out
-    assert "[TRENT] Catalyst Score: 9/10" in out
-    assert "BULLISH" in out
-    # Verify cp1252 compatibility
-    assert len(out.encode("cp1252")) > 0
+def test_catalyst_summary_encodes_cp1252():
+    """Verify that catalyst analysis output can be safely encoded in cp1252."""
+    headlines = [{"title": "Q2 profit surges 46% YoY with strong retail demand.", "source": "Livemint"}]
+    res = heuristic_catalyst_evaluation("TRENT", headlines)
+    assert res["catalyst_score"] >= 7
+    assert res["sentiment"] == "BULLISH"
+    text = f"[TRENT] Catalyst Score: {res['catalyst_score']}/10 | Sentiment: {res['sentiment']} | {res['summary']}"
+    assert len(text.encode("cp1252")) > 0

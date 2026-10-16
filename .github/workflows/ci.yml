@@ -1,0 +1,108 @@
+name: SwingTrade AI Continuous Integration
+
+on:
+  push:
+    branches: [ main, "feature/**" ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-compile:
+    name: Codebase Syntax & Compile Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify Python Compilation
+        run: |
+          python -m compileall src run_all.py run_screening.py run_technical.py run_fundamental.py run_ui.py tests
+
+  test-matrix:
+    name: Test Suite (${{ matrix.os }} / Py ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    needs: [lint-and-compile]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.11", "3.12"]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Full Test Suite (pytest)
+        run: |
+          pytest tests/ -v
+
+      - name: Master Runner Internal Verification Check
+        run: |
+          python run_all.py --test
+
+      - name: Individual Agent CLI Smoke Tests
+        run: |
+          echo "=== Testing Agent 1 Screening Discovery CLI ==="
+          python run_screening.py --offline --json-only
+
+          echo "=== Testing Agent 2 Technical Swing Engine CLI ==="
+          python run_technical.py --symbol RELIANCE --offline
+
+          echo "=== Testing Agent 3 Fundamental Analysis Engine CLI ==="
+          python run_fundamental.py --symbol RELIANCE --offline --explain
+
+      - name: Decision Engine & Multi-Agent Pipeline Smoke Tests
+        run: |
+          echo "=== Testing End-to-End Pipeline with Decision Engine Rubrics ==="
+          python run_all.py --offline --top-n 3
+
+          echo "=== Testing Single Stock Deep Analysis with Decision Engine ==="
+          python run_all.py --symbol RELIANCE --offline
+
+      - name: Terminal Web UI Launch Verification
+        run: |
+          echo "=== Verifying UI CLI arguments & FastApi Entrypoint ==="
+          python run_ui.py --help
+
+  decision-engine-verification:
+    name: Decision Engine & Rubrics Dedicated Verification
+    runs-on: ubuntu-latest
+    needs: [lint-and-compile]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Dedicated Decision Engine & Rubric Unit Tests
+        run: |
+          pytest tests/test_decision_engine.py tests/screening/test_gated_verdicts.py -v --durations=10
