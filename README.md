@@ -74,7 +74,8 @@ SwingTrade AI/
 ├── config/
 │   ├── settings.yaml                 # Agent 2 settings & weights
 │   ├── fundamental_settings.yaml     # Agent 3 settings, sector medians & weights
-│   └── screening_settings.yaml       # Agent 1 settings, universes, filters & weights
+│   ├── screening_settings.yaml       # Agent 1 settings, universes, filters & weights
+│   └── decision_settings.yaml        # Decision Engine weights, thresholds & trade execution sizing
 ├── data/
 │   ├── raw/                          # Cached market, screening & financial data
 │   └── processed/
@@ -86,30 +87,38 @@ SwingTrade AI/
 ├── src/
 │   ├── screening/                    # Agent 1 modules
 │   │   ├── main.py                   # Screening CLI and pipeline
-│   │   ├── sources/                  # Moneycontrol scraper & yfinance batch scanner
+│   │   ├── sources/                  # Moneycontrol scraper, NSE master & yfinance batch scanner
 │   │   ├── filters/                  # Technical, volume, liquidity, catalyst filters
-│   │   ├── scoring/                  # 0-100 candidate scoring engine
 │   │   └── output/                   # JSON formatter, table printer, pipeline dispatcher
 │   ├── analysis/                     # Agent 2 technical analysis modules
 │   ├── indicators/                   # Moving averages, momentum, volume, volatility
 │   ├── scoring/                      # Agent 2 technical scoring
 │   ├── risk/                         # Trade levels & stop-loss / targets
-│   └── fundamental/                  # Agent 3 modules
-│       ├── main.py                   # Fundamental CLI
-│       ├── data/                     # Financial statements & valuation metrics
-│       ├── ratios/                   # Financial ratios (ROE, ROCE, D/E)
-│       ├── analysis/                 # Growth, profitability, balance sheet, cash flow
-│       ├── scoring/                  # 100-point fundamental scoring
-│       └── output/                   # JSON formatter & LLM explainer
+│   ├── fundamental/                  # Agent 3 modules
+│   │   ├── main.py                   # Fundamental CLI
+│   │   ├── data/                     # Financial statements & valuation metrics
+│   │   ├── ratios/                   # Financial ratios (ROE, ROCE, D/E)
+│   │   ├── analysis/                 # Growth, profitability, balance sheet, cash flow
+│   │   ├── scoring/                  # 100-point fundamental scoring
+│   │   └── output/                   # JSON formatter & LLM explainer
+│   ├── decision/                     # Decision Engine modules (after Agent 2 & Agent 3)
+│   │   ├── rubrics.py                # 100-point 5-dimension scoring rubrics
+│   │   └── engine.py                 # Multi-agent confirmation gating, execution plan & sizing
+│   ├── api/                          # FastAPI REST API & background scan service
+│   └── main.py                       # Technical analysis CLI entry point
+├── ui/                               # Desktop research terminal (HTML5/CSS3/ES6 JS)
 ├── tests/
 │   ├── conftest.py
-│   ├── screening/                    # Agent 1 screening tests
-│   ├── test_*.py                     # Agent 2 technical tests
-│   └── fundamental/                  # Agent 3 fundamental tests
-├── run_all.py                        # Master runner: orchestrates Agent 1, 2, and 3 end-to-end
+│   ├── test_decision_engine.py       # Decision Engine & scoring rubrics tests (22 tests)
+│   ├── api/                          # FastAPI & UI tests (9 tests)
+│   ├── screening/                    # Agent 1 screening tests (31 tests)
+│   ├── test_*.py                     # Agent 2 technical tests (17 tests)
+│   └── fundamental/                  # Agent 3 fundamental tests (31 tests)
+├── run_all.py                        # Master runner: orchestrates Agent 1, 2, 3 and Decision Engine
 ├── run_screening.py                  # CLI runner for Agent 1
 ├── run_technical.py                  # CLI runner for Agent 2
 ├── run_fundamental.py                # CLI runner for Agent 3
+├── run_ui.py                         # Web terminal UI launcher
 ├── requirements.txt
 └── README.md
 ```
@@ -199,29 +208,34 @@ python run_technical.py --symbol RELIANCE --offline --json-only
 
 ## 4. Testing
 
-Run all 79 automated unit tests via pytest:
+Run all 122+ automated unit and integration tests via pytest:
 ```bash
 pytest -v
 ```
 
-Or run tests via the master runner:
+Or run tests via the master unified runner:
 ```bash
 python run_all.py --test
 ```
 
 Run specific test suites:
 ```bash
-pytest -v tests/screening/    # Agent 1 screening & LLM catalyst tests (31 tests)
-pytest -v tests/              # Agent 2 technical analysis tests (17 tests)
-pytest -v tests/fundamental/  # Agent 3 fundamental analysis tests (31 tests)
+pytest -v tests/test_decision_engine.py  # Decision Engine & 100-point rubrics (22 tests)
+pytest -v tests/api/                    # FastAPI endpoints & UI server (9 tests)
+pytest -v tests/screening/              # Agent 1 screening & LLM catalyst tests (31 tests)
+pytest -v tests/test_*.py               # Agent 2 technical analysis tests (17 tests)
+pytest -v tests/fundamental/            # Agent 3 fundamental analysis tests (31 tests)
 ```
 
 ---
 
 ## 5. Continuous Integration (GitHub Actions)
 
-Continuous integration is configured in [`.github/workflows/agent_1_ci.yml`](.github/workflows/agent_1_ci.yml) and runs on every push and pull request to `main`, as well as on manual dispatch:
+Continuous integration is configured in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) and runs on every push and pull request to `main` and `feature/**` branches, as well as on manual dispatch:
 
-- **Agent 1 Dedicated Job**: Runs all 19 unit tests in `tests/screening/` and offline CLI smoke tests (table format, pure JSON, and multi-agent pipeline forwarding).
-- **Full System Matrix Job**: Runs the entire 53-test suite across Python 3.11 and Python 3.12 on `ubuntu-latest`.
+- **Syntax & Compilation Validation**: Compiles the entire codebase across `src/`, `config/`, tests, and root CLI runners using `compileall`.
+- **Full Test Suite Matrix**: Runs the complete 122-test automated suite across Ubuntu, macOS, and Windows on both Python 3.11 and Python 3.12.
+- **End-to-End CLI Smoke Tests**: Exercises Agent 1, Agent 2, Agent 3, Decision Engine, and the master runner in offline mode.
+- **Decision Engine Verification**: Dedicated verification job specifically testing the 5-dimension scoring rubrics, confirmation gating rules, and trade execution plans.
+
 

@@ -144,10 +144,11 @@ class SwingAIApp {
       tbody.innerHTML = records.map(r => `
         <tr>
           <td><strong class="mono" style="font-size: 14px;">${r.symbol}</strong></td>
+          <td>${this.formatActionBadge(r.action)}</td>
+          <td>${this.formatVerdictBadge(r.composite_verdict)}</td>
           <td class="mono">${r.technical_score !== null ? r.technical_score + '/100' : '-'}</td>
           <td class="mono">${r.fundamental_score !== null ? r.fundamental_score + '/100' : '-'}</td>
           <td class="mono"><strong>${r.composite_score !== null ? r.composite_score + '/100' : '-'}</strong></td>
-          <td>${this.formatVerdictBadge(r.composite_verdict)}</td>
           <td><span class="badge ${r.mode === 'offline' ? 'badge-watchlist' : 'badge-strong-buy'}">${(r.mode || 'live').toUpperCase()}</span></td>
           <td><button class="btn btn-secondary btn-sm" onclick="app.inspectSymbol('${r.symbol}')">Inspect</button></td>
         </tr>
@@ -327,7 +328,7 @@ class SwingAIApp {
       const tbody = document.getElementById("scan-results-tbody");
 
       if (pipeline.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" class="empty-state">No candidates evaluated in this scan.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="11" class="empty-state">No candidates evaluated in this scan.</td></tr>`;
         return;
       }
 
@@ -337,10 +338,12 @@ class SwingAIApp {
         return `
           <tr>
             <td><strong class="mono" style="font-size: 14px;">${item.symbol}</strong></td>
+            <td>${this.formatActionBadge(item.action)}</td>
+            <td>${this.formatVerdictBadge(item.composite_verdict)}</td>
+            <td>${this.formatConfidenceBadge(item.confidence)}</td>
             <td class="mono">${item.agent_2_score !== null ? item.agent_2_score + '/100' : '-'}</td>
             <td class="mono">${item.agent_3_score !== null ? item.agent_3_score + '/100' : '-'}</td>
             <td class="mono"><strong>${item.composite_score !== null ? item.composite_score + '/100' : '-'}</strong></td>
-            <td>${this.formatVerdictBadge(item.composite_verdict)}</td>
             <td class="mono">${setup.entry_zone || 'None'}</td>
             <td class="mono" style="color: var(--accent-red);">${setup.stop_loss || 'None'}</td>
             <td class="mono" style="color: var(--accent-green);">${setup.target_1 || 'None'}</td>
@@ -437,8 +440,52 @@ class SwingAIApp {
     dBadge.innerText = `DIRECTION: ${dir}`;
     dBadge.className = "badge " + (dir === "LONG" ? "badge-strong-buy" : "badge-hold");
 
+    // Decision Engine execution & rubrics
+    const decision = res.decision_engine || {};
+    const rubrics = res.scoring_rubrics || decision.scoring_rubrics || {};
+    const plan = res.execution_plan || decision.execution_plan || {};
+    const checks = res.confirmation_checks || decision.confirmation_checks || {};
+    const action = res.action || decision.action || (dir === "LONG" ? "BUY" : "WATCH");
+    const confidence = res.confidence || decision.confidence || "MEDIUM";
+
+    const aBadge = document.getElementById("an-action-badge");
+    if (aBadge) {
+      aBadge.innerText = `ACTION: ${action}`;
+      aBadge.className = `badge badge-action-${action.toLowerCase()}`;
+    }
+
+    const cBadge = document.getElementById("an-confidence-badge");
+    if (cBadge) {
+      cBadge.innerText = `CONF: ${confidence}`;
+      cBadge.className = `badge badge-confidence-${confidence.toLowerCase()}`;
+    }
+
     document.getElementById("an-composite-score").innerText = `${res.composite_score !== null ? res.composite_score : '--'}/100`;
     document.getElementById("an-verdict-reason").innerText = res.verdict_reason || "Multi-agent confirmation parameters satisfied.";
+
+    // Execution Plan Bar
+    const pAction = document.getElementById("plan-action");
+    if (pAction) pAction.innerText = plan.action || action;
+    const pDir = document.getElementById("plan-direction");
+    if (pDir) pDir.innerText = plan.direction || dir;
+    const pConf = document.getElementById("plan-confidence");
+    if (pConf) pConf.innerText = plan.confidence || confidence;
+    const pSizing = document.getElementById("plan-sizing");
+    if (pSizing) pSizing.innerText = plan.position_sizing || "Standard risk allocation";
+
+    // Rubric Total Pill
+    const rTotal = document.getElementById("rubric-total-pill");
+    if (rTotal) rTotal.innerText = `${res.composite_score !== null ? res.composite_score : '--'}/100`;
+
+    // Render the 5 Rubric Cards
+    this.renderRubricCard("tech", rubrics.technical_alignment, 30);
+    this.renderRubricCard("fund", rubrics.fundamental_quality, 25);
+    this.renderRubricCard("mom", rubrics.momentum_volume, 20);
+    this.renderRubricCard("rr", rubrics.risk_reward, 15);
+    this.renderRubricCard("val", rubrics.valuation_catalyst, 10);
+
+    // Render Confirmation Checklist
+    this.renderConfirmationChecklist(checks);
 
     // Agent Scores
     const a1Eligible = s.eligible !== false;
@@ -704,7 +751,7 @@ class SwingAIApp {
     if (!records || records.length === 0) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="8" class="empty-state">
+          <td colspan="9" class="empty-state">
             <div class="empty-state-title">No matching history records</div>
             <div class="empty-state-desc">Analyses saved across sessions will appear here.</div>
           </td>
@@ -716,10 +763,11 @@ class SwingAIApp {
       <tr>
         <td class="mono" style="font-size: 11px; color: var(--text-dim);">${r.timestamp ? r.timestamp.replace('T', ' ').slice(0, 19) : '--'}</td>
         <td><strong class="mono" style="font-size: 13px;">${r.symbol}</strong></td>
+        <td>${this.formatActionBadge(r.action)}</td>
+        <td>${this.formatVerdictBadge(r.composite_verdict)}</td>
         <td class="mono">${r.technical_score !== null ? r.technical_score + '/100' : '-'}</td>
         <td class="mono">${r.fundamental_score !== null ? r.fundamental_score + '/100' : '-'}</td>
         <td class="mono"><strong>${r.composite_score !== null ? r.composite_score + '/100' : '-'}</strong></td>
-        <td>${this.formatVerdictBadge(r.composite_verdict)}</td>
         <td><span class="badge ${r.mode === 'offline' ? 'badge-watchlist' : 'badge-strong-buy'}">${(r.mode || 'live').toUpperCase()}</span></td>
         <td>
           <button class="btn btn-secondary btn-sm" onclick="app.loadAnalysisFromHistory('${r.id}')">
@@ -762,6 +810,81 @@ class SwingAIApp {
     if (!verdict) return `<span class="badge badge-hold">UNKNOWN</span>`;
     const cls = this.getVerdictClass(verdict);
     return `<span class="badge ${cls}">${verdict}</span>`;
+  }
+
+  formatActionBadge(action) {
+    if (!action) return `<span class="badge badge-action-hold">-</span>`;
+    const a = String(action).toUpperCase();
+    if (a === "BUY") return `<span class="badge badge-action-buy">BUY</span>`;
+    if (a === "WATCH") return `<span class="badge badge-action-watch">WATCH</span>`;
+    if (a === "AVOID") return `<span class="badge badge-action-avoid">AVOID</span>`;
+    if (a === "HOLD") return `<span class="badge badge-action-hold">HOLD</span>`;
+    return `<span class="badge badge-action-hold">${a}</span>`;
+  }
+
+  formatConfidenceBadge(confidence) {
+    if (!confidence) return `<span class="badge badge-confidence-low">-</span>`;
+    const c = String(confidence).toUpperCase();
+    if (c === "HIGH") return `<span class="badge badge-confidence-high">HIGH</span>`;
+    if (c === "MEDIUM" || c === "MED") return `<span class="badge badge-confidence-medium">MED</span>`;
+    if (c === "LOW") return `<span class="badge badge-confidence-low">LOW</span>`;
+    return `<span class="badge badge-confidence-low">${c}</span>`;
+  }
+
+  renderRubricCard(key, data, defaultMax) {
+    const scoreEl = document.getElementById(`rubric-score-${key}`);
+    const barEl = document.getElementById(`rubric-bar-${key}`);
+    const detailsEl = document.getElementById(`rubric-details-${key}`);
+    if (!scoreEl || !barEl || !detailsEl) return;
+
+    if (!data) {
+      scoreEl.innerText = `--/${defaultMax} pts`;
+      barEl.style.width = "0%";
+      detailsEl.innerHTML = `<li>No rubric metrics calculated</li>`;
+      return;
+    }
+
+    const score = data.score !== undefined ? data.score : 0;
+    const max = data.max_points || defaultMax;
+    const pct = data.percentage !== undefined ? data.percentage : Math.round((score / max) * 100);
+    scoreEl.innerText = `${score}/${max} pts (${pct}%)`;
+    barEl.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+
+    const details = data.details || [];
+    if (details.length === 0) {
+      detailsEl.innerHTML = `<li>Evaluated according to deterministic rubric.</li>`;
+    } else {
+      detailsEl.innerHTML = details.slice(0, 3).map(d => `<li>${d}</li>`).join("");
+    }
+  }
+
+  renderConfirmationChecklist(checks) {
+    const container = document.getElementById("confirmation-checklist-grid");
+    if (!container) return;
+
+    const checkLabels = [
+      { key: "daily_trend_bullish", label: "Daily Trend Bullish" },
+      { key: "hourly_trend_aligned", label: "Hourly Trend Alignment" },
+      { key: "volume_confirmed", label: "Institutional Volume Surge" },
+      { key: "rsi_in_sweet_spot", label: "RSI Swing Sweet-Spot (50-68)" },
+      { key: "fundamental_health_sound", label: "Fundamental Health & Solvency" },
+      { key: "risk_reward_viable", label: "Risk-to-Reward >= 1.5 Viable" },
+      { key: "no_critical_accounting_red_flags", label: "Accounting Quality & Clean Filings" }
+    ];
+
+    container.innerHTML = checkLabels.map(item => {
+      const isPassed = checks && checks[item.key] === true;
+      const isFailed = checks && checks[item.key] === false;
+      const statusClass = isPassed ? "pass" : (isFailed ? "fail" : "neutral");
+      const icon = isPassed ? "✓ PASS" : (isFailed ? "✗ FAIL" : "— N/A");
+
+      return `
+        <div class="checklist-item">
+          <span class="checklist-label">${item.label}</span>
+          <span class="checklist-status ${statusClass}">${icon}</span>
+        </div>
+      `;
+    }).join("");
   }
 
   showToast(message, type = "info") {

@@ -50,6 +50,8 @@ def save_analysis(result: Dict[str, Any]) -> str:
         "composite_score": comp_score,
         "composite_verdict": verdict,
         "verdict_reason": reason,
+        "action": result.get("action") or (result.get("decision_engine", {}) or {}).get("action", "N/A"),
+        "confidence": result.get("confidence") or (result.get("decision_engine", {}) or {}).get("confidence", "N/A"),
         "technical_score": tech.get("technical_score"),
         "fundamental_score": fund.get("fundamental_score"),
         "mode": mode,

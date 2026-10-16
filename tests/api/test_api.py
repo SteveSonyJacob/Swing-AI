@@ -69,6 +69,11 @@ def test_analyze_stock_endpoint_offline():
         assert data["technical"]["symbol"] == test_sym
         assert data["fundamental"]["symbol"] == test_sym
         assert data["screening"]["eligible"] is True
+        assert "scoring_rubrics" in data
+        assert "execution_plan" in data
+        assert "action" in data
+        assert "confidence" in data
+        assert data["action"] in ["BUY", "WATCH", "AVOID", "HOLD"]
 
 
 def test_analyze_stock_invalid_symbol():

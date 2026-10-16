@@ -140,17 +140,18 @@
                 <thead>
                   <tr>
                     <th>Symbol</th>
+                    <th>Action</th>
+                    <th>Verdict</th>
                     <th>Technical Score</th>
                     <th>Fundamental Score</th>
-                    <th>Composite Score</th>
-                    <th>Verdict</th>
+                    <th>Decision Score</th>
                     <th>Mode</th>
-                    <th>Action</th>
+                    <th>Inspect</th>
                   </tr>
                 </thead>
                 <tbody id="ov-results-tbody">
                   <tr>
-                    <td colspan="7" class="empty-state">
+                    <td colspan="8" class="empty-state">
                       <div class="empty-state-title">No stock analyses recorded yet</div>
                       <div class="empty-state-desc">Run a market scan or analyze an individual stock to generate results.</div>
                     </td>
@@ -268,19 +269,21 @@
                 <thead>
                   <tr>
                     <th>Symbol</th>
+                    <th>Action</th>
+                    <th>Verdict</th>
+                    <th>Confidence</th>
                     <th>Technical Score</th>
                     <th>Fundamental Score</th>
-                    <th>Composite Score</th>
-                    <th>Verdict</th>
+                    <th>Decision Score</th>
                     <th>Entry Zone</th>
                     <th>Stop Loss</th>
                     <th>Target 1</th>
-                    <th>Action</th>
+                    <th>Inspect</th>
                   </tr>
                 </thead>
                 <tbody id="scan-results-tbody">
                   <tr>
-                    <td colspan="9" class="empty-state">
+                    <td colspan="11" class="empty-state">
                       <div class="empty-state-title">No pipeline evaluations yet</div>
                       <div class="empty-state-desc">Click "Run Market Scan" above to evaluate discovered stocks through Agent 2 and Agent 3.</div>
                     </td>
@@ -352,9 +355,11 @@
                   <span class="symbol-callout" id="an-symbol">--</span>
                   <span class="badge badge-hold" id="an-verdict-badge">PENDING</span>
                   <span class="badge badge-hold" id="an-direction-badge">DIRECTION: NONE</span>
+                  <span class="badge badge-hold" id="an-action-badge">ACTION: --</span>
+                  <span class="badge badge-hold" id="an-confidence-badge">CONF: --</span>
                 </div>
                 <div style="display: flex; gap: 12px; align-items: center;">
-                  <span style="font-size: 12px; color: var(--text-muted);">Composite Score:</span>
+                  <span style="font-size: 12px; color: var(--text-muted);">Decision Score:</span>
                   <span class="score-pill" id="an-composite-score">--/100</span>
                 </div>
               </div>
@@ -379,6 +384,123 @@
                 <span class="stat-label">Agent 3: Fundamental Score</span>
                 <span class="stat-value" id="an-a3-score">--/100</span>
                 <span class="stat-meta" id="an-a3-assessment">Financial Quality</span>
+              </div>
+            </div>
+
+            <!-- Decision Engine 100-Point Scoring Rubrics & Execution Plan Card -->
+            <div class="card" id="an-decision-engine-card">
+              <div class="card-header">
+                <div class="card-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                  Decision Engine — 100-Point Scoring Rubrics & Confirmation System
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <span style="font-size: 11px; color: var(--text-dim);">Composite Decision Score:</span>
+                  <span class="score-pill" id="rubric-total-pill">--/100</span>
+                </div>
+              </div>
+
+              <!-- Execution Plan & Sizing Guidance Bar -->
+              <div class="plan-bar">
+                <div class="plan-item">
+                  <span class="plan-label">Execution Action</span>
+                  <span class="plan-val" id="plan-action">--</span>
+                </div>
+                <div class="plan-item">
+                  <span class="plan-label">Setup Direction</span>
+                  <span class="plan-val" id="plan-direction">--</span>
+                </div>
+                <div class="plan-item">
+                  <span class="plan-label">Conviction Level</span>
+                  <span class="plan-val" id="plan-confidence">--</span>
+                </div>
+                <div class="plan-item" style="flex: 1; min-width: 240px;">
+                  <span class="plan-label">Capital Allocation Guidance</span>
+                  <span class="plan-val" id="plan-sizing" style="font-family: var(--font-sans); font-size: 12px; color: var(--accent-green);">--</span>
+                </div>
+              </div>
+
+              <!-- 5 Rubric Dimension Cards Grid -->
+              <div class="rubrics-grid">
+                <!-- Rubric 1: Technical Trend Alignment (30 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">1. Technical Foundation</span>
+                    <span class="rubric-dim-score" id="rubric-score-tech">--/30 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-tech" style="width: 0%; background: #3b82f6;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-tech">
+                    <li>Evaluating daily and hourly trend synchronization...</li>
+                  </ul>
+                </div>
+
+                <!-- Rubric 2: Fundamental Health & Safety (25 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">2. Fundamental Quality</span>
+                    <span class="rubric-dim-score" id="rubric-score-fund">--/25 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-fund" style="width: 0%; background: #10b981;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-fund">
+                    <li>Evaluating business quality and balance sheet leverage...</li>
+                  </ul>
+                </div>
+
+                <!-- Rubric 3: Momentum & Volume Surge (20 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">3. Momentum & Volume</span>
+                    <span class="rubric-dim-score" id="rubric-score-mom">--/20 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-mom" style="width: 0%; background: #8b5cf6;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-mom">
+                    <li>Checking RSI swing sweet-spot and institutional volume...</li>
+                  </ul>
+                </div>
+
+                <!-- Rubric 4: Risk-to-Reward Setup (15 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">4. Risk / Reward Geometry</span>
+                    <span class="rubric-dim-score" id="rubric-score-rr">--/15 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-rr" style="width: 0%; background: #f59e0b;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-rr">
+                    <li>Checking stop-loss tightness and target asymmetry...</li>
+                  </ul>
+                </div>
+
+                <!-- Rubric 5: Valuation & Catalyst (10 pts) -->
+                <div class="rubric-dimension-card">
+                  <div class="rubric-card-header">
+                    <span class="rubric-dim-title">5. Valuation & Catalyst</span>
+                    <span class="rubric-dim-score" id="rubric-score-val">--/10 pts</span>
+                  </div>
+                  <div class="rubric-bar-track">
+                    <div class="rubric-bar-fill" id="rubric-bar-val" style="width: 0%; background: #06b6d4;"></div>
+                  </div>
+                  <ul class="rubric-details-list" id="rubric-details-val">
+                    <li>Comparing multiples vs sector medians and news sentiment...</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Multi-Agent Confirmation Verification Checklist -->
+              <div style="margin-top: 14px; border-top: 1px solid var(--border-color); padding-top: 14px;">
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px;">
+                  Multi-Agent Confirmation Verification Gates
+                </div>
+                <div class="checklist-grid" id="confirmation-checklist-grid">
+                  <!-- Populated dynamically by app.js -->
+                </div>
               </div>
             </div>
 
@@ -552,17 +674,18 @@
                   <tr>
                     <th>Timestamp</th>
                     <th>Symbol</th>
+                    <th>Action</th>
+                    <th>Verdict</th>
                     <th>Technical Score</th>
                     <th>Fundamental Score</th>
-                    <th>Composite Score</th>
-                    <th>Verdict</th>
+                    <th>Decision Score</th>
                     <th>Mode</th>
-                    <th>Action</th>
+                    <th>Inspect</th>
                   </tr>
                 </thead>
                 <tbody id="history-tbody">
                   <tr>
-                    <td colspan="8" class="empty-state">
+                    <td colspan="9" class="empty-state">
                       <div class="empty-state-title">No analysis history recorded yet</div>
                       <div class="empty-state-desc">All completed stock analyses are automatically preserved here.</div>
                     </td>

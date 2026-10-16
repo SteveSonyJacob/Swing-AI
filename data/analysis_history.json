@@ -1,5 +1,5638 @@
 [
   {
+    "id": "e1d1c815",
+    "symbol": "TCS",
+    "timestamp": "2026-10-16T10:53:01.362347",
+    "composite_score": 82,
+    "composite_verdict": "STRONG_BUY_CANDIDATE",
+    "verdict_reason": "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality.",
+    "action": "BUY",
+    "confidence": "HIGH",
+    "technical_score": 69,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "TCS",
+      "mode": "offline",
+      "composite_score": 82,
+      "composite_verdict": "STRONG_BUY_CANDIDATE",
+      "verdict_reason": "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality.",
+      "decision_score": 82,
+      "action": "BUY",
+      "confidence": "HIGH",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 29,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 96.7,
+          "details": [
+            "Daily trend is confirmed bullish (+12)",
+            "Hourly trend aligned bullish (+8)",
+            "Dual timeframe EMA stack aligned (+5)",
+            "Bullish structure: Higher highs and higher lows (+4)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 14,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 70.0,
+          "details": [
+            "RSI in optimal swing sweet-spot: 57.9 (+7)",
+            "MACD neutral or bearish (+0)",
+            "Institutional volume surge: RVOL 1.56x (+7)"
+          ]
+        },
+        "risk_reward": {
+          "score": 10,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 66.7,
+          "details": [
+            "Acceptable Risk/Reward ratio: 1.5:1 (+7)",
+            "Optimal swing volatility buffer (ATR 2.75%) (+3)"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "BUY",
+        "direction": "LONG",
+        "confidence": "HIGH",
+        "entry_zone": "3353.71 - 3387.41",
+        "stop_loss": 3231.31,
+        "target_1": 3579.43,
+        "target_2": 3718.68,
+        "risk_reward": 1.5,
+        "position_sizing": "Standard swing allocation (2.0% - 3.0% capital risk)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": true,
+        "hourly_trend_aligned": true,
+        "volume_confirmed": true,
+        "rsi_in_sweet_spot": true,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": true,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "TCS",
+        "decision_score": 82,
+        "composite_score": 82,
+        "verdict": "STRONG_BUY_CANDIDATE",
+        "composite_verdict": "STRONG_BUY_CANDIDATE",
+        "verdict_reason": "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality.",
+        "action": "BUY",
+        "confidence": "HIGH",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 29,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 96.7,
+            "details": [
+              "Daily trend is confirmed bullish (+12)",
+              "Hourly trend aligned bullish (+8)",
+              "Dual timeframe EMA stack aligned (+5)",
+              "Bullish structure: Higher highs and higher lows (+4)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 14,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 70.0,
+            "details": [
+              "RSI in optimal swing sweet-spot: 57.9 (+7)",
+              "MACD neutral or bearish (+0)",
+              "Institutional volume surge: RVOL 1.56x (+7)"
+            ]
+          },
+          "risk_reward": {
+            "score": 10,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 66.7,
+            "details": [
+              "Acceptable Risk/Reward ratio: 1.5:1 (+7)",
+              "Optimal swing volatility buffer (ATR 2.75%) (+3)"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": true,
+          "hourly_trend_aligned": true,
+          "volume_confirmed": true,
+          "rsi_in_sweet_spot": true,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": true,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "BUY",
+          "direction": "LONG",
+          "confidence": "HIGH",
+          "entry_zone": "3353.71 - 3387.41",
+          "stop_loss": 3231.31,
+          "target_1": 3579.43,
+          "target_2": 3718.68,
+          "risk_reward": 1.5,
+          "position_sizing": "Standard swing allocation (2.0% - 3.0% capital risk)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:53:00.904426",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:53:00.904432",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:53:00.907847",
+        "technical_score": 69,
+        "score_breakdown": {
+          "daily_trend": 18,
+          "hourly_trend": 15,
+          "momentum": 5,
+          "volume": 13,
+          "breakout": 0,
+          "support_resistance": 10,
+          "relative_strength": 3,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bullish",
+          "hourly": "bullish",
+          "daily_ema_alignment": true,
+          "hourly_ema_alignment": true,
+          "market_structure": "higher_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 57.9,
+          "hourly_rsi": 65.0,
+          "daily_macd": "bearish",
+          "hourly_macd": "bearish"
+        },
+        "volume": {
+          "relative_volume": 1.56,
+          "confirmation": true
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 3168.8,
+          "resistance": 3498.77
+        },
+        "volatility": {
+          "atr_14": 92.8,
+          "atr_percent": 2.75
+        },
+        "relative_strength": {
+          "vs_nifty_1m": 5.44,
+          "vs_sector_1m": -9.46
+        },
+        "trade_setup": {
+          "direction": "long",
+          "entry_zone": "3353.71 - 3387.41",
+          "stop_loss": 3231.31,
+          "target_1": 3579.43,
+          "target_2": 3718.68,
+          "risk_reward": 1.5
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:53:01.361675",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": false,
+          "days_to_results": null
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "44692155",
+    "symbol": "INFY",
+    "timestamp": "2026-10-16T10:53:00.840616",
+    "composite_score": 57,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "action": "WATCH",
+    "confidence": "MEDIUM",
+    "technical_score": 44,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "INFY",
+      "mode": "offline",
+      "composite_score": 57,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 57,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 19,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 63.3,
+          "details": [
+            "Daily trend is confirmed bullish (+12)",
+            "Hourly trend is bearish (+0)",
+            "Daily EMA stack aligned (+3)",
+            "Bullish structure: Higher highs and higher lows (+4)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 9,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 45.0,
+          "details": [
+            "RSI in optimal swing sweet-spot: 64.8 (+7)",
+            "Hourly MACD bullish (+2)",
+            "Contracted volume: RVOL 0.37x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": true,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": true,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "INFY",
+        "decision_score": 57,
+        "composite_score": 57,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 19,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 63.3,
+            "details": [
+              "Daily trend is confirmed bullish (+12)",
+              "Hourly trend is bearish (+0)",
+              "Daily EMA stack aligned (+3)",
+              "Bullish structure: Higher highs and higher lows (+4)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 9,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 45.0,
+            "details": [
+              "RSI in optimal swing sweet-spot: 64.8 (+7)",
+              "Hourly MACD bullish (+2)",
+              "Contracted volume: RVOL 0.37x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": true,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": true,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:53:00.567413",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:53:00.567424",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:53:00.572150",
+        "technical_score": 44,
+        "score_breakdown": {
+          "daily_trend": 20,
+          "hourly_trend": 2,
+          "momentum": 7,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 3,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bullish",
+          "hourly": "bearish",
+          "daily_ema_alignment": true,
+          "hourly_ema_alignment": false,
+          "market_structure": "higher_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 64.8,
+          "hourly_rsi": 39.7,
+          "daily_macd": "bearish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 0.37,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 2225.98,
+          "resistance": 2370.95
+        },
+        "volatility": {
+          "atr_14": 62.4,
+          "atr_percent": 2.64
+        },
+        "relative_strength": {
+          "vs_nifty_1m": 7.81,
+          "vs_sector_1m": -7.09
+        },
+        "trade_setup": {
+          "direction": "long",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:53:00.839967",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 6
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "f0187c4e",
+    "symbol": "RELIANCE",
+    "timestamp": "2026-10-16T10:53:00.523025",
+    "composite_score": 47,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "action": "WATCH",
+    "confidence": "MEDIUM",
+    "technical_score": 38,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "RELIANCE",
+      "mode": "offline",
+      "composite_score": 47,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 47,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 12,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 40.0,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend aligned bullish (+8)",
+            "Hourly EMA stack aligned (+2)",
+            "Mixed swing pivot structure (+2)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 6,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 30.0,
+          "details": [
+            "RSI neutral/subdued: 45.6 (+2)",
+            "Daily MACD bullish (+4)",
+            "Contracted volume: RVOL 0.4x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": true,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "RELIANCE",
+        "decision_score": 47,
+        "composite_score": 47,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 12,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 40.0,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend aligned bullish (+8)",
+              "Hourly EMA stack aligned (+2)",
+              "Mixed swing pivot structure (+2)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 6,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 30.0,
+            "details": [
+              "RSI neutral/subdued: 45.6 (+2)",
+              "Daily MACD bullish (+4)",
+              "Contracted volume: RVOL 0.4x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": true,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:52:59.589232",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:52:59.589239",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:52:59.592545",
+        "technical_score": 38,
+        "score_breakdown": {
+          "daily_trend": 2,
+          "hourly_trend": 13,
+          "momentum": 8,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 10,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bearish",
+          "hourly": "bullish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": true,
+          "market_structure": "higher_highs_lower_lows"
+        },
+        "momentum": {
+          "daily_rsi": 45.6,
+          "hourly_rsi": 55.7,
+          "daily_macd": "bullish",
+          "hourly_macd": "bearish"
+        },
+        "volume": {
+          "relative_volume": 0.4,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1366.68,
+          "resistance": 1421.58
+        },
+        "volatility": {
+          "atr_14": 37.9,
+          "atr_percent": 2.76
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -0.43,
+          "vs_sector_1m": -0.42
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:53:00.522692",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 4
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "683bd39b",
+    "symbol": "TCS",
+    "timestamp": "2026-10-16T10:51:15.105737",
+    "composite_score": 39,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "action": "WATCH",
+    "confidence": "MEDIUM",
+    "technical_score": 27,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "TCS",
+      "mode": "offline",
+      "composite_score": 39,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 39,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 8,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 26.7,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend aligned bullish (+8)",
+            "EMA stack not aligned (+0)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 2,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 10.0,
+          "details": [
+            "RSI unfavorable for swing entry: 38.7 (+0)",
+            "Hourly MACD bullish (+2)",
+            "Contracted volume: RVOL 0.38x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": true,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "TCS",
+        "decision_score": 39,
+        "composite_score": 39,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 8,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 26.7,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend aligned bullish (+8)",
+              "EMA stack not aligned (+0)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 2,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 10.0,
+            "details": [
+              "RSI unfavorable for swing entry: 38.7 (+0)",
+              "Hourly MACD bullish (+2)",
+              "Contracted volume: RVOL 0.38x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": true,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:51:14.751187",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:51:14.751191",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:51:14.754625",
+        "technical_score": 27,
+        "score_breakdown": {
+          "daily_trend": 4,
+          "hourly_trend": 9,
+          "momentum": 2,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bearish",
+          "hourly": "bullish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": false,
+          "market_structure": "lower_highs_lower_lows"
+        },
+        "momentum": {
+          "daily_rsi": 38.7,
+          "hourly_rsi": 58.0,
+          "daily_macd": "bearish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 0.38,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1840.56,
+          "resistance": 1866.76
+        },
+        "volatility": {
+          "atr_14": 49.8,
+          "atr_percent": 2.7
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -3.03,
+          "vs_sector_1m": -2.66
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:51:15.104992",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": false,
+          "days_to_results": null
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "a021a43f",
+    "symbol": "INFY",
+    "timestamp": "2026-10-16T10:51:14.698614",
+    "composite_score": 68,
+    "composite_verdict": "MODERATE_BUY_CANDIDATE",
+    "verdict_reason": "Acceptable technical setup with supportive fundamental metrics.",
+    "action": "BUY",
+    "confidence": "MEDIUM",
+    "technical_score": 59,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "INFY",
+      "mode": "offline",
+      "composite_score": 68,
+      "composite_verdict": "MODERATE_BUY_CANDIDATE",
+      "verdict_reason": "Acceptable technical setup with supportive fundamental metrics.",
+      "decision_score": 68,
+      "action": "BUY",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 18,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 60.0,
+          "details": [
+            "Daily trend is confirmed bullish (+12)",
+            "Hourly trend is bearish (+0)",
+            "Daily EMA stack aligned (+3)",
+            "Price breakout detected (50_day_high) (+3)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 11,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 55.0,
+          "details": [
+            "RSI in optimal swing sweet-spot: 68.0 (+7)",
+            "Daily MACD bullish (+4)",
+            "Contracted volume: RVOL 0.7x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 10,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 66.7,
+          "details": [
+            "Acceptable Risk/Reward ratio: 1.5:1 (+7)",
+            "Optimal swing volatility buffer (ATR 2.42%) (+3)"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "BUY",
+        "direction": "LONG",
+        "confidence": "MEDIUM",
+        "entry_zone": "2534.34 - 2559.81",
+        "stop_loss": 2454.64,
+        "target_1": 2685.72,
+        "target_2": 2778.16,
+        "risk_reward": 1.5,
+        "position_sizing": "Conservative swing allocation (1.0% - 1.5% capital risk)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": true,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": true,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": true,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "INFY",
+        "decision_score": 68,
+        "composite_score": 68,
+        "verdict": "MODERATE_BUY_CANDIDATE",
+        "composite_verdict": "MODERATE_BUY_CANDIDATE",
+        "verdict_reason": "Acceptable technical setup with supportive fundamental metrics.",
+        "action": "BUY",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 18,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 60.0,
+            "details": [
+              "Daily trend is confirmed bullish (+12)",
+              "Hourly trend is bearish (+0)",
+              "Daily EMA stack aligned (+3)",
+              "Price breakout detected (50_day_high) (+3)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 11,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 55.0,
+            "details": [
+              "RSI in optimal swing sweet-spot: 68.0 (+7)",
+              "Daily MACD bullish (+4)",
+              "Contracted volume: RVOL 0.7x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 10,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 66.7,
+            "details": [
+              "Acceptable Risk/Reward ratio: 1.5:1 (+7)",
+              "Optimal swing volatility buffer (ATR 2.42%) (+3)"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": true,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": true,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": true,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "BUY",
+          "direction": "LONG",
+          "confidence": "MEDIUM",
+          "entry_zone": "2534.34 - 2559.81",
+          "stop_loss": 2454.64,
+          "target_1": 2685.72,
+          "target_2": 2778.16,
+          "risk_reward": 1.5,
+          "position_sizing": "Conservative swing allocation (1.0% - 1.5% capital risk)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:51:14.346449",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:51:14.346460",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:51:14.353132",
+        "technical_score": 59,
+        "score_breakdown": {
+          "daily_trend": 18,
+          "hourly_trend": 0,
+          "momentum": 13,
+          "volume": 0,
+          "breakout": 10,
+          "support_resistance": 8,
+          "relative_strength": 5,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bullish",
+          "hourly": "bearish",
+          "daily_ema_alignment": true,
+          "hourly_ema_alignment": false,
+          "market_structure": "lower_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 68.0,
+          "hourly_rsi": 31.5,
+          "daily_macd": "bullish",
+          "hourly_macd": "bearish"
+        },
+        "volume": {
+          "relative_volume": 0.7,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": true,
+          "type": "50_day_high",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 2313.57,
+          "resistance": null
+        },
+        "volatility": {
+          "atr_14": 61.6,
+          "atr_percent": 2.42
+        },
+        "relative_strength": {
+          "vs_nifty_1m": 9.36,
+          "vs_sector_1m": 9.72
+        },
+        "trade_setup": {
+          "direction": "long",
+          "entry_zone": "2534.34 - 2559.81",
+          "stop_loss": 2454.64,
+          "target_1": 2685.72,
+          "target_2": 2778.16,
+          "risk_reward": 1.5
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:51:14.698354",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 6
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "2b3c0e66",
+    "symbol": "RELIANCE",
+    "timestamp": "2026-10-16T10:51:14.300473",
+    "composite_score": 49,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "action": "WATCH",
+    "confidence": "MEDIUM",
+    "technical_score": 32,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "RELIANCE",
+      "mode": "offline",
+      "composite_score": 49,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 49,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 16,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 53.3,
+          "details": [
+            "Daily trend is confirmed bullish (+12)",
+            "Hourly trend is bearish (+0)",
+            "EMA stack not aligned (+0)",
+            "Bullish structure: Higher highs and higher lows (+4)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 4,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 20.0,
+          "details": [
+            "RSI neutral/subdued: 45.5 (+2)",
+            "Hourly MACD bullish (+2)",
+            "Contracted volume: RVOL 0.16x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": true,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "RELIANCE",
+        "decision_score": 49,
+        "composite_score": 49,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 16,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 53.3,
+            "details": [
+              "Daily trend is confirmed bullish (+12)",
+              "Hourly trend is bearish (+0)",
+              "EMA stack not aligned (+0)",
+              "Bullish structure: Higher highs and higher lows (+4)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 4,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 20.0,
+            "details": [
+              "RSI neutral/subdued: 45.5 (+2)",
+              "Hourly MACD bullish (+2)",
+              "Contracted volume: RVOL 0.16x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": true,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:51:13.026482",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:51:13.026485",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:51:13.029050",
+        "technical_score": 32,
+        "score_breakdown": {
+          "daily_trend": 14,
+          "hourly_trend": 2,
+          "momentum": 2,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 2,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bullish",
+          "hourly": "bearish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": false,
+          "market_structure": "higher_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 45.5,
+          "hourly_rsi": 43.3,
+          "daily_macd": "bearish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 0.16,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1041.6,
+          "resistance": 1060.52
+        },
+        "volatility": {
+          "atr_14": 29.4,
+          "atr_percent": 2.81
+        },
+        "relative_strength": {
+          "vs_nifty_1m": 0.99,
+          "vs_sector_1m": -3.7
+        },
+        "trade_setup": {
+          "direction": "long",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:51:14.299747",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 4
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "0b474177",
+    "symbol": "TCS",
+    "timestamp": "2026-10-16T10:50:40.380161",
+    "composite_score": 33,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "action": "WATCH",
+    "confidence": "MEDIUM",
+    "technical_score": 28,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "TCS",
+      "mode": "offline",
+      "composite_score": 33,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 33,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 2,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 6.7,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend is bearish (+0)",
+            "EMA stack not aligned (+0)",
+            "Mixed swing pivot structure (+2)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 2,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 10.0,
+          "details": [
+            "RSI neutral/subdued: 40.3 (+2)",
+            "MACD neutral or bearish (+0)",
+            "Contracted volume: RVOL 0.63x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "TCS",
+        "decision_score": 33,
+        "composite_score": 33,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 2,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 6.7,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend is bearish (+0)",
+              "EMA stack not aligned (+0)",
+              "Mixed swing pivot structure (+2)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 2,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 10.0,
+            "details": [
+              "RSI neutral/subdued: 40.3 (+2)",
+              "MACD neutral or bearish (+0)",
+              "Contracted volume: RVOL 0.63x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:50:39.946139",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:50:39.946145",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:50:39.949712",
+        "technical_score": 28,
+        "score_breakdown": {
+          "daily_trend": 6,
+          "hourly_trend": 8,
+          "momentum": 2,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "mixed",
+          "hourly": "bearish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": false,
+          "market_structure": "lower_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 40.3,
+          "hourly_rsi": 42.8,
+          "daily_macd": "bearish",
+          "hourly_macd": "bearish"
+        },
+        "volume": {
+          "relative_volume": 0.63,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1102.84,
+          "resistance": 1118.47
+        },
+        "volatility": {
+          "atr_14": 30.0,
+          "atr_percent": 2.69
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -5.57,
+          "vs_sector_1m": -12.96
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:50:40.379470",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": false,
+          "days_to_results": null
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "d2a775e8",
+    "symbol": "INFY",
+    "timestamp": "2026-10-16T10:50:39.882366",
+    "composite_score": 39,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "action": "WATCH",
+    "confidence": "MEDIUM",
+    "technical_score": 35,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "INFY",
+      "mode": "offline",
+      "composite_score": 39,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 39,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 5,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 16.7,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend is bearish (+0)",
+            "Daily EMA stack aligned (+3)",
+            "Mixed swing pivot structure (+2)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 5,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 25.0,
+          "details": [
+            "RSI in positive momentum territory: 54.0 (+5)",
+            "MACD neutral or bearish (+0)",
+            "Contracted volume: RVOL 0.87x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": true,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "INFY",
+        "decision_score": 39,
+        "composite_score": 39,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 5,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 16.7,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend is bearish (+0)",
+              "Daily EMA stack aligned (+3)",
+              "Mixed swing pivot structure (+2)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 5,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 25.0,
+            "details": [
+              "RSI in positive momentum territory: 54.0 (+5)",
+              "MACD neutral or bearish (+0)",
+              "Contracted volume: RVOL 0.87x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": true,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:50:39.516397",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:50:39.516408",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:50:39.521410",
+        "technical_score": 35,
+        "score_breakdown": {
+          "daily_trend": 16,
+          "hourly_trend": 2,
+          "momentum": 5,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "mixed",
+          "hourly": "bearish",
+          "daily_ema_alignment": true,
+          "hourly_ema_alignment": false,
+          "market_structure": "higher_highs_lower_lows"
+        },
+        "momentum": {
+          "daily_rsi": 54.0,
+          "hourly_rsi": 36.7,
+          "daily_macd": "bearish",
+          "hourly_macd": "bearish"
+        },
+        "volume": {
+          "relative_volume": 0.87,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 2065.56,
+          "resistance": 2195.03
+        },
+        "volatility": {
+          "atr_14": 54.4,
+          "atr_percent": 2.52
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -0.54,
+          "vs_sector_1m": -7.93
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:50:39.881579",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 6
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "0f184cd9",
+    "symbol": "RELIANCE",
+    "timestamp": "2026-10-16T10:50:39.470953",
+    "composite_score": 37,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "action": "WATCH",
+    "confidence": "MEDIUM",
+    "technical_score": 31,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "RELIANCE",
+      "mode": "offline",
+      "composite_score": 37,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 37,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 2,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 6.7,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend is bearish (+0)",
+            "EMA stack not aligned (+0)",
+            "Mixed swing pivot structure (+2)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 6,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 30.0,
+          "details": [
+            "RSI neutral/subdued: 46.0 (+2)",
+            "Hourly MACD bullish (+2)",
+            "Normal trading volume: RVOL 0.93x (+2)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "RELIANCE",
+        "decision_score": 37,
+        "composite_score": 37,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 2,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 6.7,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend is bearish (+0)",
+              "EMA stack not aligned (+0)",
+              "Mixed swing pivot structure (+2)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 6,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 30.0,
+            "details": [
+              "RSI neutral/subdued: 46.0 (+2)",
+              "Hourly MACD bullish (+2)",
+              "Normal trading volume: RVOL 0.93x (+2)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:50:38.581820",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:50:38.581824",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:50:38.584226",
+        "technical_score": 31,
+        "score_breakdown": {
+          "daily_trend": 12,
+          "hourly_trend": 5,
+          "momentum": 2,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "mixed",
+          "hourly": "mixed",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": false,
+          "market_structure": "lower_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 46.0,
+          "hourly_rsi": 46.4,
+          "daily_macd": "bearish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 0.93,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 2331.06,
+          "resistance": 2393.75
+        },
+        "volatility": {
+          "atr_14": 66.0,
+          "atr_percent": 2.79
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -3.52,
+          "vs_sector_1m": -2.51
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:50:39.470182",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 4
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "1ca659db",
+    "symbol": "TCS",
+    "timestamp": "2026-10-16T10:50:18.329845",
+    "composite_score": 71,
+    "composite_verdict": "NOT_RECOMMENDED",
+    "verdict_reason": "Technical score (50/100) is below the minimum required threshold (55) for trade entry.",
+    "action": "AVOID",
+    "confidence": "HIGH",
+    "technical_score": 50,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "TCS",
+      "mode": "offline",
+      "composite_score": 71,
+      "composite_verdict": "NOT_RECOMMENDED",
+      "verdict_reason": "Technical score (50/100) is below the minimum required threshold (55) for trade entry.",
+      "decision_score": 71,
+      "action": "AVOID",
+      "confidence": "HIGH",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 19,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 63.3,
+          "details": [
+            "Daily trend is confirmed bullish (+12)",
+            "Hourly trend is bearish (+0)",
+            "Daily EMA stack aligned (+3)",
+            "Bullish structure: Higher highs and higher lows (+4)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 13,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 65.0,
+          "details": [
+            "RSI in optimal swing sweet-spot: 56.7 (+7)",
+            "Dual timeframe MACD bullish alignment (+6)",
+            "Contracted volume: RVOL 0.7x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 10,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 66.7,
+          "details": [
+            "Acceptable Risk/Reward ratio: 1.5:1 (+7)",
+            "Optimal swing volatility buffer (ATR 2.6%) (+3)"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "AVOID",
+        "direction": "NONE",
+        "confidence": "HIGH",
+        "entry_zone": "1545.92 - 1561.46",
+        "stop_loss": 1493.12,
+        "target_1": 1644.54,
+        "target_2": 1705.11,
+        "risk_reward": 1.5,
+        "position_sizing": "No capital allocation (Setup does not satisfy risk parameters)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": true,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": true,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": true,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "TCS",
+        "decision_score": 71,
+        "composite_score": 71,
+        "verdict": "NOT_RECOMMENDED",
+        "composite_verdict": "NOT_RECOMMENDED",
+        "verdict_reason": "Technical score (50/100) is below the minimum required threshold (55) for trade entry.",
+        "action": "AVOID",
+        "confidence": "HIGH",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 19,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 63.3,
+            "details": [
+              "Daily trend is confirmed bullish (+12)",
+              "Hourly trend is bearish (+0)",
+              "Daily EMA stack aligned (+3)",
+              "Bullish structure: Higher highs and higher lows (+4)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 13,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 65.0,
+            "details": [
+              "RSI in optimal swing sweet-spot: 56.7 (+7)",
+              "Dual timeframe MACD bullish alignment (+6)",
+              "Contracted volume: RVOL 0.7x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 10,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 66.7,
+            "details": [
+              "Acceptable Risk/Reward ratio: 1.5:1 (+7)",
+              "Optimal swing volatility buffer (ATR 2.6%) (+3)"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": true,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": true,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": true,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "AVOID",
+          "direction": "NONE",
+          "confidence": "HIGH",
+          "entry_zone": "1545.92 - 1561.46",
+          "stop_loss": 1493.12,
+          "target_1": 1644.54,
+          "target_2": 1705.11,
+          "risk_reward": 1.5,
+          "position_sizing": "No capital allocation (Setup does not satisfy risk parameters)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:50:17.908340",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:50:17.908345",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:50:17.911816",
+        "technical_score": 50,
+        "score_breakdown": {
+          "daily_trend": 20,
+          "hourly_trend": 2,
+          "momentum": 11,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 5,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bullish",
+          "hourly": "bearish",
+          "daily_ema_alignment": true,
+          "hourly_ema_alignment": false,
+          "market_structure": "higher_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 56.7,
+          "hourly_rsi": 43.2,
+          "daily_macd": "bullish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 0.7,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1536.74,
+          "resistance": 1563.43
+        },
+        "volatility": {
+          "atr_14": 40.4,
+          "atr_percent": 2.6
+        },
+        "relative_strength": {
+          "vs_nifty_1m": 7.29,
+          "vs_sector_1m": 9.42
+        },
+        "trade_setup": {
+          "direction": "long",
+          "entry_zone": "1545.92 - 1561.46",
+          "stop_loss": 1493.12,
+          "target_1": 1644.54,
+          "target_2": 1705.11,
+          "risk_reward": 1.5
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:50:18.329167",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": false,
+          "days_to_results": null
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "9e71b75f",
+    "symbol": "INFY",
+    "timestamp": "2026-10-16T10:50:17.848922",
+    "composite_score": 45,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "action": "WATCH",
+    "confidence": "MEDIUM",
+    "technical_score": 41,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "INFY",
+      "mode": "offline",
+      "composite_score": 45,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 45,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 10,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 33.3,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend aligned bullish (+8)",
+            "Hourly EMA stack aligned (+2)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 6,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 30.0,
+          "details": [
+            "RSI unfavorable for swing entry: 38.6 (+0)",
+            "Dual timeframe MACD bullish alignment (+6)",
+            "Contracted volume: RVOL 0.76x (+0)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": true,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "INFY",
+        "decision_score": 45,
+        "composite_score": 45,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 10,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 33.3,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend aligned bullish (+8)",
+              "Hourly EMA stack aligned (+2)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 6,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 30.0,
+            "details": [
+              "RSI unfavorable for swing entry: 38.6 (+0)",
+              "Dual timeframe MACD bullish alignment (+6)",
+              "Contracted volume: RVOL 0.76x (+0)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": true,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:50:17.510393",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:50:17.510400",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:50:17.515173",
+        "technical_score": 41,
+        "score_breakdown": {
+          "daily_trend": 4,
+          "hourly_trend": 15,
+          "momentum": 10,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bearish",
+          "hourly": "bullish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": true,
+          "market_structure": "lower_highs_lower_lows"
+        },
+        "momentum": {
+          "daily_rsi": 38.6,
+          "hourly_rsi": 72.0,
+          "daily_macd": "bullish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 0.76,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 2757.52,
+          "resistance": 2864.33
+        },
+        "volatility": {
+          "atr_14": 81.0,
+          "atr_percent": 2.87
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -8.73,
+          "vs_sector_1m": -6.6
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:50:17.848243",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 6
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "24e1c61d",
+    "symbol": "RELIANCE",
+    "timestamp": "2026-10-16T10:50:17.466115",
+    "composite_score": 86,
+    "composite_verdict": "STRONG_BUY_CANDIDATE",
+    "verdict_reason": "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality.",
+    "action": "BUY",
+    "confidence": "HIGH",
+    "technical_score": 70,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "RELIANCE",
+      "mode": "offline",
+      "composite_score": 86,
+      "composite_verdict": "STRONG_BUY_CANDIDATE",
+      "verdict_reason": "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality.",
+      "decision_score": 86,
+      "action": "BUY",
+      "confidence": "HIGH",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 27,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 90.0,
+          "details": [
+            "Daily trend is confirmed bullish (+12)",
+            "Hourly trend aligned bullish (+8)",
+            "Dual timeframe EMA stack aligned (+5)",
+            "Mixed swing pivot structure (+2)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 20,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 100.0,
+          "details": [
+            "RSI in optimal swing sweet-spot: 59.7 (+7)",
+            "Dual timeframe MACD bullish alignment (+6)",
+            "Institutional volume surge: RVOL 2.54x (+7)"
+          ]
+        },
+        "risk_reward": {
+          "score": 10,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 66.7,
+          "details": [
+            "Acceptable Risk/Reward ratio: 1.5:1 (+7)",
+            "Optimal swing volatility buffer (ATR 2.57%) (+3)"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "BUY",
+        "direction": "LONG",
+        "confidence": "HIGH",
+        "entry_zone": "2638.1 - 2664.62",
+        "stop_loss": 2549.34,
+        "target_1": 2804.39,
+        "target_2": 2906.42,
+        "risk_reward": 1.5,
+        "position_sizing": "Standard swing allocation (2.0% - 3.0% capital risk)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": true,
+        "hourly_trend_aligned": true,
+        "volume_confirmed": true,
+        "rsi_in_sweet_spot": true,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": true,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "RELIANCE",
+        "decision_score": 86,
+        "composite_score": 86,
+        "verdict": "STRONG_BUY_CANDIDATE",
+        "composite_verdict": "STRONG_BUY_CANDIDATE",
+        "verdict_reason": "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality.",
+        "action": "BUY",
+        "confidence": "HIGH",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 27,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 90.0,
+            "details": [
+              "Daily trend is confirmed bullish (+12)",
+              "Hourly trend aligned bullish (+8)",
+              "Dual timeframe EMA stack aligned (+5)",
+              "Mixed swing pivot structure (+2)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 20,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 100.0,
+            "details": [
+              "RSI in optimal swing sweet-spot: 59.7 (+7)",
+              "Dual timeframe MACD bullish alignment (+6)",
+              "Institutional volume surge: RVOL 2.54x (+7)"
+            ]
+          },
+          "risk_reward": {
+            "score": 10,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 66.7,
+            "details": [
+              "Acceptable Risk/Reward ratio: 1.5:1 (+7)",
+              "Optimal swing volatility buffer (ATR 2.57%) (+3)"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": true,
+          "hourly_trend_aligned": true,
+          "volume_confirmed": true,
+          "rsi_in_sweet_spot": true,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": true,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "BUY",
+          "direction": "LONG",
+          "confidence": "HIGH",
+          "entry_zone": "2638.1 - 2664.62",
+          "stop_loss": 2549.34,
+          "target_1": 2804.39,
+          "target_2": 2906.42,
+          "risk_reward": 1.5,
+          "position_sizing": "Standard swing allocation (2.0% - 3.0% capital risk)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:50:16.797494",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:50:16.797496",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:50:16.800411",
+        "technical_score": 70,
+        "score_breakdown": {
+          "daily_trend": 18,
+          "hourly_trend": 15,
+          "momentum": 11,
+          "volume": 11,
+          "breakout": 0,
+          "support_resistance": 5,
+          "relative_strength": 5,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bullish",
+          "hourly": "bullish",
+          "daily_ema_alignment": true,
+          "hourly_ema_alignment": true,
+          "market_structure": "lower_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 59.7,
+          "hourly_rsi": 62.6,
+          "daily_macd": "bullish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 2.54,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 2417.59,
+          "resistance": 2718.05
+        },
+        "volatility": {
+          "atr_14": 68.0,
+          "atr_percent": 2.57
+        },
+        "relative_strength": {
+          "vs_nifty_1m": 5.34,
+          "vs_sector_1m": 4.01
+        },
+        "trade_setup": {
+          "direction": "long",
+          "entry_zone": "2638.1 - 2664.62",
+          "stop_loss": 2549.34,
+          "target_1": 2804.39,
+          "target_2": 2906.42,
+          "risk_reward": 1.5
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:50:17.465389",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 4
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "be80ecb8",
+    "symbol": "TCS",
+    "timestamp": "2026-10-16T10:39:37.714582",
+    "composite_score": 47,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "technical_score": 42,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "TCS",
+      "mode": "offline",
+      "composite_score": 47,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 47,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 12,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 40.0,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend aligned bullish (+8)",
+            "Hourly EMA stack aligned (+2)",
+            "Mixed swing pivot structure (+2)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 6,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 30.0,
+          "details": [
+            "RSI unfavorable for swing entry: 36.1 (+0)",
+            "Daily MACD bullish (+4)",
+            "Normal trading volume: RVOL 0.94x (+2)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": true,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "TCS",
+        "decision_score": 47,
+        "composite_score": 47,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 12,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 40.0,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend aligned bullish (+8)",
+              "Hourly EMA stack aligned (+2)",
+              "Mixed swing pivot structure (+2)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 6,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 30.0,
+            "details": [
+              "RSI unfavorable for swing entry: 36.1 (+0)",
+              "Daily MACD bullish (+4)",
+              "Normal trading volume: RVOL 0.94x (+2)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": true,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:39:37.471445",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:39:37.471448",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:39:37.474640",
+        "technical_score": 42,
+        "score_breakdown": {
+          "daily_trend": 2,
+          "hourly_trend": 15,
+          "momentum": 8,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 10,
+          "relative_strength": 2,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bearish",
+          "hourly": "bullish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": true,
+          "market_structure": "lower_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 36.1,
+          "hourly_rsi": 57.1,
+          "daily_macd": "bullish",
+          "hourly_macd": "bearish"
+        },
+        "volume": {
+          "relative_volume": 0.94,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1499.46,
+          "resistance": 1609.36
+        },
+        "volatility": {
+          "atr_14": 43.8,
+          "atr_percent": 2.9
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -2.73,
+          "vs_sector_1m": 7.61
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:39:37.713910",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": false,
+          "days_to_results": null
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "06cb7175",
+    "symbol": "INFY",
+    "timestamp": "2026-10-16T10:39:37.426862",
+    "composite_score": 36,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "technical_score": 30,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "INFY",
+      "mode": "offline",
+      "composite_score": 36,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 36,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 0,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 0.0,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend is bearish (+0)",
+            "EMA stack not aligned (+0)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 7,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 35.0,
+          "details": [
+            "RSI unfavorable for swing entry: 35.1 (+0)",
+            "MACD neutral or bearish (+0)",
+            "Institutional volume surge: RVOL 2.0x (+7)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": true,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "INFY",
+        "decision_score": 36,
+        "composite_score": 36,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 0,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 0.0,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend is bearish (+0)",
+              "EMA stack not aligned (+0)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 7,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 35.0,
+            "details": [
+              "RSI unfavorable for swing entry: 35.1 (+0)",
+              "MACD neutral or bearish (+0)",
+              "Institutional volume surge: RVOL 2.0x (+7)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": true,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:39:37.163879",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:39:37.163886",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:39:37.168237",
+        "technical_score": 30,
+        "score_breakdown": {
+          "daily_trend": 4,
+          "hourly_trend": 0,
+          "momentum": 2,
+          "volume": 9,
+          "breakout": 0,
+          "support_resistance": 10,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "mixed",
+          "hourly": "bearish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": false,
+          "market_structure": "lower_highs_lower_lows"
+        },
+        "momentum": {
+          "daily_rsi": 35.1,
+          "hourly_rsi": 40.0,
+          "daily_macd": "bearish",
+          "hourly_macd": "bearish"
+        },
+        "volume": {
+          "relative_volume": 2.0,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 2125.45,
+          "resistance": 2234.56
+        },
+        "volatility": {
+          "atr_14": 62.2,
+          "atr_percent": 2.89
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -11.52,
+          "vs_sector_1m": -1.17
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:39:37.426143",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 6
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "6e90849f",
+    "symbol": "RELIANCE",
+    "timestamp": "2026-10-16T10:39:37.129759",
+    "composite_score": 33,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "technical_score": 31,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "RELIANCE",
+      "mode": "offline",
+      "composite_score": 33,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "decision_score": 33,
+      "action": "WATCH",
+      "confidence": "MEDIUM",
+      "scoring_rubrics": {
+        "technical_alignment": {
+          "score": 2,
+          "max_points": 30,
+          "available_weight": 30,
+          "percentage": 6.7,
+          "details": [
+            "Daily trend is bearish (+0)",
+            "Hourly trend is bearish (+0)",
+            "EMA stack not aligned (+0)",
+            "Mixed swing pivot structure (+2)"
+          ]
+        },
+        "fundamental_quality": {
+          "score": 23,
+          "max_points": 25,
+          "available_weight": 25,
+          "percentage": 92.0,
+          "details": [
+            "Agent 3 base score (84/100) -> +8.4 pts",
+            "Robust revenue expansion: 16.99% YoY (+3)",
+            "Strong profit expansion: 16.99% YoY (+3)",
+            "High Return on Equity: 54.74% (+3)",
+            "Strong ROCE capital efficiency: 66.54% (+2)",
+            "Low leverage: D/E 0.21 (+2.5)",
+            "Healthy liquidity: Current ratio 1.78 (+1.5)"
+          ]
+        },
+        "momentum_volume": {
+          "score": 2,
+          "max_points": 20,
+          "available_weight": 20,
+          "percentage": 10.0,
+          "details": [
+            "RSI unfavorable for swing entry: 36.6 (+0)",
+            "MACD neutral or bearish (+0)",
+            "Normal trading volume: RVOL 1.11x (+2)"
+          ]
+        },
+        "risk_reward": {
+          "score": 0,
+          "max_points": 15,
+          "available_weight": 15,
+          "percentage": 0.0,
+          "details": [
+            "No actionable long trade setup defined"
+          ]
+        },
+        "valuation_catalyst": {
+          "score": 6,
+          "max_points": 10,
+          "available_weight": 10,
+          "percentage": 60.0,
+          "details": [
+            "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+            "No active news catalyst flagged; neutral baseline applied (+2)"
+          ]
+        }
+      },
+      "execution_plan": {
+        "action": "WATCH",
+        "direction": "NONE",
+        "confidence": "MEDIUM",
+        "entry_zone": null,
+        "stop_loss": null,
+        "target_1": null,
+        "target_2": null,
+        "risk_reward": null,
+        "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+      },
+      "confirmation_checks": {
+        "daily_trend_bullish": false,
+        "hourly_trend_aligned": false,
+        "volume_confirmed": false,
+        "rsi_in_sweet_spot": false,
+        "fundamental_health_sound": true,
+        "risk_reward_viable": false,
+        "no_critical_accounting_red_flags": true
+      },
+      "decision_engine": {
+        "symbol": "RELIANCE",
+        "decision_score": 33,
+        "composite_score": 33,
+        "verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+        "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+        "action": "WATCH",
+        "confidence": "MEDIUM",
+        "scoring_rubrics": {
+          "technical_alignment": {
+            "score": 2,
+            "max_points": 30,
+            "available_weight": 30,
+            "percentage": 6.7,
+            "details": [
+              "Daily trend is bearish (+0)",
+              "Hourly trend is bearish (+0)",
+              "EMA stack not aligned (+0)",
+              "Mixed swing pivot structure (+2)"
+            ]
+          },
+          "fundamental_quality": {
+            "score": 23,
+            "max_points": 25,
+            "available_weight": 25,
+            "percentage": 92.0,
+            "details": [
+              "Agent 3 base score (84/100) -> +8.4 pts",
+              "Robust revenue expansion: 16.99% YoY (+3)",
+              "Strong profit expansion: 16.99% YoY (+3)",
+              "High Return on Equity: 54.74% (+3)",
+              "Strong ROCE capital efficiency: 66.54% (+2)",
+              "Low leverage: D/E 0.21 (+2.5)",
+              "Healthy liquidity: Current ratio 1.78 (+1.5)"
+            ]
+          },
+          "momentum_volume": {
+            "score": 2,
+            "max_points": 20,
+            "available_weight": 20,
+            "percentage": 10.0,
+            "details": [
+              "RSI unfavorable for swing entry: 36.6 (+0)",
+              "MACD neutral or bearish (+0)",
+              "Normal trading volume: RVOL 1.11x (+2)"
+            ]
+          },
+          "risk_reward": {
+            "score": 0,
+            "max_points": 15,
+            "available_weight": 15,
+            "percentage": 0.0,
+            "details": [
+              "No actionable long trade setup defined"
+            ]
+          },
+          "valuation_catalyst": {
+            "score": 6,
+            "max_points": 10,
+            "available_weight": 10,
+            "percentage": 60.0,
+            "details": [
+              "Fairly valued vs sector benchmark (P/E 22.0 vs Sector 24.0) (+4.5)",
+              "No active news catalyst flagged; neutral baseline applied (+2)"
+            ]
+          }
+        },
+        "confirmation_checks": {
+          "daily_trend_bullish": false,
+          "hourly_trend_aligned": false,
+          "volume_confirmed": false,
+          "rsi_in_sweet_spot": false,
+          "fundamental_health_sound": true,
+          "risk_reward_viable": false,
+          "no_critical_accounting_red_flags": true
+        },
+        "execution_plan": {
+          "action": "WATCH",
+          "direction": "NONE",
+          "confidence": "MEDIUM",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null,
+          "position_sizing": "No capital allocation (Monitor for confirmed technical breakout/reversal)"
+        }
+      },
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:39:36.689313",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:39:36.689317",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:39:36.691798",
+        "technical_score": 31,
+        "score_breakdown": {
+          "daily_trend": 12,
+          "hourly_trend": 2,
+          "momentum": 2,
+          "volume": 2,
+          "breakout": 0,
+          "support_resistance": 8,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "mixed",
+          "hourly": "bearish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": false,
+          "market_structure": "lower_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 36.6,
+          "hourly_rsi": 41.3,
+          "daily_macd": "bearish",
+          "hourly_macd": "bearish"
+        },
+        "volume": {
+          "relative_volume": 1.11,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1649.32,
+          "resistance": 2050.12
+        },
+        "volatility": {
+          "atr_14": 52.7,
+          "atr_percent": 2.87
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -10.5,
+          "vs_sector_1m": -11.4
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:39:37.129049",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 4
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "9a17c030",
+    "symbol": "TCS",
+    "timestamp": "2026-10-16T10:23:42.725861",
+    "composite_score": 62,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "technical_score": 41,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "TCS",
+      "mode": "offline",
+      "composite_score": 62,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:23:42.483323",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:23:42.483327",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:23:42.486639",
+        "technical_score": 41,
+        "score_breakdown": {
+          "daily_trend": 0,
+          "hourly_trend": 15,
+          "momentum": 8,
+          "volume": 6,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bearish",
+          "hourly": "bullish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": true,
+          "market_structure": "lower_highs_lower_lows"
+        },
+        "momentum": {
+          "daily_rsi": 46.0,
+          "hourly_rsi": 53.3,
+          "daily_macd": "bullish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 1.19,
+          "confirmation": true
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1505.8,
+          "resistance": 1554.9
+        },
+        "volatility": {
+          "atr_14": 38.5,
+          "atr_percent": 2.53
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -11.07,
+          "vs_sector_1m": -15.97
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "TCS",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:23:42.725375",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": false,
+          "days_to_results": null
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "a4cedec8",
+    "symbol": "INFY",
+    "timestamp": "2026-10-16T10:23:42.435154",
+    "composite_score": 66,
+    "composite_verdict": "NOT_RECOMMENDED",
+    "verdict_reason": "Technical score (48/100) is below the minimum required threshold (55) for trade entry.",
+    "technical_score": 48,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "INFY",
+      "mode": "offline",
+      "composite_score": 66,
+      "composite_verdict": "NOT_RECOMMENDED",
+      "verdict_reason": "Technical score (48/100) is below the minimum required threshold (55) for trade entry.",
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:23:42.136857",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:23:42.136865",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:23:42.141004",
+        "technical_score": 48,
+        "score_breakdown": {
+          "daily_trend": 16,
+          "hourly_trend": 15,
+          "momentum": 5,
+          "volume": 0,
+          "breakout": 0,
+          "support_resistance": 7,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "mixed",
+          "hourly": "bullish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": true,
+          "market_structure": "higher_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 54.2,
+          "hourly_rsi": 63.8,
+          "daily_macd": "bearish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 0.87,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 852.54,
+          "resistance": 885.93
+        },
+        "volatility": {
+          "atr_14": 21.6,
+          "atr_percent": 2.46
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -3.02,
+          "vs_sector_1m": -7.92
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "INFY",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:23:42.434644",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 6
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "1daf8d66",
+    "symbol": "RELIANCE",
+    "timestamp": "2026-10-16T10:23:42.107084",
+    "composite_score": 54,
+    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+    "technical_score": 24,
+    "fundamental_score": 84,
+    "mode": "offline",
+    "status": "success",
+    "full_result": {
+      "symbol": "RELIANCE",
+      "mode": "offline",
+      "composite_score": 54,
+      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
+      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
+      "screening": {
+        "eligible": true,
+        "status": "discovered",
+        "metadata": {
+          "data_source": "CUSTOM_SYMBOLS_REQUEST",
+          "discovery_timestamp": "2026-10-16T10:23:41.002560",
+          "total_discovered": 1,
+          "total_eligible": 1,
+          "excluded_count": 0,
+          "coverage_status": "custom",
+          "is_cached": false,
+          "last_refresh": "2026-10-16T10:23:41.002562",
+          "failed_sources": []
+        }
+      },
+      "technical": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16 10:23:41.005071",
+        "technical_score": 24,
+        "score_breakdown": {
+          "daily_trend": 2,
+          "hourly_trend": 0,
+          "momentum": 0,
+          "volume": 7,
+          "breakout": 0,
+          "support_resistance": 10,
+          "relative_strength": 0,
+          "volatility": 5
+        },
+        "trend": {
+          "daily": "bearish",
+          "hourly": "bearish",
+          "daily_ema_alignment": false,
+          "hourly_ema_alignment": false,
+          "market_structure": "lower_highs_higher_lows"
+        },
+        "momentum": {
+          "daily_rsi": 29.0,
+          "hourly_rsi": 40.0,
+          "daily_macd": "bearish",
+          "hourly_macd": "bullish"
+        },
+        "volume": {
+          "relative_volume": 1.43,
+          "confirmation": false
+        },
+        "breakout": {
+          "detected": false,
+          "type": "none",
+          "volume_confirmed": false
+        },
+        "levels": {
+          "support": 1564.46,
+          "resistance": 1648.03
+        },
+        "volatility": {
+          "atr_14": 42.2,
+          "atr_percent": 2.69
+        },
+        "relative_strength": {
+          "vs_nifty_1m": -15.22,
+          "vs_sector_1m": -22.49
+        },
+        "trade_setup": {
+          "direction": "none",
+          "entry_zone": null,
+          "stop_loss": null,
+          "target_1": null,
+          "target_2": null,
+          "risk_reward": null
+        }
+      },
+      "fundamental": {
+        "status": "success",
+        "symbol": "RELIANCE",
+        "market": "NSE",
+        "analysis_timestamp": "2026-10-16T10:23:42.106611",
+        "fundamental_score": 84,
+        "score_breakdown": {
+          "growth": 13,
+          "profitability": 13,
+          "balance_sheet": 13,
+          "cash_flow": 15,
+          "earnings_quality": 10,
+          "valuation": 10,
+          "consistency": 5,
+          "sector_relative": 5
+        },
+        "growth": {
+          "revenue_yoy": 16.99,
+          "pat_yoy": 16.99,
+          "eps_yoy": 16.99,
+          "revenue_cagr_3y": 16.0,
+          "pat_cagr_3y": 16.0,
+          "ttm_revenue_yoy": null,
+          "ttm_pat_yoy": null
+        },
+        "profitability": {
+          "roe": 54.74,
+          "roce": 66.54,
+          "operating_margin": 16.0,
+          "net_margin": 10.88,
+          "margin_trend": "stable"
+        },
+        "balance_sheet": {
+          "debt_equity": 0.21,
+          "net_debt": 1934.68,
+          "interest_coverage": 10.67,
+          "current_ratio": 1.78,
+          "is_financial": false
+        },
+        "cash_flow": {
+          "operating_cash_flow": 11046.33,
+          "free_cash_flow": 6630.0,
+          "ocf_pat_ratio": 1.15,
+          "cash_flow_trend": "strong"
+        },
+        "earnings_quality": {
+          "score": 10,
+          "status": "strong",
+          "warnings": []
+        },
+        "valuation": {
+          "pe": 22.0,
+          "pb": 2.1,
+          "ev_ebitda": 11.5,
+          "sector_pe": 24.0,
+          "pe_premium_to_sector": -8.3,
+          "valuation_assessment": "fair"
+        },
+        "ownership": {
+          "insider_holding": 51.0,
+          "institutional_holding": 28.0,
+          "ownership_trend": "stable"
+        },
+        "events": {
+          "upcoming_results": true,
+          "days_to_results": 4
+        },
+        "warnings": [],
+        "data_quality": {
+          "status": "partial",
+          "missing_metrics": [
+            "ttm_pat_yoy",
+            "ttm_revenue_yoy"
+          ]
+        }
+      }
+    }
+  },
+  {
     "id": "4ea2e322",
     "symbol": "63MOONS",
     "timestamp": "2026-10-15T18:01:30.037604",
@@ -13061,513 +18694,6 @@
         "symbol": "RELIANCE",
         "market": "NSE",
         "analysis_timestamp": "2026-10-15T17:41:50.925002",
-        "fundamental_score": 84,
-        "score_breakdown": {
-          "growth": 13,
-          "profitability": 13,
-          "balance_sheet": 13,
-          "cash_flow": 15,
-          "earnings_quality": 10,
-          "valuation": 10,
-          "consistency": 5,
-          "sector_relative": 5
-        },
-        "growth": {
-          "revenue_yoy": 16.99,
-          "pat_yoy": 16.99,
-          "eps_yoy": 16.99,
-          "revenue_cagr_3y": 16.0,
-          "pat_cagr_3y": 16.0,
-          "ttm_revenue_yoy": null,
-          "ttm_pat_yoy": null
-        },
-        "profitability": {
-          "roe": 54.74,
-          "roce": 66.54,
-          "operating_margin": 16.0,
-          "net_margin": 10.88,
-          "margin_trend": "stable"
-        },
-        "balance_sheet": {
-          "debt_equity": 0.21,
-          "net_debt": 1934.68,
-          "interest_coverage": 10.67,
-          "current_ratio": 1.78,
-          "is_financial": false
-        },
-        "cash_flow": {
-          "operating_cash_flow": 11046.33,
-          "free_cash_flow": 6630.0,
-          "ocf_pat_ratio": 1.15,
-          "cash_flow_trend": "strong"
-        },
-        "earnings_quality": {
-          "score": 10,
-          "status": "strong",
-          "warnings": []
-        },
-        "valuation": {
-          "pe": 22.0,
-          "pb": 2.1,
-          "ev_ebitda": 11.5,
-          "sector_pe": 24.0,
-          "pe_premium_to_sector": -8.3,
-          "valuation_assessment": "fair"
-        },
-        "ownership": {
-          "insider_holding": 51.0,
-          "institutional_holding": 28.0,
-          "ownership_trend": "stable"
-        },
-        "events": {
-          "upcoming_results": true,
-          "days_to_results": 5
-        },
-        "warnings": [],
-        "data_quality": {
-          "status": "partial",
-          "missing_metrics": [
-            "ttm_pat_yoy",
-            "ttm_revenue_yoy"
-          ]
-        }
-      }
-    }
-  },
-  {
-    "id": "0313d364",
-    "symbol": "TCS",
-    "timestamp": "2026-10-15T17:41:09.403546",
-    "composite_score": 56,
-    "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
-    "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
-    "technical_score": 29,
-    "fundamental_score": 84,
-    "mode": "offline",
-    "status": "success",
-    "full_result": {
-      "symbol": "TCS",
-      "mode": "offline",
-      "composite_score": 56,
-      "composite_verdict": "WATCHLIST_WAIT_FOR_SETUP",
-      "verdict_reason": "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal.",
-      "screening": {
-        "eligible": true,
-        "status": "discovered",
-        "metadata": {
-          "data_source": "CUSTOM_SYMBOLS_REQUEST",
-          "discovery_timestamp": "2026-10-15T17:41:09.081667",
-          "total_discovered": 1,
-          "total_eligible": 1,
-          "excluded_count": 0,
-          "coverage_status": "custom",
-          "is_cached": false,
-          "last_refresh": "2026-10-15T17:41:09.081674",
-          "failed_sources": []
-        }
-      },
-      "technical": {
-        "status": "success",
-        "symbol": "TCS",
-        "market": "NSE",
-        "analysis_timestamp": "2026-10-15 17:41:09.089847",
-        "technical_score": 29,
-        "score_breakdown": {
-          "daily_trend": 4,
-          "hourly_trend": 8,
-          "momentum": 2,
-          "volume": 0,
-          "breakout": 0,
-          "support_resistance": 10,
-          "relative_strength": 0,
-          "volatility": 5
-        },
-        "trend": {
-          "daily": "mixed",
-          "hourly": "mixed",
-          "daily_ema_alignment": false,
-          "hourly_ema_alignment": true,
-          "market_structure": "lower_highs_lower_lows"
-        },
-        "momentum": {
-          "daily_rsi": 42.4,
-          "hourly_rsi": 56.4,
-          "daily_macd": "bearish",
-          "hourly_macd": "bearish"
-        },
-        "volume": {
-          "relative_volume": 0.21,
-          "confirmation": false
-        },
-        "breakout": {
-          "detected": false,
-          "type": "none",
-          "volume_confirmed": false
-        },
-        "levels": {
-          "support": 2798.38,
-          "resistance": 3038.68
-        },
-        "volatility": {
-          "atr_14": 82.5,
-          "atr_percent": 2.92
-        },
-        "relative_strength": {
-          "vs_nifty_1m": -20.72,
-          "vs_sector_1m": -15.16
-        },
-        "trade_setup": {
-          "direction": "none",
-          "entry_zone": null,
-          "stop_loss": null,
-          "target_1": null,
-          "target_2": null,
-          "risk_reward": null
-        }
-      },
-      "fundamental": {
-        "status": "success",
-        "symbol": "TCS",
-        "market": "NSE",
-        "analysis_timestamp": "2026-10-15T17:41:09.402875",
-        "fundamental_score": 84,
-        "score_breakdown": {
-          "growth": 13,
-          "profitability": 13,
-          "balance_sheet": 13,
-          "cash_flow": 15,
-          "earnings_quality": 10,
-          "valuation": 10,
-          "consistency": 5,
-          "sector_relative": 5
-        },
-        "growth": {
-          "revenue_yoy": 16.99,
-          "pat_yoy": 16.99,
-          "eps_yoy": 16.99,
-          "revenue_cagr_3y": 16.0,
-          "pat_cagr_3y": 16.0,
-          "ttm_revenue_yoy": null,
-          "ttm_pat_yoy": null
-        },
-        "profitability": {
-          "roe": 54.74,
-          "roce": 66.54,
-          "operating_margin": 16.0,
-          "net_margin": 10.88,
-          "margin_trend": "stable"
-        },
-        "balance_sheet": {
-          "debt_equity": 0.21,
-          "net_debt": 1934.68,
-          "interest_coverage": 10.67,
-          "current_ratio": 1.78,
-          "is_financial": false
-        },
-        "cash_flow": {
-          "operating_cash_flow": 11046.33,
-          "free_cash_flow": 6630.0,
-          "ocf_pat_ratio": 1.15,
-          "cash_flow_trend": "strong"
-        },
-        "earnings_quality": {
-          "score": 10,
-          "status": "strong",
-          "warnings": []
-        },
-        "valuation": {
-          "pe": 22.0,
-          "pb": 2.1,
-          "ev_ebitda": 11.5,
-          "sector_pe": 24.0,
-          "pe_premium_to_sector": -8.3,
-          "valuation_assessment": "fair"
-        },
-        "ownership": {
-          "insider_holding": 51.0,
-          "institutional_holding": 28.0,
-          "ownership_trend": "stable"
-        },
-        "events": {
-          "upcoming_results": false,
-          "days_to_results": null
-        },
-        "warnings": [],
-        "data_quality": {
-          "status": "partial",
-          "missing_metrics": [
-            "ttm_pat_yoy",
-            "ttm_revenue_yoy"
-          ]
-        }
-      }
-    }
-  },
-  {
-    "id": "b0326493",
-    "symbol": "INFY",
-    "timestamp": "2026-10-15T17:41:09.023291",
-    "composite_score": 66,
-    "composite_verdict": "NOT_RECOMMENDED",
-    "verdict_reason": "Technical score (47/100) is below the minimum required threshold (55) for trade entry.",
-    "technical_score": 47,
-    "fundamental_score": 84,
-    "mode": "offline",
-    "status": "success",
-    "full_result": {
-      "symbol": "INFY",
-      "mode": "offline",
-      "composite_score": 66,
-      "composite_verdict": "NOT_RECOMMENDED",
-      "verdict_reason": "Technical score (47/100) is below the minimum required threshold (55) for trade entry.",
-      "screening": {
-        "eligible": true,
-        "status": "discovered",
-        "metadata": {
-          "data_source": "CUSTOM_SYMBOLS_REQUEST",
-          "discovery_timestamp": "2026-10-15T17:41:08.289281",
-          "total_discovered": 1,
-          "total_eligible": 1,
-          "excluded_count": 0,
-          "coverage_status": "custom",
-          "is_cached": false,
-          "last_refresh": "2026-10-15T17:41:08.289290",
-          "failed_sources": []
-        }
-      },
-      "technical": {
-        "status": "success",
-        "symbol": "INFY",
-        "market": "NSE",
-        "analysis_timestamp": "2026-10-15 17:41:08.294889",
-        "technical_score": 47,
-        "score_breakdown": {
-          "daily_trend": 6,
-          "hourly_trend": 13,
-          "momentum": 5,
-          "volume": 11,
-          "breakout": 0,
-          "support_resistance": 7,
-          "relative_strength": 0,
-          "volatility": 5
-        },
-        "trend": {
-          "daily": "mixed",
-          "hourly": "bullish",
-          "daily_ema_alignment": false,
-          "hourly_ema_alignment": true,
-          "market_structure": "lower_highs_higher_lows"
-        },
-        "momentum": {
-          "daily_rsi": 50.4,
-          "hourly_rsi": 71.6,
-          "daily_macd": "bearish",
-          "hourly_macd": "bullish"
-        },
-        "volume": {
-          "relative_volume": 1.35,
-          "confirmation": true
-        },
-        "breakout": {
-          "detected": false,
-          "type": "none",
-          "volume_confirmed": false
-        },
-        "levels": {
-          "support": 1566.94,
-          "resistance": 1633.31
-        },
-        "volatility": {
-          "atr_14": 42.5,
-          "atr_percent": 2.67
-        },
-        "relative_strength": {
-          "vs_nifty_1m": -14.59,
-          "vs_sector_1m": -9.03
-        },
-        "trade_setup": {
-          "direction": "none",
-          "entry_zone": null,
-          "stop_loss": null,
-          "target_1": null,
-          "target_2": null,
-          "risk_reward": null
-        }
-      },
-      "fundamental": {
-        "status": "success",
-        "symbol": "INFY",
-        "market": "NSE",
-        "analysis_timestamp": "2026-10-15T17:41:09.022597",
-        "fundamental_score": 84,
-        "score_breakdown": {
-          "growth": 13,
-          "profitability": 13,
-          "balance_sheet": 13,
-          "cash_flow": 15,
-          "earnings_quality": 10,
-          "valuation": 10,
-          "consistency": 5,
-          "sector_relative": 5
-        },
-        "growth": {
-          "revenue_yoy": 16.99,
-          "pat_yoy": 16.99,
-          "eps_yoy": 16.99,
-          "revenue_cagr_3y": 16.0,
-          "pat_cagr_3y": 16.0,
-          "ttm_revenue_yoy": null,
-          "ttm_pat_yoy": null
-        },
-        "profitability": {
-          "roe": 54.74,
-          "roce": 66.54,
-          "operating_margin": 16.0,
-          "net_margin": 10.88,
-          "margin_trend": "stable"
-        },
-        "balance_sheet": {
-          "debt_equity": 0.21,
-          "net_debt": 1934.68,
-          "interest_coverage": 10.67,
-          "current_ratio": 1.78,
-          "is_financial": false
-        },
-        "cash_flow": {
-          "operating_cash_flow": 11046.33,
-          "free_cash_flow": 6630.0,
-          "ocf_pat_ratio": 1.15,
-          "cash_flow_trend": "strong"
-        },
-        "earnings_quality": {
-          "score": 10,
-          "status": "strong",
-          "warnings": []
-        },
-        "valuation": {
-          "pe": 22.0,
-          "pb": 2.1,
-          "ev_ebitda": 11.5,
-          "sector_pe": 24.0,
-          "pe_premium_to_sector": -8.3,
-          "valuation_assessment": "fair"
-        },
-        "ownership": {
-          "insider_holding": 51.0,
-          "institutional_holding": 28.0,
-          "ownership_trend": "stable"
-        },
-        "events": {
-          "upcoming_results": true,
-          "days_to_results": 7
-        },
-        "warnings": [],
-        "data_quality": {
-          "status": "partial",
-          "missing_metrics": [
-            "ttm_pat_yoy",
-            "ttm_revenue_yoy"
-          ]
-        }
-      }
-    }
-  },
-  {
-    "id": "996df5ed",
-    "symbol": "RELIANCE",
-    "timestamp": "2026-10-15T17:41:08.278865",
-    "composite_score": 76,
-    "composite_verdict": "STRONG_BUY_CANDIDATE",
-    "verdict_reason": "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality.",
-    "technical_score": 67,
-    "fundamental_score": 84,
-    "mode": "offline",
-    "status": "success",
-    "full_result": {
-      "symbol": "RELIANCE",
-      "mode": "offline",
-      "composite_score": 76,
-      "composite_verdict": "STRONG_BUY_CANDIDATE",
-      "verdict_reason": "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality.",
-      "screening": {
-        "eligible": true,
-        "status": "discovered",
-        "metadata": {
-          "data_source": "CUSTOM_SYMBOLS_REQUEST",
-          "discovery_timestamp": "2026-10-15T17:41:07.014620",
-          "total_discovered": 1,
-          "total_eligible": 1,
-          "excluded_count": 0,
-          "coverage_status": "custom",
-          "is_cached": false,
-          "last_refresh": "2026-10-15T17:41:07.014630",
-          "failed_sources": []
-        }
-      },
-      "technical": {
-        "status": "success",
-        "symbol": "RELIANCE",
-        "market": "NSE",
-        "analysis_timestamp": "2026-10-15 17:41:07.021902",
-        "technical_score": 67,
-        "score_breakdown": {
-          "daily_trend": 18,
-          "hourly_trend": 15,
-          "momentum": 11,
-          "volume": 9,
-          "breakout": 0,
-          "support_resistance": 7,
-          "relative_strength": 2,
-          "volatility": 5
-        },
-        "trend": {
-          "daily": "bullish",
-          "hourly": "bullish",
-          "daily_ema_alignment": true,
-          "hourly_ema_alignment": true,
-          "market_structure": "lower_highs_higher_lows"
-        },
-        "momentum": {
-          "daily_rsi": 52.4,
-          "hourly_rsi": 63.8,
-          "daily_macd": "bullish",
-          "hourly_macd": "bullish"
-        },
-        "volume": {
-          "relative_volume": 1.7,
-          "confirmation": false
-        },
-        "breakout": {
-          "detected": false,
-          "type": "none",
-          "volume_confirmed": false
-        },
-        "levels": {
-          "support": 1821.07,
-          "resistance": 1958.8
-        },
-        "volatility": {
-          "atr_14": 46.1,
-          "atr_percent": 2.41
-        },
-        "relative_strength": {
-          "vs_nifty_1m": -7.95,
-          "vs_sector_1m": 4.75
-        },
-        "trade_setup": {
-          "direction": "long",
-          "entry_zone": "1904.5 - 1923.64",
-          "stop_loss": 1844.93,
-          "target_1": 2017.78,
-          "target_2": 2086.92,
-          "risk_reward": 1.5
-        }
-      },
-      "fundamental": {
-        "status": "success",
-        "symbol": "RELIANCE",
-        "market": "NSE",
-        "analysis_timestamp": "2026-10-15T17:41:08.277990",
         "fundamental_score": 84,
         "score_breakdown": {
           "growth": 13,

@@ -8,6 +8,9 @@ from src.fundamental.main import run_fundamental_analysis
 logger = logging.getLogger(__name__)
 
 
+from src.decision.engine import evaluate_composite_verdict as engine_composite_verdict, evaluate_decision
+
+
 def evaluate_composite_verdict(
     agent_2_score: Optional[int] = None,
     agent_3_score: Optional[int] = None,
@@ -28,90 +31,15 @@ def evaluate_composite_verdict(
     Returns:
         (composite_score, verdict, reason)
     """
-    # Handle legacy positional calls: (agent_1_score, agent_2_score, agent_3_score, daily_trend, ...)
-    if len(args) >= 2 and isinstance(agent_2_score, int) and isinstance(agent_3_score, int):
-        # 3 initial integer arguments were passed positionally
-        a2 = agent_3_score
-        a3 = daily_trend if isinstance(daily_trend, int) else None
-        trend = tech_status if isinstance(tech_status, str) else None
-        t_status = fund_status if isinstance(fund_status, str) else None
-        f_status = agent_1_score if isinstance(agent_1_score, str) else None
-        agent_2_score = a2
-        agent_3_score = a3
-        daily_trend = trend
-        tech_status = t_status
-        fund_status = f_status
-
-    valid_scores = [s for s in [agent_2_score, agent_3_score] if s is not None]
-    composite_score = round(sum(valid_scores) / len(valid_scores)) if valid_scores else (agent_2_score or 0)
-
-    # Gate 1: Insufficient technical data or technical execution failure
-    if agent_2_score is None or tech_status in ["insufficient_data", "error"]:
-        return composite_score, "INSUFFICIENT_DATA_HOLD", "Technical analysis data is unavailable or insufficient"
-
-    # Gate 2: Clear Bearish Technical Trend or failing technical score (< 45)
-    # Regardless of fundamentals, never recommend a swing-trading BUY on a bearish trend.
-    if daily_trend == "bearish" or agent_2_score < 45:
-        if agent_3_score is not None and agent_3_score >= 60:
-            return (
-                composite_score,
-                "WATCHLIST_WAIT_FOR_SETUP",
-                "Strong company fundamentals, but technical trend is bearish/failing. Wait for confirmed technical reversal."
-            )
-        else:
-            return (
-                composite_score,
-                "REJECTED_BEARISH",
-                "Technical trend is bearish and below viable swing parameters."
-            )
-
-    # Gate 3: Weak / Below-Threshold Technical Setup (< 55)
-    if agent_2_score < 55:
-        return (
-            composite_score,
-            "NOT_RECOMMENDED",
-            f"Technical score ({agent_2_score}/100) is below the minimum required threshold (55) for trade entry."
-        )
-
-    # Gate 4: Technically Bullish but Fundamentally Distressed / Very Weak (< 40)
-    if daily_trend == "bullish" and agent_2_score >= 65 and agent_3_score is not None and agent_3_score < 40:
-        return (
-            composite_score,
-            "SPECULATIVE_TECHNICAL_ONLY",
-            f"Strong technical momentum, but company fundamental health is poor ({agent_3_score}/100). Higher risk."
-        )
-
-    # Gate 5: Strong Buy Setup (Mutual Confirmation across Technical and Fundamental Engines)
-    if (
-        daily_trend == "bullish"
-        and agent_2_score >= 65
-        and (agent_3_score is not None and agent_3_score >= 60)
-        and composite_score >= 65
-    ):
-        return (
-            composite_score,
-            "STRONG_BUY_CANDIDATE",
-            "Mutual multi-agent confirmation: Confirmed bullish technical setup and solid fundamental quality."
-        )
-
-    # Gate 6: Moderate Buy Setup (Confirmed technical viability and adequate fundamental metrics)
-    if (
-        agent_2_score >= 55
-        and daily_trend in ["bullish", "neutral"]
-        and (agent_3_score is None or agent_3_score >= 45)
-        and composite_score >= 55
-    ):
-        return (
-            composite_score,
-            "MODERATE_BUY_CANDIDATE",
-            "Acceptable technical setup with supportive fundamental metrics."
-        )
-
-    # Default fallback
-    return (
-        composite_score,
-        "NEUTRAL_WAIT",
-        "Setup does not meet required entry thresholds across all agents."
+    return engine_composite_verdict(
+        agent_2_score=agent_2_score,
+        agent_3_score=agent_3_score,
+        daily_trend=daily_trend,
+        tech_status=tech_status,
+        fund_status=fund_status,
+        agent_1_score=agent_1_score,
+        *args,
+        **kwargs
     )
 
 
@@ -128,9 +56,10 @@ def pipe_to_agents(
     Takes discovered equity symbols from Agent 1 and evaluates them through:
     - Agent 2 (Technical Analysis Engine)
     - Agent 3 (Fundamental Analysis Engine)
+    - Decision Engine (5-Dimension Scoring Rubrics & Confirmation Gating)
     
     Selection policy is explicit and reproducible (first N discovered symbols).
-    Returns combined evaluations with strictly gated composite verdicts.
+    Returns combined evaluations with strictly gated composite verdicts and execution plans.
     """
     raw_input = symbols_or_candidates if symbols_or_candidates is not None else candidates
 
@@ -169,7 +98,13 @@ def pipe_to_agents(
             "agent_3_score": None,
             "composite_score": None,
             "composite_verdict": None,
-            "verdict_reason": None
+            "verdict_reason": None,
+            "action": None,
+            "confidence": None,
+            "scoring_rubrics": None,
+            "execution_plan": None,
+            "confirmation_checks": None,
+            "decision_engine": None
         }
 
         # Run Agent 2 (Technical)
@@ -198,24 +133,22 @@ def pipe_to_agents(
                 result["agent_3_fundamental"] = fund_res
                 result["agent_3_score"] = None
 
-        # Extract agent signals for gated composite evaluation
-        a2 = result.get("agent_2_score")
-        a3 = result.get("agent_3_score")
-        daily_trend = tech_res.get("trend", {}).get("daily") if isinstance(tech_res, dict) else None
-        tech_status = tech_res.get("status") if isinstance(tech_res, dict) else None
-        fund_status = fund_res.get("status") if isinstance(fund_res, dict) else None
-
-        composite_score, verdict, reason = evaluate_composite_verdict(
-            agent_2_score=a2,
-            agent_3_score=a3,
-            daily_trend=daily_trend,
-            tech_status=tech_status,
-            fund_status=fund_status
+        # Execute Decision Engine with 5-dimension scoring rubrics & confirmation gating
+        decision = evaluate_decision(
+            technical_data=tech_res,
+            fundamental_data=fund_res,
+            symbol=sym
         )
 
-        result["composite_score"] = composite_score
-        result["composite_verdict"] = verdict
-        result["verdict_reason"] = reason
+        result["decision_engine"] = decision
+        result["composite_score"] = decision.get("composite_score")
+        result["composite_verdict"] = decision.get("composite_verdict")
+        result["verdict_reason"] = decision.get("verdict_reason")
+        result["action"] = decision.get("action")
+        result["confidence"] = decision.get("confidence")
+        result["scoring_rubrics"] = decision.get("scoring_rubrics")
+        result["execution_plan"] = decision.get("execution_plan")
+        result["confirmation_checks"] = decision.get("confirmation_checks")
 
         combined_results.append(result)
 

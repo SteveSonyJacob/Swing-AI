@@ -62,13 +62,23 @@ Once running, navigate to:
 - **Symbol Input:** Analyze any valid NSE symbol (e.g. `RELIANCE`, `INFY`, `TCS`, `360ONE`, `ZOMATO`).
 - **Gated Composite Verdict Banner:**
   - Final Decision Engine Verdict badge (`STRONG_BUY_CANDIDATE`, `MODERATE_BUY_CANDIDATE`, `WATCHLIST_WAIT_FOR_SETUP`, `NOT_RECOMMENDED`, `SPECULATIVE_TECHNICAL_ONLY`, `REJECTED_BEARISH`, `INSUFFICIENT_DATA_HOLD`).
-  - Trade Setup Direction: `LONG` or `NONE`.
-  - Composite Score (`/100`).
+  - Action Badge: `BUY`, `WATCH`, `AVOID`, or `HOLD`.
+  - Confidence Level: `HIGH`, `MEDIUM`, or `LOW`.
+  - Setup Direction: `LONG` or `NONE`.
+  - Composite Decision Score (`/100`).
   - Decision Engine Rationale explaining why confirmation rules passed or failed.
 - **Agent Evaluations Bar:**
   - Agent 1: Discovery Status (`Eligible Ordinary Equity · NSE`).
   - Agent 2: Technical Swing Score (`/100`) and trend alignment.
   - Agent 3: Fundamental Quality Score (`/100`) and financial assessment.
+- **Decision Engine 100-Point Scoring Rubrics Card:**
+  - **1. Technical Foundation (30 pts):** Multi-timeframe trend synchronization, dual EMA stack alignment, and breakout confirmation.
+  - **2. Fundamental Health & Safety (25 pts):** Revenue & PAT growth momentum, ROE/ROCE capital efficiency, solvency & D/E safety.
+  - **3. Momentum & Volume (20 pts):** RSI in ideal swing zone (50-68), MACD dual alignment, and institutional RVOL volume surge.
+  - **4. Risk / Reward Geometry (15 pts):** Setup asymmetry (>= 2.5:1, >= 2.0:1, >= 1.5:1) and ATR risk buffer.
+  - **5. Valuation & Catalyst (10 pts):** Sector-relative multiple discount/fairness and corporate news catalyst sentiment.
+  - **Capital Allocation Guidance:** Concrete position sizing recommendation (e.g. standard 2-3% risk, 1-1.5% conservative, 0.5% speculative, or 0% monitor).
+  - **Confirmation Verification Gates:** Real-time checklist across 7 multi-agent gates (Daily trend, Hourly alignment, Volume surge, RSI sweet-spot, Fundamental health, R:R viability, Accounting cleanliness).
 - **Interactive Price & Indicator Chart:**
   - Real daily price series with moving average overlays: **EMA 20** (blue), **EMA 50** (amber), **EMA 200** (red).
   - Subchart for **RSI (14)** with 30 and 70 overbought/oversold levels.
@@ -79,7 +89,7 @@ Once running, navigate to:
 
 ### D. Analysis History
 - Persistent, searchable archive of past analyses saved in `data/analysis_history.json`.
-- Displays Timestamp, Symbol, Technical Score, Fundamental Score, Composite Score, Verdict, and Mode.
+- Displays Timestamp, Symbol, Action, Verdict, Technical Score, Fundamental Score, Decision Score, and Mode.
 - One-click **"Reopen"** action loads that analysis record instantly without re-running.
 
 ---

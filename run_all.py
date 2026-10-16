@@ -33,6 +33,7 @@ from src.screening.output.formatter import print_screening_summary_table
 from src.screening.output.pipeline import pipe_to_agents, evaluate_composite_verdict
 from src.main import run_technical_analysis
 from src.fundamental.main import run_fundamental_analysis
+from src.decision.engine import evaluate_decision
 
 logging.basicConfig(level=logging.WARNING, format="%(asctime)s [%(levelname)s] %(message)s")
 
@@ -61,16 +62,44 @@ def print_single_stock_summary(symbol: str, res: Dict[str, Any]):
     verdict = res.get("composite_verdict", "N/A")
     score = res.get("composite_score", "N/A")
     reason = res.get("verdict_reason", "")
-    print(f"FINAL COMPOSITE VERDICT : {verdict} (Composite Score: {score}/100)")
+    action = res.get("action", "N/A")
+    confidence = res.get("confidence", "N/A")
+    print(f"FINAL DECISION VERDICT  : {verdict} (Score: {score}/100 | Action: {action} | Confidence: {confidence})")
     print(f"RATIONALE               : {reason}")
     print("-" * 90)
+
+    # Decision Engine 5-Dimension Scoring Rubrics
+    rubrics = res.get("scoring_rubrics") or {}
+    if rubrics:
+        print("\n[DECISION ENGINE - 100-POINT SCORING RUBRICS]")
+        names = {
+            "technical_alignment": "1. Technical Foundation & Trend Alignment",
+            "fundamental_quality": "2. Fundamental Quality & Growth Safety",
+            "momentum_volume": "3. Momentum & Volume Institutional Surge",
+            "risk_reward": "4. Risk-to-Reward Setup & Asymmetry",
+            "valuation_catalyst": "5. Valuation Multiple & Catalyst Conviction"
+        }
+        for k, v in rubrics.items():
+            title = names.get(k, k.replace('_', ' ').title())
+            score_str = f"{v.get('score', 0)}/{v.get('max_points', 0)} pts ({v.get('percentage', 0)}%)"
+            print(f"  * {title:<48} : {score_str}")
+            for d in v.get("details", [])[:2]:
+                print(f"      - {d}")
+
+    # Execution Plan & Sizing
+    plan = res.get("execution_plan") or {}
+    if plan:
+        print("\n[DECISION ENGINE - EXECUTION PLAN & RISK ALLOCATION]")
+        print(f"  * Recommended Action  : {plan.get('action', 'N/A')} (Direction: {plan.get('direction', 'NONE')})")
+        print(f"  * Capital Allocation  : {plan.get('position_sizing', 'N/A')}")
+        print(f"  * Execution Range     : Entry: {plan.get('entry_zone', 'N/A')} | Stop: {plan.get('stop_loss', 'N/A')} | Target: {plan.get('target_1', 'N/A')} | R:R: {plan.get('risk_reward', 'N/A')}")
 
     # Status & Scores
     sc = res.get("screening", {})
     sc_status = "Eligible (NSE)" if sc.get("eligible") else "Unverified"
     a2_score = t.get("technical_score", "N/A")
     a3_score = f.get("fundamental_score", "N/A")
-    print(f"Agent Evaluations       : Discovery: {sc_status} | Technical: {a2_score}/100 | Fundamental: {a3_score}/100")
+    print(f"\nAgent Evaluations       : Discovery: {sc_status} | Technical: {a2_score}/100 | Fundamental: {a3_score}/100")
 
     # Technical Details
     print("\n[AGENT 2 - TECHNICAL SWING SETUP]")
@@ -162,7 +191,7 @@ def run_pipeline(
 
 
 def run_single_stock(symbol: str, offline: bool = False, enable_llm: bool = False) -> Dict[str, Any]:
-    """Runs all three agents on a specific stock symbol."""
+    """Runs all three agents and Decision Engine on a specific stock symbol."""
     sym = symbol.strip().upper().replace(".NS", "")
 
     # 1. Agent 1: Screening discovery verification
@@ -176,28 +205,31 @@ def run_single_stock(symbol: str, offline: bool = False, enable_llm: bool = Fals
 
     # 2. Agent 2: Technical Analysis
     tech_res = run_technical_analysis(symbol=sym, offline=offline)
-    a2_score = tech_res.get("technical_score")
-    daily_trend = tech_res.get("trend", {}).get("daily")
 
     # 3. Agent 3: Fundamental Analysis
     fund_res = run_fundamental_analysis(symbol=sym, offline=offline)
-    a3_score = fund_res.get("fundamental_score")
 
-    # 4. Gated Composite Verdict (Technical + Fundamental)
-    comp_score, verdict, reason = evaluate_composite_verdict(
-        agent_2_score=a2_score,
-        agent_3_score=a3_score,
-        daily_trend=daily_trend,
-        tech_status=tech_res.get("status"),
-        fund_status=fund_res.get("status")
+    # 4. Decision Engine (5-Dimension Rubrics, Confirmation Gating & Execution Plan)
+    decision = evaluate_decision(
+        technical_data=tech_res,
+        fundamental_data=fund_res,
+        screening_data=screen_run,
+        symbol=sym
     )
 
     return {
         "symbol": sym,
         "mode": "offline" if offline else "live",
-        "composite_score": comp_score,
-        "composite_verdict": verdict,
-        "verdict_reason": reason,
+        "composite_score": decision.get("composite_score"),
+        "composite_verdict": decision.get("composite_verdict"),
+        "verdict_reason": decision.get("verdict_reason"),
+        "decision_score": decision.get("decision_score"),
+        "action": decision.get("action"),
+        "confidence": decision.get("confidence"),
+        "scoring_rubrics": decision.get("scoring_rubrics"),
+        "execution_plan": decision.get("execution_plan"),
+        "confirmation_checks": decision.get("confirmation_checks"),
+        "decision_engine": decision,
         "screening": {
             "eligible": is_discovered,
             "status": "discovered" if is_discovered else "not_found",
@@ -330,20 +362,22 @@ def main():
 
         pipeline_items = results.get("multi_agent_pipeline", [])
         if pipeline_items:
-            print("\n" + "=" * 90)
-            print(" MULTI-AGENT COMPOSITE VERDICTS (Agent 1 -> Agent 2 -> Agent 3)")
-            print("=" * 90)
-            print(f"{'Symbol':<12} {'Discovery':<14} {'A2 (Tech)':<12} {'A3 (Fund)':<12} {'Composite':<12} {'Verdict':<25}")
-            print("-" * 90)
+            print("\n" + "=" * 95)
+            print(" MULTI-AGENT DECISION ENGINE VERDICTS (Agent 1 -> Agent 2 -> Agent 3 -> Decision Engine)")
+            print("=" * 95)
+            print(f"{'Symbol':<12} {'Discovery':<12} {'A2 (Tech)':<10} {'A3 (Fund)':<10} {'Score':<10} {'Action':<8} {'Verdict':<26} {'Conf':<6}")
+            print("-" * 95)
             for item in pipeline_items:
                 sym = item["symbol"]
-                disc = "Discovered"
+                disc = "Eligible"
                 a2 = f"{item.get('agent_2_score')}/100" if item.get('agent_2_score') is not None else "-"
                 a3 = f"{item.get('agent_3_score')}/100" if item.get('agent_3_score') is not None else "-"
                 comp = f"{item.get('composite_score')}/100" if item.get('composite_score') is not None else "-"
+                act = item.get("action", "-")
+                conf = item.get("confidence", "-")
                 verdict = item.get("composite_verdict", "-")
-                print(f"{sym:<12} {disc:<14} {a2:<12} {a3:<12} {comp:<12} {verdict:<25}")
-            print("=" * 90)
+                print(f"{sym:<12} {disc:<12} {a2:<10} {a3:<10} {comp:<10} {act:<8} {verdict:<26} {conf:<6}")
+            print("=" * 95)
 
             print("\n" + "=" * 90)
             print(" CONFIRMED TRADE SETUPS (Agent 2 Technical Execution Zones)")
